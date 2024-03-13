@@ -1,0 +1,22 @@
+<h1 class="text-center">Pedidos em aberto</h1>
+
+<div class="m-5">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(pedido of pedidos; track pedido.id){ @if(!pedido.completed){
+      <tr>
+        <td>{{ pedido.id }}</td>
+        <td>{{ pedido.title }}</td>
+        <td>{{ !pedido.completed ? "Aberto" : "Finalizado" }}</td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>
