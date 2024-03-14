@@ -13,11 +13,13 @@ body {
 }
 .container {
     max-width: 550px;
+    max-height: 80%;
     margin: 0 auto;
     text-align: left;
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    
 }
 
 .custom-card {
@@ -46,10 +48,26 @@ body {
 }
 
 #form-floating-email {
-    padding-top: 20px;
+    padding-top: 4px;
 }
 
-#form-floating-password {
+#form-floating-cpf {
+    padding-top: 4px;
+}
+
+#form-floating-nome {
+    padding-top: 4px;
+}
+
+#form-floating-endereco {
+    padding-top: 4px;
+}
+
+#form-floating-complemento {
+    padding-top: 4px;
+}
+
+#form-floating-telefone {
     padding-top: 4px;
 }
 
@@ -75,17 +93,17 @@ body {
     padding-top: 15px;
 }
 
-#text-cadastro {
+#text-login {
     color: #32445c;
 }
 
-#text-cadastro-link {
+#text-login-link {
     color: #3dabe1;
     cursor: pointer;
     text-decoration: none; 
 }
 
-#text-cadastro-link:hover {
+#text-login-link:hover {
     color: #1c8bc1;
 }
 
