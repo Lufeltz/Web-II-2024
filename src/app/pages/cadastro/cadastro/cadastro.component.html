@@ -1,0 +1,57 @@
+<div class="background">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="container">
+            <div class="card shadow-lg custom-card border-0">
+                <div class="card-body">
+                    <div class="container-logo">
+                        <img src="assets/logo-lol.png" alt="Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+                        <h1 id="cadastro-text">Autocadastro</h1>
+                    </div>
+                    <form #formCadastro="ngForm" class="container-form d-flex flex-column justify-content-center">
+                        <div class="imput-form">
+                            <div id="form-floating-cpf">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="cpf" name="cpf" placeholder=" " [(ngModel)]="cadastroCPF" #cpf="ngModel" required>
+                                    <label for="cpf">CPF:</label>
+                                </div>
+                            </div>
+                            <div id="form-floating-nome">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="nome" name="nome" placeholder=" " [(ngModel)]="cadastroNome" #nome="ngModel" required>
+                                    <label for="nome">Nome:</label>
+                                </div>
+                            </div>
+                            <div id="form-floating-email">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="email" name="email" placeholder=" " [(ngModel)]="cadastroEmail" #email="ngModel" required>
+                                    <label for="email">Email:</label>
+                                </div>
+                            </div>
+                            <div id="form-floating-endereco">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="endereco" name="endereco" placeholder=" " [(ngModel)]="CadastroEndereco" #endereco="ngModel" required>
+                                    <label for="endereco">Endereço:</label>
+                                </div>
+                            </div>
+                            <div id="form-floating-complemento">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="complemento" name="complemento" placeholder=" " [(ngModel)]="CadastroComplemento" #complemento="ngModel">
+                                    <label for="complemento">Complemento:</label>
+                                </div>
+                            </div>
+                            <div id="form-floating-telefone">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" id="telefone" name="telefone" placeholder=" " [(ngModel)]="CadastroTelefone" #telefone="ngModel" required>
+                                    <label for="telefone">Telefone:</label>
+                                </div>
+                            </div>
+                            <div class="container-button">
+                                <button type="submit" class="btn btn-primary custom-btn" (click)="cadastro()" [disabled]="!formCadastro.form.valid">Cadastrar</button>
+                            </div>
+                            </div>
+                      </form>
+                <div>
+            </div>
+          </div>
+    </div>
+</div>
