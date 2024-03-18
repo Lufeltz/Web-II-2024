@@ -48,7 +48,8 @@ body {
   }
 
   .delete-button {
-    background-image: url("C:/Users/Rodri/OneDrive/Imagens/icone-excluir.png");
+    /*background-image: url("C:/Users/Rodri/OneDrive/Imagens/icone-excluir.png");*/
+    /* retirei esse elemento de background image pois tava dando erro por vir de uma pasta do onedrive pessoal*/
     background-size: 20px;
     background-color: white;
     width: 20px;
@@ -89,4 +90,8 @@ body {
 
   .result {
     margin-top: 20px;
+  }
+  
+  #cancelar{
+    background-color: red;
   }
