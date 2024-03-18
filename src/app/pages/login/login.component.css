@@ -61,6 +61,10 @@ body {
     color: #32445c;
 }
 
+.form-floating label {
+    margin-top: -2px;
+}
+
 .form-floating input:focus ~ label {
     color: #6b6771;
 }
@@ -106,6 +110,7 @@ body {
     font-size: 18px;
     cursor: pointer; 
     letter-spacing: inherit;
+    width: 120px;
 }
 
 .custom-btn:hover {
