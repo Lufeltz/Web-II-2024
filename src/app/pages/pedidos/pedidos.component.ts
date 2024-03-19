@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoModel } from '../models/pedido.model';
-import { PedidosService } from '../services/pedidos.service';
-import { Status } from '../models/status.enum';
+import { PedidoModel } from '../../models/pedido.model';
+import { PedidosService } from '../../services/pedidos.service';
+import { Status } from '../../models/status.enum';
 
 @Component({
   selector: 'app-pedidos',
