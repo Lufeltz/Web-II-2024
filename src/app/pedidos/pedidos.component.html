@@ -1,22 +1,62 @@
 <h1 class="text-center">Pedidos em aberto</h1>
 
 <div class="m-5">
-  <table class="table table-striped">
+  <div>
+    <select (change)="filtroPedidos($event)" class="form-select">
+      <option [value]="statusEnum.EM_ABERTO">EM ABERTO</option>
+      <option [value]="statusEnum.REJEITADO">REJEITADO</option>
+      <option [value]="statusEnum.CANCELADO">CANCELADO</option>
+      <option [value]="statusEnum.AGUARDANDO_PAGAMENTO">
+        AGUARDANDO PAGAMENTO
+      </option>
+      <option [value]="statusEnum.RECOLHIDO">RECOLHIDO</option>
+      <option [value]="statusEnum.PAGO">PAGO</option>
+      <option [value]="statusEnum.FINALIZADO">FINALIZADO</option>
+    </select>
+  </div>
+
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">Id</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Status</th>
+        <th scope="col">Situação</th>
+        <th scope="col">Data Criação</th>
+        <th scope="col">Roupas</th>
+        <th scope="col">Prazo do serviço</th>
+        <th scope="col">Preço total</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      @for(pedido of pedidos; track pedido.id){ @if(!pedido.completed){
+      @for(pedido of filteredPedidos; track pedido.id){
       <tr>
         <td>{{ pedido.id }}</td>
-        <td>{{ pedido.title }}</td>
-        <td>{{ !pedido.completed ? "Aberto" : "Finalizado" }}</td>
+        <td>{{ pedido.situacao }}</td>
+        <td>{{ pedido.dataCriacao }}</td>
+
+        <td>
+          <ul>
+            @for(roupa of pedido.roupas; track roupa.id){
+            <li>
+              {{ roupa.roupa }}, R${{ roupa.preco }},
+              {{ roupa.tempoDeServicoMinutos }} Min
+            </li>
+            }
+          </ul>
+        </td>
+
+        <td>{{ pedido.prazoServico }} Min</td>
+        <td>R$ {{ pedido.precoTotal }}</td>
+
+        <td>
+          @if(pedido.situacao == statusEnum.AGUARDANDO_PAGAMENTO){
+          <button type="button" class="btn btn-success">Pagar</button>
+          } @if(pedido.situacao == statusEnum.EM_ABERTO){
+          <button type="button" class="btn btn-danger">Cancelar</button>
+          }
+        </td>
       </tr>
-      } }
+      }
     </tbody>
   </table>
 </div>

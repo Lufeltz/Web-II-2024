@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PedidosModel } from '../models/pedidoModel';
+import { PedidoModel } from '../models/pedido.model';
 
-const BASE_URL = 'https://jsonplaceholder.typicode.com/todos';
+const BASE_URL = 'http://localhost:3000/';
 @Injectable({
   providedIn: 'root',
 })
 export class PedidosService {
   constructor(private http: HttpClient) {}
 
-  getPedidos(): Observable<PedidosModel[]> {
-    return this.http.get<PedidosModel[]>(BASE_URL);
+  getPedidos(): Observable<PedidoModel[]> {
+    return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos');
   }
 }
