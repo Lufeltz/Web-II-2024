@@ -95,3 +95,12 @@ body {
   #cancelar{
     background-color: red;
   }
+
+  #botoes {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #aprovar {
+    margin-right: 10px;
+  }
