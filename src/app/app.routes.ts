@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login';
-import { CadastroComponent } from './pages/cadastro';
-import { PedidosComponent } from './pages/pedidos';
-import { PedidoComponent } from './pages/pedido';
-import { ConsultaPedidoComponent } from './pages/consulta-pedido';
-import { PageNotFoundComponent } from './pages/page-not-found';
+import { LoginComponent } from './auth/login';
+import { CadastroComponent } from './auth/cadastro';
+import { PedidosComponent } from './cliente-pages/pedidos';
+import { PedidoComponent } from './cliente-pages/pedido';
+import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
+import { PageNotFoundComponent } from './components/page-not-found';
 
 export const routes: Routes = [
     { path: 'login', title: 'Login', component: LoginComponent },
@@ -14,6 +14,6 @@ export const routes: Routes = [
     { path: 'consulta-pedido', title: 'Consultar Pedido', component: ConsultaPedidoComponent },
     
     
-    { path: '', redirectTo: 'Login', pathMatch: 'full'}, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
+    { path: '', redirectTo: 'login', pathMatch: 'full'}, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
     { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404
 ];

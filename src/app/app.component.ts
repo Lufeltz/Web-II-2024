@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './pages/login';
-import { CadastroComponent } from './pages/cadastro';
-import { PedidosComponent } from './pages/pedidos';
-import { PedidoComponent } from './pages/pedido';
-import { ConsultaPedidoComponent } from './pages/consulta-pedido';
-import { PageNotFoundComponent } from './pages/page-not-found';
+import { LoginComponent } from './auth/login';
+import { CadastroComponent } from './auth/cadastro';
+import { PedidosComponent } from './cliente-pages/pedidos';
+import { PedidoComponent } from './cliente-pages/pedido';
+import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
+import { PageNotFoundComponent } from './components/page-not-found';
 
 @Component({
     selector: 'app-root',
