@@ -14,6 +14,6 @@ export const routes: Routes = [
     { path: 'consulta-pedido', title: 'Consultar Pedido', component: ConsultaPedidoComponent },
     
     
-    { path: '', redirectTo: 'login', pathMatch: 'full'}, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
-    { path: '**', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404
+    { path: '', redirectTo: 'Login', pathMatch: 'full'}, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
+    { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404
 ];

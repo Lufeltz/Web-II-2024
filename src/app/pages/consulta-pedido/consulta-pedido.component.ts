@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-consulta-pedido',
@@ -24,11 +24,15 @@ export class ConsultaPedidoComponent {
   descricaoRoupa?: string[];
   precoRoupa?: number[];
   precoTotal?: number;
+  totalItens?: number;
 
   mapPedido: Map<any, any> = new Map();
   maisDeCincoItens: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) {
+    this.totalItens = 0;
+    this.precoTotal = 0;
+  }
 
   consultar() {
     if (this.formConsultaPedido.form.valid) {
@@ -47,9 +51,7 @@ export class ConsultaPedidoComponent {
       this.descricaoRoupa = this.mapPedido.get('descricaoRoupa');
       this.precoRoupa = this.mapPedido.get('precoRoupa');
 
-      this.maisDeCincoItens = this.mapPedido.get('descricaoRoupa').length > 5;
-
-      this.precoTotal = 0;
+      this.totalItens = this.mapPedido.get('descricaoRoupa').length;
       for (let i = 0; i < this.mapPedido.get('precoRoupa').length; i++) {
         this.precoTotal += this.mapPedido.get('precoRoupa')[i];
       }
@@ -58,6 +60,10 @@ export class ConsultaPedidoComponent {
       this.pedidoEncontrado = true;
       //this.pedidoEncontrado = false;
     }
+  }
+
+  voltar() {
+    this.router.navigate(['/']);
   }
 
 }

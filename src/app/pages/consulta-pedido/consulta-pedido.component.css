@@ -116,56 +116,53 @@ body {
 
 .alert-container {
     margin: 0 auto;
-    width: fit-content;
     max-width: 890px;
+    width: fit-content;
 }
 
-.container-table table {
+.container-dados-pedido {
     width: 100%;
-    border-collapse: collapse;
     border: 1px solid #ccc;
-    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-.container-table thead th, .container-table tbody td, .container-table tfoot th {
-    border: 1px solid #ccc;
-    padding: 8px;
-    width: 500px;
-}
-
-.custom-tr-borderless td, .custom-tr-borderless th {
-    border: none;
-}
-
-.custom-card-pedido-number {
+.container-card-pedido-codigo {
+    height: 50px;
+    display: flex;
     align-items: center;
-    border-color: #ccc;
-    border-top: none;
-    border-left: none;
+    justify-content: center;
     color: #32445c;
     font-size: 18px;
     font-weight: 900;
-    margin-bottom: 10px;
-    border-radius: 0px;
     background-color: #dcf2ff;
+    border-color: #ccc;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-.situacao-prazo-pedido-text {
+.container-situacao-prazo-pedido-text {
     color: #32445c;
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
 }
 
-.custom-headers-tfoot th {
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 5px;
+.container-situacao-text, .container-prazo-pedido-text {
+    flex: 1;
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #e2f5fff1;
+.container-situacao-text {
+    padding-left: 8px;
 }
 
 .text-yellow {
@@ -192,13 +189,43 @@ body {
     color: green;
 }
 
-.container-table {
-    max-height: 400px;
-    overflow-y: auto;
+.container-table .table thead tr{
+    position: sticky;
+    top: 0;
+}
+
+.container-table thead th {
+    background-color: #f2f2f2;
+    border-right: 1px solid #ccc;
+}
+
+.alarm-table {
+    max-height: 280px;
+    overflow: auto;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-top: none;
 }
 
 .table-items-body td{
     color: #32445c;
     font-size: 18px;
     font-weight: 500;
+    width: 50.5%;
+}
+
+.container-table tbody td, .container-table tfoot th {
+    border-right: 1px solid #ccc;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #e2f5fff1;
+}
+
+.custom-headers-tfoot th {
+    background-color: #f2f2f2;
+    color: #32445c;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
 }

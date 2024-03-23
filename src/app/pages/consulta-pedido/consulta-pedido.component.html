@@ -4,7 +4,6 @@
             <div class="card shadow-lg custom-card border-0">
                 <div class="card-body">
 
-
                     <form #formConsultaPedido="ngForm" class="container-form d-flex flex-column justify-content-start">
                         <div class="container-consulta-pedido-texto">
                             <h5 class="consulta-pedido-text card-title">Consultar Pedido</h5>
@@ -32,54 +31,57 @@
                         </div>
                     </form>
 
+                    <div *ngIf="pedidoEncontrado === true">
 
-                    <div class="container-table table-responsive" *ngIf="pedidoEncontrado === true">
-                        <table class="table table-striped table-hover">
+                        <div class="container-dados-pedido">
+                            <div class="container-card-pedido-codigo card">
+                                <td id="codigo-pedido-text">N° do pedido: <span id="codigo-pedido-results">{{ codigoPedido }}</span></td>
+                            </div>
+                            <div class="container-situacao-prazo-pedido-text">
+                                <div class="container-situacao-text">
+                                    Situação: 
+                                    <span [ngClass]="{
+                                        'text-yellow': situacaoPedido === 'EM ABERTO',
+                                        'text-red': situacaoPedido === 'REJEITADO' || situacaoPedido === 'CANCELADO',
+                                        'text-gray': situacaoPedido === 'RECOLHIDO',
+                                        'text-blue': situacaoPedido === 'AGUARDANDO PAGAMENTO',
+                                        'text-orange': situacaoPedido === 'PAGO',
+                                        'text-green': situacaoPedido === 'FINALIZADO'}">
+                                        {{ situacaoPedido }}
+                                    </span>
+                                </div>
+                                <div class="container-prazo-pedido-text">
+                                    Prazo: 
+                                    <span id="prazo-pedido-results">{{ prazo }}</span>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="container-table shadow-sm alarm-table table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="custom-headers-tfoot">
+                                        <th scope="col">Itens:</th>
+                                        <th scope="col">Valor:</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-items-body custom-tr-items">
+                                    <tr *ngFor="let item of mapPedido.get('descricaoRoupa'); let i = index">
+                                        <td>{{ mapPedido.get('descricaoRoupa')[i] }}</td>
+                                        <td>{{ mapPedido.get('precoRoupa')[i] | currency:'BRL' }}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="custom-headers-tfoot"> 
+                                        <th>Itens totais: {{ totalItens }}</th>
+                                        <th>Valor total: {{ precoTotal | currency:'BRL' }}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
-                            <thead>
-                                <tr class="custom-tr-borderless">
-                                    <div class="custom-card-pedido-number card">
-                                        <td colspan="2" id="codigo-pedido-text">N° do pedido: <span id="codigo-pedido-results">{{ codigoPedido }}</span></td>
-                                    </div>
-                                </tr> 
-                                <tr class="custom-tr-borderless">
-                                    <td class="situacao-prazo-pedido-text">
-                                        Situação: 
-                                        <span [ngClass]="{
-                                            'text-yellow': situacaoPedido === 'EM ABERTO',
-                                            'text-red': situacaoPedido === 'REJEITADO' || situacaoPedido === 'CANCELADO',
-                                            'text-gray': situacaoPedido === 'RECOLHIDO',
-                                            'text-blue': situacaoPedido === 'AGUARDANDO PAGAMENTO',
-                                            'text-orange': situacaoPedido === 'PAGO',
-                                            'text-green': situacaoPedido === 'FINALIZADO'}">
-                                            {{ situacaoPedido }}
-                                        </span>
-                                    </td>
-                                    <td class="situacao-prazo-pedido-text">Prazo: <span id="prazo-pedido-results">{{ prazo }}</span></td>
-                                </tr>
-                                <tr class="custom-headers-tfoot">
-                                    <th scope="col">Itens:</th>
-                                    <th scope="col">Valor:</th>
-                                </tr>
-                            </thead>
-
-                            <tbody class="table-items-body custom-tr-items">
-                                <tr class="unbreakable" *ngFor="let item of mapPedido.get('descricaoRoupa'); let i = index">
-                                    <td class="unbreakable">{{ mapPedido.get('descricaoRoupa')[i] }}</td>
-                                    <td class="unbreakable">{{ mapPedido.get('precoRoupa')[i] | currency:'BRL' }}</td>
-                                </tr>
-                            </tbody>
-                            
-                            <tfoot class="custom-headers-tfoot">
-                                <tr> 
-                                    <th>Valor total:</th>
-                                    <th>{{ precoTotal | currency:'BRL' }}</th>
-                                </tr>
-                            </tfoot>
-
-                        </table>
                     </div>
-
+                    
                     <div *ngIf="pedidoEncontrado === false" class="alert-container">
                         <div class="alert-container row justify-content-center">
                             <div class="alert alert-danger mt-3 text-center">
@@ -90,10 +92,9 @@
                     </div>
 
                     <div class="container-button d-flex justify-content-end mt-auto">
-                        <button type="button" class="btn btn-primary custom-btn custom-btn-voltar" routerLink="">Voltar</button>
+                        <button type="button" class="btn btn-primary custom-btn custom-btn-voltar" (click)="voltar()">Voltar</button>
                     </div>
                     
-
                 </div>
             </div>
         </div>
