@@ -7,6 +7,7 @@ import { PedidosComponent } from './cliente-pages/pedidos';
 import { PedidoComponent } from './cliente-pages/pedido';
 import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
+import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
 
 @Component({
     selector: 'app-root',
@@ -14,13 +15,23 @@ import { PageNotFoundComponent } from './components/page-not-found';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     imports: [
+      //angular
       CommonModule,
       RouterOutlet,
+
+      //auth
       LoginComponent,
       CadastroComponent,
+
+      //cliente-pages
       PedidosComponent,
       PedidoComponent,
       ConsultaPedidoComponent,
+
+      //funcionario-pages
+      ManutencaoRoupasComponent,
+
+      //components
       PageNotFoundComponent,
     ]
 })

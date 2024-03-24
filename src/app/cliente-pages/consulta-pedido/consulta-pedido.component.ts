@@ -27,7 +27,6 @@ export class ConsultaPedidoComponent {
   totalItens?: number;
 
   mapPedido: Map<any, any> = new Map();
-  maisDeCincoItens: boolean = false;
 
   constructor(private router: Router) {
     this.totalItens = 0;
