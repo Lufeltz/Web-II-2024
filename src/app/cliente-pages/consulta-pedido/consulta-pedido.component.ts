@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { PedidoModel } from '../../models/pedido.model';
+import { PedidosService } from '../../services/pedidos.service';
 
 @Component({
   selector: 'app-consulta-pedido',
@@ -10,54 +12,67 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './consulta-pedido.component.html',
   styleUrl: './consulta-pedido.component.css'
 })
-export class ConsultaPedidoComponent {
+
+export class ConsultaPedidoComponent implements OnInit {
   @ViewChild('formConsultaPedido') formConsultaPedido!: NgForm;
 
-  consultaPedido?: String;
-  consultaPedidoSubmetido?: String;
+  consultaPedido: number = 0;
+  consultaPedidoSubmetido?: number;
   pedidoEncontrado: boolean | null = null;
+  pedido: PedidoModel = new PedidoModel();
+  prazoServico: string = '';
+  totalItens: number = 0;
+  precoTotal: number = 0;
 
-  //PEDIDO MODEL
-  codigoPedido?: string;
-  situacaoPedido?: string;
-  prazo?: String;
-  descricaoRoupa?: string[];
-  precoRoupa?: number[];
-  precoTotal?: number;
-  totalItens?: number;
+  constructor(private router: Router, private pedidosService: PedidosService) {}
 
-  mapPedido: Map<any, any> = new Map();
-
-  constructor(private router: Router) {
-    this.totalItens = 0;
-    this.precoTotal = 0;
+  ngOnInit(): void {
   }
 
   consultar() {
     if (this.formConsultaPedido.form.valid) {
       this.consultaPedidoSubmetido = this.consultaPedido;
+      this.pedidosService.getPedidoByCodigo(this.consultaPedido.toString()).subscribe({
+        next: (pedidos: PedidoModel[]) => {
+          this.pedido = pedidos[0];
+          this.calcularPrazo(this.pedido.dataCriacao.toString(), this.pedido.prazoServico);
+          this.calcularQuantidadeTotal();
+          this.calcularPrecoTotal();
+          this.pedidoEncontrado = true;
+          console.log('Pedido encontrado com sucesso!');
+        },
+        error: (error) => {
+          this.pedidoEncontrado = false;
+          console.log('Erro ao requisitar o pedido: ', error);
+        }
+      });
+    }
+    if (this.pedido.roupas.length === 0) {
+      this.pedidoEncontrado = false;
+    }
+  }
 
-      
-      this.mapPedido.set('codigoPedido', "123456789");
-      this.mapPedido.set('situacaoPedido', "EM ABERTO");
-      this.mapPedido.set('prazo', '20/03/2024');
-      this.mapPedido.set('descricaoRoupa', ['Camisa', 'Calça', 'Vestido', 'Saia', 'Blusa', 'Shorts', 'Camisa', 'Calça', 'Vestido', 'Saia', 'Blusa', 'Shorts', 'Camisa', 'Calça', 'Vestido', 'Saia', 'Blusa', 'Shorts', 'Camisa', 'Calça', 'Vestido', 'Saia', 'Blusa', 'Shorts']);
-      this.mapPedido.set('precoRoupa', [15.30, 10.80, 14, 23.20, 30.10, 7.65, 15.30, 10.80, 14, 23.20, 30.10, 7.65, 15.30, 10.80, 14, 23.20, 30.10, 7.65, 15.30, 10.80, 14, 23.20, 30.10, 7.65]);
+  calcularPrazo(dataCriacao: string, prazoMinutos: number) {
+    const dataCriacaoDate = new Date(dataCriacao);
+    const prazoMilliseconds = prazoMinutos * 60000;
+    let dataConclusaoTimestamp = dataCriacaoDate.getTime() + prazoMilliseconds;
+    let dataConclusaoDate = new Date(dataConclusaoTimestamp);
+    while (dataConclusaoDate.getDay() === 6 || dataConclusaoDate.getDay() === 0) {
+      dataConclusaoTimestamp += 24 * 60 * 60 * 1000;
+      dataConclusaoDate = new Date(dataConclusaoTimestamp);
+    }
+    this.prazoServico = dataConclusaoDate.toLocaleDateString('pt-BR');
+  }
 
-      this.codigoPedido = this.mapPedido.get('codigoPedido');
-      this.situacaoPedido = this.mapPedido.get('situacaoPedido');
-      this.prazo = this.mapPedido.get('prazo');
-      this.descricaoRoupa = this.mapPedido.get('descricaoRoupa');
-      this.precoRoupa = this.mapPedido.get('precoRoupa');
+  calcularQuantidadeTotal() {
+    this.totalItens = this.pedido.roupas.length;
+  }
 
-      this.totalItens = this.mapPedido.get('descricaoRoupa').length;
-      for (let i = 0; i < this.mapPedido.get('precoRoupa').length; i++) {
-        this.precoTotal += this.mapPedido.get('precoRoupa')[i];
-      }
-
-
-      this.pedidoEncontrado = true;
-      //this.pedidoEncontrado = false;
+  calcularPrecoTotal() {
+    this.precoTotal = 0;
+    for (const item of this.pedido.roupas) {
+      const preco = typeof item.preco === 'string' ? parseFloat(item.preco) : item.preco;
+      this.precoTotal += preco;
     }
   }
 

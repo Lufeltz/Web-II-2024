@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PedidoModel } from '../models/pedido.model';
@@ -12,5 +12,10 @@ export class PedidosService {
 
   getPedidos(): Observable<PedidoModel[]> {
     return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos');
+  }
+
+  getPedidoByCodigo(codigoPedido: string): Observable<PedidoModel[]> {
+    const params = new HttpParams().set('codigoPedido', codigoPedido);
+    return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos', { params });
   }
 }

@@ -35,24 +35,24 @@
 
                         <div class="container-dados-pedido">
                             <div class="container-card-pedido-codigo card">
-                                <td id="codigo-pedido-text">N° do pedido: <span id="codigo-pedido-results">{{ codigoPedido }}</span></td>
+                                <td id="codigo-pedido-text">N° do pedido: <span id="codigo-pedido-results">{{ pedido.codigoPedido }}</span></td>
                             </div>
                             <div class="container-situacao-prazo-pedido-text">
                                 <div class="container-situacao-text">
                                     Situação: 
                                     <span [ngClass]="{
-                                        'text-yellow': situacaoPedido === 'EM ABERTO',
-                                        'text-red': situacaoPedido === 'REJEITADO' || situacaoPedido === 'CANCELADO',
-                                        'text-gray': situacaoPedido === 'RECOLHIDO',
-                                        'text-blue': situacaoPedido === 'AGUARDANDO PAGAMENTO',
-                                        'text-orange': situacaoPedido === 'PAGO',
-                                        'text-green': situacaoPedido === 'FINALIZADO'}">
-                                        {{ situacaoPedido }}
+                                        'text-yellow': pedido.situacao === 'EM ABERTO',
+                                        'text-red': pedido.situacao === 'REJEITADO' || pedido.situacao === 'CANCELADO',
+                                        'text-gray': pedido.situacao === 'RECOLHIDO',
+                                        'text-blue': pedido.situacao === 'AGUARDANDO PAGAMENTO',
+                                        'text-orange': pedido.situacao === 'PAGO',
+                                        'text-green': pedido.situacao === 'FINALIZADO'}">
+                                        {{ pedido.situacao }}
                                     </span>
                                 </div>
                                 <div class="container-prazo-pedido-text">
                                     Prazo: 
-                                    <span id="prazo-pedido-results">{{ prazo }}</span>
+                                    <span id="prazo-pedido-results">{{ prazoServico }}</span>
                                 </div>
                             </div>
                         </div>
@@ -66,9 +66,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-items-body custom-tr-items">
-                                    <tr *ngFor="let item of mapPedido.get('descricaoRoupa'); let i = index">
-                                        <td>{{ mapPedido.get('descricaoRoupa')[i] }}</td>
-                                        <td>{{ mapPedido.get('precoRoupa')[i] | currency:'BRL' }}</td>
+                                    <tr *ngFor="let item of pedido.roupas; let i = index">
+                                        <td>{{ item.roupa }}</td>
+                                        <td>{{ item.preco | currency:'BRL' }}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>

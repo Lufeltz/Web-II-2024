@@ -17,7 +17,6 @@ export class ManutencaoRoupasComponent implements OnInit {
   roupa: RoupaModel[] = [];
   orderRoupa: RoupaModel[] = [];
   roupasIsPresent: boolean | any = null;
-  mapRoupas: Map<any, any> = new Map();
 
   constructor(private router: Router, private roupaService: RoupaService) {}
 
@@ -41,14 +40,13 @@ export class ManutencaoRoupasComponent implements OnInit {
       },
       error: (error) => console.log('Erro ao requisitar as roupas: ', error),
     });
-
     if (this.roupa.length === 0) {
       this.roupasIsPresent = false;
     }
   }
 
   formatarTempoParaDiasUteis(tempoDeServicoMinutos: number): number {
-    return Math.ceil(tempoDeServicoMinutos / 480);
+    return Math.ceil(tempoDeServicoMinutos / 1440);
   }
 
   adicionar() {
