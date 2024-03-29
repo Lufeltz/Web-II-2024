@@ -29,13 +29,37 @@
     </thead>
     <tbody>
       @for(pedido of filteredPedidos; track pedido.id){
-      <tr>
+      <tr
+        class="
+            {{
+          pedido.situacao === statusEnum.EM_ABERTO ? 'table-warning' : ''
+        }}
+            {{
+          pedido.situacao === statusEnum.REJEITADO ||
+          pedido.situacao === statusEnum.CANCELADO
+            ? 'table-danger'
+            : ''
+        }}
+            {{
+          pedido.situacao === statusEnum.RECOLHIDO ? 'table-secondary' : ''
+        }}
+            {{
+          pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO
+            ? 'table-info'
+            : ''
+        }}
+            {{ pedido.situacao === statusEnum.PAGO ? 'table-success' : '' }}
+            {{
+          pedido.situacao === statusEnum.FINALIZADO ? 'table-primary' : ''
+        }}
+        "
+      >
         <td>{{ pedido.id }}</td>
         <td>{{ pedido.situacao }}</td>
         <td>{{ pedido.dataCriacao }}</td>
 
         <td>
-          <ul>
+          <ul class="list-group">
             @for(roupa of pedido.roupas; track roupa.id){
             <li>
               {{ roupa.roupa }}, R${{ roupa.preco }},
