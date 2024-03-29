@@ -1,9 +1,8 @@
-  <meta charset="utf-8">
   <div id="container">
     <h1>Pedido On-line</h1>
     <p>
       <label for="roupa">Roupa:</label>
-      <select id="roupa">
+      <select id="roupa" #descrRoupa>
         <option value="Camiseta">Camiseta</option>
         <option value="Calça">Calça</option>
         <option value="Blusa">Blusa</option>
@@ -13,8 +12,8 @@
         <option value="Toalha">Toalha</option>
       </select>
       <label for="qntd" style="margin-bottom: 0px">Quantidade:</label>
-      <input type="number" id="qntd" min="1" max="100" value="1">
-      <button id="addRoupa">Inserir</button>
+      <input type="number" id="qntd" #quantidade min="1" max="100" value="1">
+      <button id="addRoupa" (click)="inserirRoupa(descrRoupa.value, quantidade.value)">Inserir</button>
     </p>
     <table id="tabela">
       <thead>
@@ -24,53 +23,28 @@
           <th id="areaExcluir"></th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr *ngFor="let roupa of tabela">
+          <td>{{ roupa.roupa }}</td>
+          <td>{{ roupa.quantidade }}</td>
+        </tr>
+      </tbody>
     </table>
-    <button id="cadastrar">Cadastrar pedido</button>
-    <div class="result">
+    <button id="cadastrar" (click)="cadastrarPedido()">Cadastrar pedido</button>
+    <div class="result" *ngIf="exibir">
       <p>
         <label for="total">Valor total:</label>
-        <span id="total"></span>
+        <span id="total">{{ total }}</span>
       </p>
       <p>
         <label for="dias">Tempo estimado:</label>
-        <span id="dias"></span>
+        <span id="dias">{{ tempo }}</span>
       </p>
     </div>
     <div class="botoes">
-      <button id="aprovar">Aprovar</button>
+      <button id="aprovar" (click)="aprovarPedido()">Aprovar</button>
       <!--<div class="cancelar"> removido para deixar os botoes lado a lado-->
         <button id="cancelar">Cancelar</button>
       <!--</div>-->
     </div>
   </div>
-  <script>
-    document.getElementById('addRoupa').addEventListener('click', function () {
-      var roupaSelect = document.getElementById('roupa');
-      var quantidadeInput = document.getElementById('qntd');
-      var tabela = document.getElementById('tabela').getElementsByTagName('tbody')[0];
-
-      var roupa = roupaSelect.options[roupaSelect.selectedIndex].value;
-      var quantidade = parseInt(quantidadeInput.value);
-
-      var newRow = tabela.insertRow(tabela.rows.length);
-      var cell1 = newRow.insertCell(0);
-      var cell2 = newRow.insertCell(1);
-      var cell3 = newRow.insertCell(2);
-
-      cell1.innerHTML = roupa;
-      cell2.innerHTML = quantidade;
-      cell3.innerHTML = '<button class="delete-button"></button>';
-
-      cell3.querySelector('.delete-button').addEventListener('click', function() {
-      newRow.remove();
-      });
-    });
-
-    document.getElementById('cadastrar').addEventListener('click', function () {
-      var total = 0.00; // implementar busca dos valores no banco de dados para calcular
-      var dias = 0; // implementar busca dos valores no banco de dados para calcular
-      document.getElementById("total").textContent = ("R$ " + total.toFixed(2));
-      document.getElementById("dias").textContent = (dias + " dias");
-    });
-  </script>
