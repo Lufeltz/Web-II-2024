@@ -16,7 +16,7 @@ import { PedidosService } from '../../services/pedidos.service';
 export class ConsultaPedidoComponent implements OnInit {
   @ViewChild('formConsultaPedido') formConsultaPedido!: NgForm;
 
-  consultaPedido: number = 0;
+  consultaPedido?: number;
   consultaPedidoSubmetido?: number;
   pedidoEncontrado: boolean | null = null;
   pedido: PedidoModel = new PedidoModel();
@@ -30,7 +30,7 @@ export class ConsultaPedidoComponent implements OnInit {
   }
 
   consultar() {
-    if (this.formConsultaPedido.form.valid) {
+    if (this.formConsultaPedido.form.valid && this.consultaPedido) {
       this.consultaPedidoSubmetido = this.consultaPedido;
       this.pedidosService.getPedidoByCodigo(this.consultaPedido.toString()).subscribe({
         next: (pedidos: PedidoModel[]) => {

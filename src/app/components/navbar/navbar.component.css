@@ -13,3 +13,16 @@
 .navbar-nav .nav-link:focus {
     color: #66c0eb;
 }
+
+.nav-link {
+    cursor: pointer;
+}
+
+.custom-dropdown-menu {
+    background-color: #ffffff;
+}
+
+.dropdown-item-hover:hover {
+    background-color: #32445c;
+    color: #ffffff;
+}

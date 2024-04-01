@@ -13,8 +13,8 @@
                         <div class="imput-form">
                             <div id="form-floating-email">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control custom-input" name="email" id="email" placeholder=" " [(ngModel)]="loginEmail" 
-                                    #email="ngModel" required [class.invalid-border]="email.invalid && (email.dirty || email.touched)"/>
+                                    <input type="text" class="form-control custom-input" name="email" id="email" placeholder=" " [(ngModel)]="emailUser" 
+                                    #email="ngModel" required [class.invalid-border]="email.invalid && (email.dirty || email.touched)" (focus)="clearLoginError()"/>
                                     <label for="email">E-mail</label>
                                 </div>
                             </div>
@@ -26,13 +26,16 @@
                         <div class="imput-form">
                             <div id="form-floating-password">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control custom-input" name="password" id="password" placeholder=" " [(ngModel)]="loginPassword" 
-                                    #password="ngModel" required [class.invalid-border]="password.invalid && (password.dirty || password.touched)"/>
+                                    <input type="password" class="form-control custom-input" name="password" id="password" placeholder=" " [(ngModel)]="passwordUser" 
+                                    #password="ngModel" required [class.invalid-border]="password.invalid && (password.dirty || password.touched)" (focus)="clearLoginError()"/>
                                     <label for="password">Senha</label>
                                 </div>
                             </div>
                             <div *ngIf="password.errors && (password.dirty || password.touched)" class="left-align text-danger">
                                 <div [hidden]="!password?.errors?.['required']">Insira sua senha</div>
+                            </div>
+                            <div *ngIf="loginError" class="left-align text-danger">
+                                Credenciais inválidas. Por favor, verifique seu e-mail e senha.
                             </div>
                         </div>
 
