@@ -1,5 +1,5 @@
 <div class="background">
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 80px);">
         <div class="container">
             <div class="card shadow-lg custom-card border-0">
                 <div class="card-body">
@@ -28,7 +28,7 @@
                                 <tbody class="table-items-body custom-tr-items">
                                     <tr *ngFor="let item of orderRoupa; let i = index">
                                         <td style="width: 54%;">{{ item.roupa }}</td>
-                                        <td style="width: 20%;">{{ formatarTempoParaDiasUteis(item.tempoDeServicoMinutos) }}</td>
+                                        <td style="width: 20%;">{{ formatarMinutosParaDiasUteis(item.tempoDeServicoMinutos) }}</td>
                                         <td style="width: 10%;">{{ item.preco | currency:'BRL' }}</td>
                                         <td style="width: 8%; text-align: center; border-right: none;"><button type="button" class="btn-table btn-edit" (click)="editar(item)">Editar</button></td>
                                         <td style="width: 8%; text-align: center;"><button type="button" class="btn-table btn-remove" (click)="excluir(item)">Excluir</button></td>

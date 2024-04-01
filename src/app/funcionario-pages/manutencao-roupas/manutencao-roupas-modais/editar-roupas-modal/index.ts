@@ -1,0 +1,1 @@
+export * from './editar-roupas-modal.component';

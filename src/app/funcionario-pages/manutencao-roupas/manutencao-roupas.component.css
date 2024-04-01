@@ -134,6 +134,10 @@ body {
     width: fit-content;
 }
 
+.body-with-navbar {
+    min-height: calc(100vh - 60px);
+}
+
 .container-table .table thead tr{
     position: sticky;
     top: 0;

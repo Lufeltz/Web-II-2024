@@ -4,6 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { RoupaModel } from '../../models/roupa.model';
 import { RoupaService } from '../../services/roupa.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AdicionarRoupasModalComponent } from './manutencao-roupas-modais/adicionar-roupas-modal';
+import { EditarRoupasModalComponent } from './manutencao-roupas-modais/editar-roupas-modal';
+import { ExcluirRoupasModalComponent } from './manutencao-roupas-modais/excluir-roupas-modal';
+
 
 @Component({
   selector: 'app-manutencao-roupas',
@@ -17,8 +22,10 @@ export class ManutencaoRoupasComponent implements OnInit {
   roupa: RoupaModel[] = [];
   orderRoupa: RoupaModel[] = [];
   roupasIsPresent: boolean | any = null;
+  roupaParaEditar: RoupaModel | undefined;
+  roupaParaExcluir: RoupaModel | undefined;
 
-  constructor(private router: Router, private roupaService: RoupaService) {}
+  constructor(private router: Router, private roupaService: RoupaService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadRoupas();
@@ -45,20 +52,30 @@ export class ManutencaoRoupasComponent implements OnInit {
     }
   }
 
-  formatarTempoParaDiasUteis(tempoDeServicoMinutos: number): number {
+  formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
     return Math.ceil(tempoDeServicoMinutos / 1440);
   }
 
-  adicionar() {
-
+  adicionar(): void {
+    const modalRef = this.modalService.open(AdicionarRoupasModalComponent, { backdrop: 'static', centered: true});
+    modalRef.componentInstance.voltarClicked.subscribe(() => {modalRef.close()});
+    modalRef.componentInstance.adicaoConcluida.subscribe(() => {this.loadRoupas();modalRef.close()});
   }
 
   editar(roupa: RoupaModel) {
-    console.log(roupa);
+    this.roupaParaEditar = roupa;
+    const modalRef = this.modalService.open(EditarRoupasModalComponent, { backdrop: 'static', centered: true});
+    modalRef.componentInstance.roupaParaEditar = this.roupaParaEditar;
+    modalRef.componentInstance.voltarClicked.subscribe(() => {modalRef.close()});
+    modalRef.componentInstance.edicaoConcluida.subscribe(() => {this.loadRoupas();modalRef.close()});
   }
 
   excluir(roupa: RoupaModel) {
-    console.log(roupa);
+    this.roupaParaExcluir = roupa;
+    const modalRef = this.modalService.open(ExcluirRoupasModalComponent, { backdrop: 'static', centered: true});
+    modalRef.componentInstance.roupaParaExcluir = this.roupaParaExcluir;
+    modalRef.componentInstance.voltarClicked.subscribe(() => {modalRef.close()});
+    modalRef.componentInstance.exclusaoConcluida.subscribe(() => {this.loadRoupas();modalRef.close()});
   }
 
   voltar() {

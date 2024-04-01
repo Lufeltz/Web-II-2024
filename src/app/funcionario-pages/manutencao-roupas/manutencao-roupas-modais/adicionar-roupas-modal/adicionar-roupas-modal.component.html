@@ -1,0 +1,71 @@
+<div class="background">
+    <div class="modal-container d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg custom-card border-0">
+            <div class="card-body">
+
+                <div class="container-adicionar-roupa-texto">
+                    <h5 class="adicionar-roupa-text card-title">Adicionar Roupa</h5>
+                    <h6 class="adicionar-roupa-phrase card-subtitle">Adicione aqui uma nova roupa.</h6>
+                </div>
+
+                <form #formAdicionarRoupa="ngForm" class="container-form">
+                    <div class="container-imput">
+                        
+                        <div class="imput-form">
+                            <div id="form-floating-descricao-roupa">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" name="descricao" id="descricao" placeholder=" " [(ngModel)]="descricaoRoupa" 
+                                    #descricao="ngModel" required [class.invalid-border]="descricao.invalid && (descricao.dirty || descricao.touched)" maxlength="100"/>
+                                    <label for="descricao">Descrição da roupa</label>
+                                </div>
+                            </div>
+                            <div *ngIf="descricao.errors && (descricao.dirty || descricao.touched)" class="left-align text-danger">
+                                <div [hidden]="!descricao.errors['required']">Insira a descrição da roupa</div>
+                            </div>
+                        </div>
+
+                        <div class="imput-form">
+                            <div id="form-floating-tempo-roupa">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input" name="prazo" id="prazo" placeholder=" " [(ngModel)]="prazoRoupa" 
+                                    #prazo="ngModel" required pattern="[0-9]*" [class.invalid-border]="prazo.invalid && (prazo.dirty || prazo.touched)" maxlength="2"/>
+                                    <label for="prazo">Prazo (dias úteis)</label>
+                                </div>
+                            </div>
+                            <div *ngIf="prazo.errors && (prazo.dirty || prazo.touched)" class="left-align text-danger">
+                                <div [hidden]="!prazo.errors['required']">Insira o prazo da roupa</div>
+                                <div [hidden]="!prazo.errors['pattern']">Insira somente números (dias úteis)</div>
+                            </div>
+                        </div>
+
+                        <div class="imput-form">
+                            <div id="form-floating-preco-roupa">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control custom-input currency-input" name="preco" id="preco" placeholder=" " [(ngModel)]="precoRoupa" 
+                                    #preco="ngModel" required currencyMask [options]="{ 
+                                        prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left', allowNegative: false, allowZero: false, precision: 2, }" 
+                                        [class.invalid-border]="preco.invalid && (preco.dirty || preco.touched)" maxlength="6" (focus)="clearValueInvalid()"/>
+                                    <label for="preco">Preço</label>
+                                </div>
+                            </div>
+                            <div *ngIf="preco.errors && (preco.dirty || preco.touched)" class="left-align text-danger">
+                                <div [hidden]="!preco.errors['required']">Insira o preço da roupa</div>
+                            </div>
+                            <div *ngIf="valueInvalid" class="left-align text-danger">
+                                Insira um valor acima de 0,00
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="container-button d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary custom-btn btn-voltar mr-2" (click)="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-primary custom-btn btn-adicionar" (click)="adicionar()" [disabled]="!formAdicionarRoupa.form.valid">Adicionar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+  

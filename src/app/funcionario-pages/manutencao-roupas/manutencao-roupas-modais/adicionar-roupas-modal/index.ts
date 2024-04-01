@@ -1,0 +1,1 @@
+export * from './adicionar-roupas-modal.component';
