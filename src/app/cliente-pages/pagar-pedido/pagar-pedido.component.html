@@ -1,0 +1,28 @@
+<div class="background">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="container">
+            <div class="card shadow-lg custom-card border-0">
+                <div class="card-body">
+
+                    <div class="container-dados-pedido">
+                        <div class="container-card-pedido-codigo card">
+                            <p>Número do Pedido: {{ pedido?.codigoPedido }}</p>
+                        </div>
+                        <div class="container-situacao-pedido-text">
+                            <p>Situação do Pedido: {{ pedido?.situacao }}</p>
+                        </div>
+                        <div class="container-data-criacao-pedido-text">
+                            <p>Data de Criação: {{ pedido?.dataCriacao | date: 'dd/MM/yyyy HH:mm' }}</p>
+                        </div>
+                        <div class="container-preco-total-pedido-text">
+                            <p>Preço Total: {{ pedido?.precoTotal | currency:'BRL' }}</p>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" (click)="pagarPedido()">Confirmar Pagamento</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

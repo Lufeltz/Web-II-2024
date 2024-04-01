@@ -1,0 +1,1 @@
+export * from "./pagar-pedido.component"

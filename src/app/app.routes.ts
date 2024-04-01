@@ -6,6 +6,7 @@ import { PedidoComponent } from './cliente-pages/pedido';
 import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
+import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
 
 export const routes: Routes = [
     //default
@@ -19,6 +20,7 @@ export const routes: Routes = [
     { path: 'pedidos', title:'Pedidos', component: PedidosComponent },
     { path: 'pedido', title:'Pedido', component: PedidoComponent },
     { path: 'consulta-pedido', title: 'Consultar Pedido', component: ConsultaPedidoComponent },
+    { path: 'pagar-pedido', title: 'Pagar Pedido', component: PagarPedidoComponent},
 
     //funcionario-pages
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },

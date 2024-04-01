@@ -8,6 +8,7 @@ import { PedidoComponent } from './cliente-pages/pedido';
 import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
+import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
 
 @Component({
     selector: 'app-root',
