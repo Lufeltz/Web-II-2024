@@ -66,15 +66,15 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-items-body custom-tr-items">
-                                    <tr *ngFor="let item of pedido.roupas; let i = index">
+                                    <tr *ngFor="let item of pedido.roupas;">
                                         <td>{{ item.roupa }}</td>
-                                        <td>{{ item.preco | currency:'BRL' }}</td>
+                                        <td>R${{ formatarValor(item.preco) }}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr class="custom-headers-tfoot"> 
                                         <th>Itens totais: {{ totalItens }}</th>
-                                        <th>Valor total: {{ precoTotal | currency:'BRL' }}</th>
+                                        <th>Valor total: R${{ formatarValor(precoTotal) }}</th>
                                     </tr>
                                 </tfoot>
                             </table>

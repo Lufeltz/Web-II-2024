@@ -46,10 +46,11 @@ export class EditarRoupasModalComponent implements OnInit {
       editRoupa.roupa = this.descricaoRoupa;
       editRoupa.tempoDeServicoMinutos = this.formatarDiasUteisParaMinutos(this.prazoRoupa);
       editRoupa.preco = this.precoRoupa;
-      console.log('Roupa editada: ', editRoupa);
+      console.log('Roupa editada com sucesso: ', editRoupa);
 
       this.edicaoConcluida.emit();
     } else {
+      console.log('Erro ao editar roupa!');
       this.valueInvalid = true;
     }
   }
