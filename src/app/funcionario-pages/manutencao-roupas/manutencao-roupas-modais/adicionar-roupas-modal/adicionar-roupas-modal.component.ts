@@ -34,10 +34,11 @@ export class AdicionarRoupasModalComponent {
       newRoupa.roupa = this.descricaoRoupa;
       newRoupa.tempoDeServicoMinutos = this.diasParaMinutos(this.prazoRoupa);
       newRoupa.preco = this.precoRoupa;
-      console.log('Nova roupa: ', newRoupa);
+      console.log('Roupa criada com sucesso: ', newRoupa);
 
       this.adicaoConcluida.emit();
     } else {
+      console.log('Erro ao criar roupa!');
       this.valueInvalid = true;
     }
   }

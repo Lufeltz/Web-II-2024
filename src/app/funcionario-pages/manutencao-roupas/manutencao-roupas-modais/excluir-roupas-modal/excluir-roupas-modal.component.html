@@ -21,15 +21,15 @@
                             </tr>
                             <tr>
                                 <td class="tbody-header">Preço:</td>
-                                <td class="tbody-result">{{ precoRoupa | currency:'BRL' }}</td>
+                                <td class="tbody-result">R${{ formatarValor(precoRoupa) }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="container-button d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary custom-btn btn-excluir" (click)="excluir()">Excluir</button>
                     <button type="button" class="btn btn-primary custom-btn btn-cancelar mr-2" (click)="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-primary custom-btn btn-excluir" (click)="excluir()">Excluir</button>
                 </div>
 
             </div>

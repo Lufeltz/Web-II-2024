@@ -39,7 +39,7 @@ export class ConsultaPedidoComponent implements OnInit {
           this.calcularQuantidadeTotal();
           this.calcularPrecoTotal();
           this.pedidoEncontrado = true;
-          console.log('Pedido encontrado com sucesso!');
+          console.log('Pedido encontrado com sucesso: ', this.pedido);
         },
         error: (error) => {
           this.pedidoEncontrado = false;
@@ -74,6 +74,10 @@ export class ConsultaPedidoComponent implements OnInit {
       const preco = typeof item.preco === 'string' ? parseFloat(item.preco) : item.preco;
       this.precoTotal += preco;
     }
+  }
+
+  formatarValor(valor: number): string {
+    return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   }
 
   voltar() {

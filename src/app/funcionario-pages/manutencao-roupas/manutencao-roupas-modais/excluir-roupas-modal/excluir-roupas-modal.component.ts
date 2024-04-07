@@ -18,9 +18,7 @@ export class ExcluirRoupasModalComponent {
   prazoRoupa?: number;
   precoRoupa: number = 0;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     if (this.roupaParaExcluir) {
@@ -34,12 +32,17 @@ export class ExcluirRoupasModalComponent {
     return Math.ceil(tempoDeServicoMinutos / 1440);
   }
 
+  formatarValor(valor: number): string {
+    return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+  }
+
   cancelar(): void {
     this.voltarClicked.emit();
   }
 
   excluir(): void {
-    console.log('Roupa excluida: ', this.roupaParaExcluir);
+    console.log('Roupa excluida com sucesso: ', this.roupaParaExcluir);
     this.exclusaoConcluida.emit();
   }
+  
 }

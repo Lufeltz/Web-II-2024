@@ -41,19 +41,22 @@ export class ManutencaoRoupasComponent implements OnInit {
             const descricaoB = b.roupa.toLowerCase();
             return descricaoA.localeCompare(descricaoB);
           });
-          this.roupasIsPresent = true;
-        console.log('Roupas obtidas com sucesso!');
-        console.log(roupa);
+          if (this.roupa.length === 0) {
+            this.roupasIsPresent = false;
+          } else {
+            this.roupasIsPresent = true;
+          }
       },
       error: (error) => console.log('Erro ao requisitar as roupas: ', error),
     });
-    if (this.roupa.length === 0) {
-      this.roupasIsPresent = false;
-    }
   }
 
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
     return Math.ceil(tempoDeServicoMinutos / 1440);
+  }
+
+  formatarValor(valor: number): string {
+    return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   }
 
   adicionar(): void {
