@@ -20,7 +20,6 @@ export class PedidoComponent {
     private listaRoupas : RoupaQuantidade[] = [];
     private valorTotal : number = 0.0;
     private prazo: Date = new Date();
-    private cont : number = 0;
     private mostrarValores: boolean = false;
 
     constructor(private roupaService: RoupaService){
@@ -32,8 +31,7 @@ export class PedidoComponent {
       let novoItem: RoupaQuantidade = new RoupaQuantidade();
       novoItem.roupa = roupa;
       novoItem.quantidade = nQntd;
-      this.listaRoupas[this.cont] = novoItem;
-      this.cont++;
+      this.listaRoupas.push(novoItem);
       //busca na base de dados dos valores (A SER IMPLEMENTADO)
       /*
       this.roupaService.getRoupas().subscribe((roupas: RoupaModel[]) => {
@@ -47,6 +45,11 @@ export class PedidoComponent {
         }        
       });  
       */            
+    }
+
+    removerRoupa(item : RoupaQuantidade): void{
+      let i = this.listaRoupas.indexOf(item);
+      this.listaRoupas.splice(i, 1);
     }
 
     cadastrarPedido(){

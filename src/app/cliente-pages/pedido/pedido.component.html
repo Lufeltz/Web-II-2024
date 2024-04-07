@@ -1,50 +1,56 @@
-  <div id="container">
+  <div class="container">
     <h1>Pedido On-line</h1>
-    <p>
-      <label for="roupa">Roupa:</label>
-      <select id="roupa" #descrRoupa>
-        <option value="Camiseta">Camiseta</option>
-        <option value="Calça">Calça</option>
-        <option value="Blusa">Blusa</option>
-        <option value="Bermuda">Bermuda</option>
-        <option value="Vestido">Vestido</option>
-        <option value="Meia">Meia</option>
-        <option value="Toalha">Toalha</option>
-      </select>
-      <label for="qntd" style="margin-bottom: 0px">Quantidade:</label>
-      <input type="number" id="qntd" #quantidade min="1" max="100" value="1">
-      <button id="addRoupa" (click)="inserirRoupa(descrRoupa.value, quantidade.value)">Inserir</button>
-    </p>
-    <table id="tabela">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="roupa">Roupa:</label>
+          <select id="roupa" #descrRoupa class="form-control">
+            <option value="Camiseta">Camiseta</option>
+            <option value="Calça">Calça</option>
+            <option value="Blusa">Blusa</option>
+            <option value="Bermuda">Bermuda</option>
+            <option value="Vestido">Vestido</option>
+            <option value="Meia">Meia</option>
+            <option value="Toalha">Toalha</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="qntd">Quantidade:</label>
+          <input type="number" class="form-control" id="qntd" #quantidade min="1" max="100" value="1">
+        </div>
+        <div class="col-md-4">
+          <button id="addRoupa" class="btn btn-primary mt-4" (click)="inserirRoupa(descrRoupa.value, quantidade.value)">Inserir</button>
+        </div>
+      </div>
+    <table class="table max-width">
       <thead>
         <tr>
-          <th>Peça</th>
-          <th class="colunaQntd">Quantidade</th>
-          <th id="areaExcluir"></th>
+          <th class="col-8">Peça</th>
+          <th class="col-2">Quantidade</th>
+          <th class="col-2">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let roupa of tabela">
           <td>{{ roupa.roupa }}</td>
           <td>{{ roupa.quantidade }}</td>
+          <td><button class="btn btn-danger btn-circle" (click)="removerRoupa(roupa)">X</button></td>
         </tr>
       </tbody>
     </table>
-    <button id="cadastrar" (click)="cadastrarPedido()">Cadastrar pedido</button>
+    <button class="btn btn-primary" (click)="cadastrarPedido()">Cadastrar pedido</button>
     <div class="result" *ngIf="exibir">
-      <p>
-        <label for="total">Valor total:</label>
-        <span id="total">{{ total }}</span>
+      <p class="d-flex align-items-center">
+        <label for="total">Valor total:&nbsp;</label>
+        <span id="total">R$ {{ total }}</span>
       </p>
-      <p>
-        <label for="dias">Tempo estimado:</label>
-        <span id="dias">{{ tempo }}</span>
+      <p class="d-flex align-items-center">
+        <label for="dias">Prazo estimado:&nbsp;</label>
+        <span id="dias"> {{ tempo | date: "dd/MM/yyyy HH:mm"}}</span>
       </p>
     </div>
-    <div class="botoes">
-      <button id="aprovar" (click)="aprovarPedido()">Aprovar</button>
-      <!--<div class="cancelar"> removido para deixar os botoes lado a lado-->
-        <button id="cancelar">Cancelar</button>
-      <!--</div>-->
+    <div class="d-flex align-items-center">
+      <button class="btn btn-success mt-2 mr-md-2" id="aprovar" (click)="aprovarPedido()">Aprovar</button>
+      <div class="cancelar">
+        <button class= "btn mt-2" id="cancelar">Cancelar</button>
     </div>
   </div>

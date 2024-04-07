@@ -5,7 +5,7 @@ body {
     background-color: #f0f0f0;
   }
 
-  #container {
+  .container {
     max-width: 600px;
     margin: 20px auto;
     background-color: #fff;
@@ -22,56 +22,12 @@ body {
   label {
     font-weight: bold;
     display: block;
-    margin-bottom: 5px;
-  }
-
-  select {
-    padding: 8px;
-    margin-bottom: 10px;
-    width: 200px;
   }
 
   input {
     padding: 8px;
     margin-bottom: 10px;
     width: 100px;
-  }
-
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 10px;
-  }
-
-  .delete-button {
-    /*background-image: url("C:/Users/Rodri/OneDrive/Imagens/icone-excluir.png");*/
-    /* retirei esse elemento de background image pois tava dando erro por vir de uma pasta do onedrive pessoal*/
-    background-size: 20px;
-    background-color: white;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-  }
-  
-  #areaExcluir {
-    width: 20px;
-  }
-
-  button:hover {
-    background-color: #0056b3;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
   }
 
   th, td {
@@ -84,10 +40,6 @@ body {
     background-color: #f2f2f2;
   }
 
-  .colunaQntd {
-    width: 100px;
-  }
-
   .result {
     margin-top: 20px;
   }
@@ -96,11 +48,6 @@ body {
     background-color: red;
   }
 
-  #botoes {
-    display: flex;
-    justify-content: space-between;
-  }
-
   #aprovar {
-    margin-right: 10px;
+    margin-right: .5rem;
   }
