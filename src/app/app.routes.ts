@@ -7,6 +7,7 @@ import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
 import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
+import { HomepageComponent } from './funcionario-pages/homepage/homepage.component';
 
 export const routes: Routes = [
     //default
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'pagar-pedido', title: 'Pagar Pedido', component: PagarPedidoComponent},
 
     //funcionario-pages
+    { path: 'homepage', title: 'Homepage', component: HomepageComponent },
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
     
     //components
