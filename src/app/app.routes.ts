@@ -7,6 +7,7 @@ import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
 import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
+import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
 
 export const routes: Routes = [
     //default
@@ -24,6 +25,7 @@ export const routes: Routes = [
 
     //funcionario-pages
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
+    { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
     
     //components
     { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404

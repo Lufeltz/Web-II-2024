@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './auth/login';
 import { CadastroComponent } from './auth/cadastro';
 import { PedidosComponent } from './cliente-pages/pedidos';
@@ -8,7 +8,8 @@ import { PedidoComponent } from './cliente-pages/pedido';
 import { ConsultaPedidoComponent } from './cliente-pages/consulta-pedido';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
-import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
+import { NavbarComponent } from './components/navbar';
+import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
 
 @Component({
     selector: 'app-root',
@@ -31,12 +32,26 @@ import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
 
       //funcionario-pages
       ManutencaoRoupasComponent,
+      RelatorioReceitasComponent,
 
       //components
       PageNotFoundComponent,
+      NavbarComponent,
     ]
 })
 
 export class AppComponent {
   title = 'LOL';
+  showNavbar: boolean = true;
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showNavbar = !['/login', '/cadastro'].includes(event.url);
+      }
+    });
+  }
+
 }
