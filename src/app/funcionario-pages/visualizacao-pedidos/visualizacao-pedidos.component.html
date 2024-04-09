@@ -21,7 +21,7 @@
             
         </div>          
     </div>
-
+    <br>
     <table class="table">
         <tr>
             <th scope="col">Id</th>
@@ -29,6 +29,7 @@
             <th scope="col">Roupas</th>
             <th scope="col">Prazo do serviço</th>
             <th scope="col">Situação</th>
+            <th scope="col">Ação</th>
         </tr>
         <tr *ngFor="let pedido of orderedPedidos">
             <td>{{pedido.id}}</td>
@@ -36,6 +37,15 @@
             <td>{{pedido.roupas}}</td>
             <td>{{pedido.prazoServico}}</td>
             <td [ngClass]="getStatusColor(pedido.situacao)">{{pedido.situacao}}</td>
+            <td>
+                <button *ngIf="pedido.situacao === 'EM ABERTO'" class="btn btn-success" (click)="recolherPedido(pedido)">Recolher</button>
+            </td>
+            <td>
+                <button *ngIf="pedido.situacao === 'RECOLHIDO'" class="btn btn-success">Confirmar</button>
+            </td>
+            <td>
+                <button *ngIf="pedido.situacao === 'PAGO'" class="btn btn-success">Finalizar</button>
+            </td>
         </tr>
     </table>
 </div>

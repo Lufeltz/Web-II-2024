@@ -4,6 +4,7 @@ import { Status } from '../../models/status.enum';
 import { PedidosService } from '../../services/pedidos.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-visualizacao-pedidos',
@@ -21,11 +22,14 @@ export class VisualizacaoPedidosComponent implements OnInit {
   endDate?: Date;
   opcaoSelecionada: string = '';
 
-  constructor(private pedidoService: PedidosService) {}
+  constructor(
+    private pedidoService: PedidosService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.getPedidos();
   }
+
 
   getPedidos() {
     this.pedidoService.getPedidos().subscribe({
@@ -101,5 +105,11 @@ export class VisualizacaoPedidosComponent implements OnInit {
         return 'roxo';
     }
   }
+
+  recolherPedido(pedido: PedidoModel) {
+    pedido.situacao = Status.RECOLHIDO;
+    this.router.navigate(['/visualizacao-pedidos']);
+  }
+
 }
 

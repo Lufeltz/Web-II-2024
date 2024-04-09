@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { PedidoModel } from '../../models/pedido.model';
 import { Status } from '../../models/status.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -15,9 +16,13 @@ export class HomepageComponent implements OnInit {
     private pedidosEmAberto : PedidoModel[] = [];
     private listaVazia : boolean = false;
 
-    constructor(private pedidosService : PedidosService){
+    constructor(
+      private pedidosService : PedidosService,
+      private router: Router
+    ){
 
     }
+    
 
     ngOnInit(): void {
       this.listaPedidosEmAberto();
@@ -36,6 +41,11 @@ export class HomepageComponent implements OnInit {
           this.listaVazia = true;
         }
       });
+    }
+
+    recolherPedido(pedido: PedidoModel) {
+      pedido.situacao = Status.RECOLHIDO;
+      this.router.navigate(['/visualizacao-pedidos']);
     }
 
     get listaPedidos() : PedidoModel[] {

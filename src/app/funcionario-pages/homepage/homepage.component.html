@@ -25,7 +25,7 @@
                     <td>{{ pedido.prazoServico }} min</td>
                     <td>R$ {{ pedido.precoTotal }}</td>
                     <td>
-                        <button class="btn btn-success">Recolher</button>
+                        <button *ngIf="pedido.situacao === 'EM ABERTO'" class="btn btn-success" (click)="recolherPedido(pedido)">Recolher</button>
                     </td>
                     </tr>
                 </tbody>
