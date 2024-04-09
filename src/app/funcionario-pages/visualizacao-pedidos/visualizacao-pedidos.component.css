@@ -1,0 +1,60 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 8px;
+    text-align: center;
+}
+
+.form-select {
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.amarelo {
+background-color: yellow;
+}
+
+.vermelho {
+background-color: red;
+}
+
+.cinza {
+background-color: gray;
+}
+
+.azul {
+background-color: blue;
+}
+
+.laranja {
+    background-color: orange;
+}
+
+.verde {
+    background-color: green;
+}
+
+.roxo {
+    background-color: purple;
+}
+
+.dtInput {
+    margin: 5px;
+    width: 35%;
+    border-radius: 4px;
+}
+
+.container-button {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .container-button .btn {
+    margin-left: 10px; 
+  }

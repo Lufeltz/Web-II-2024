@@ -9,6 +9,7 @@ import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas
 import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
 import { HomepageComponent } from './funcionario-pages/homepage/homepage.component';
 import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
+import { VisualizacaoPedidosComponent } from './funcionario-pages/visualizacao-pedidos/visualizacao-pedidos.component';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
     { path: 'homepage', title: 'Homepage', component: HomepageComponent },
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
     { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
+    { path: 'visualizacao-pedidos', title: 'Visualização de pedidos', component: VisualizacaoPedidosComponent },
     
     //components
     { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404

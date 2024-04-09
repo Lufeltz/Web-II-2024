@@ -1,0 +1,42 @@
+<br>
+<h1 class="text-center">Visualização de Pedidos</h1>
+
+<div class="m-5">
+    <div>
+        <div>
+            <select #selectElement (change)="filtroPedidos(selectElement.value)" class="form-select">
+                <option value="TODOS">TODOS</option>
+                <option value="PEDIDOS DE HOJE">PEDIDOS DE HOJE</option>
+                <option value="PEDIDOS POR DATA">PEDIDOS POR DATA</option>
+            </select>
+        </div>
+        <div *ngIf="opcaoSelecionada === 'PEDIDOS POR DATA'">
+            <label for="startDate">Data inicial:</label>
+            <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" class="dtInput">
+            <label for="endDate">Data final:</label>
+            <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" class="dtInput">
+            <div class="container-button">
+                <button type="button" class="btn btn-primary custom-btn" (click)="filtroPedidos(opcaoSelecionada)">Filtrar</button>
+            </div>
+            
+        </div>          
+    </div>
+
+    <table class="table">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Data Criação</th>
+            <th scope="col">Roupas</th>
+            <th scope="col">Prazo do serviço</th>
+            <th scope="col">Situação</th>
+        </tr>
+        <tr *ngFor="let pedido of orderedPedidos">
+            <td>{{pedido.id}}</td>
+            <td>{{formatDate(pedido.dataCriacao)}}</td>
+            <td>{{pedido.roupas}}</td>
+            <td>{{pedido.prazoServico}}</td>
+            <td [ngClass]="getStatusColor(pedido.situacao)">{{pedido.situacao}}</td>
+        </tr>
+    </table>
+</div>
+
