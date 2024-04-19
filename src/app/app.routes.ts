@@ -10,6 +10,7 @@ import { PagarPedidoComponent } from './cliente-pages/pagar-pedido';
 import { HomepageComponent } from './funcionario-pages/homepage/homepage.component';
 import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
 import { VisualizacaoPedidosComponent } from './funcionario-pages/visualizacao-pedidos/visualizacao-pedidos.component';
+import { ManutencaoFuncionariosComponent } from './funcionario-pages/manutencao-funcionarios';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
     //funcionario-pages
     { path: 'homepage', title: 'Homepage', component: HomepageComponent },
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
+    { path: 'manutencao-funcionario', title: 'Funcionários Cadastrados', component: ManutencaoFuncionariosComponent },
     { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
     { path: 'visualizacao-pedidos', title: 'Visualização de pedidos', component: VisualizacaoPedidosComponent },
     

@@ -1,1 +1,38 @@
-<p>manutencao-funcionarios works!</p>
+<div class="container">
+  <h2 class="card-title text-center mt-3">Gerenciamento de funcionários</h2>
+</div>
+
+<h3 class="text-center m-5">Funcionários atuais</h3>
+<div class="card-body text-center">
+  <button type="submit" class="btn btn-primary mb-3" (click)="adicionar()">
+    Adicionar
+  </button>
+</div>
+
+<div class="card mb-3 d-flex justify-content-center">
+  <table class="table">
+    <thead>
+      <tr class="text-center">
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Data de nascimento</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      @for (func of funcionarios; track $index) {
+      <tr>
+        <td>{{ func.nome }}</td>
+        <td>{{ func.email }}</td>
+        <td>{{ func.dataNascimento}}</td>
+        <td>
+          <button type="button" class="btn btn-warning" (click)="adicionar()">
+            Editar
+          </button>
+          <button type="button" class="btn btn-danger">Remover</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
