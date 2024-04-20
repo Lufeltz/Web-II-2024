@@ -1,5 +1,5 @@
 export class FuncionarioModel {
-  id?: string = '';
+  id?: number = 0;
   email: string = '';
   nome: string = '';
   dataNascimento: string = '';

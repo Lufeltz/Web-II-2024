@@ -36,18 +36,18 @@
     }
 }
 
-.container-adicionar-funcionario-texto {
+.container-editar-funcionario-texto {
     margin-bottom: 20px;
 }
 
-.adicionar-funcionario-text {
+.editar-funcionario-text {
     text-align: left;
     font-size: 30px;
     font-weight: 300;
     color: #32445c;
 }
 
-.adicionar-funcionario-phrase {
+.editar-funcionario-phrase {
     text-align: left;
     font-size: 16px;
     color: #32445c;
@@ -119,19 +119,19 @@
     background-color: #66c0eb;
 }
 
-.btn-adicionar {
+.btn-salvar {
     background-color: green;
 }
 
-.btn-adicionar:hover {
+.btn-salvar:hover {
     background-color: rgb(0, 100, 0);
 }
 
-.btn-adicionar:active {
+.btn-salvar:active {
     background-color: rgb(0, 182, 0);
 }
 
-.btn-adicionar:disabled {
+.btn-salvar:disabled {
     background-color: rgba(0, 160, 0, 0.637);
 }
 

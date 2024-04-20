@@ -1,61 +1,67 @@
-import { Component } from '@angular/core';
-import { NgbDateStruct, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { NgxCurrencyDirective } from 'ngx-currency';
 import { FuncionarioModel } from '../../../../models/funcionario.model';
-import { FuncionarioService } from '../../../../services/funcionario.service';
 
 @Component({
   selector: 'app-adicionar-funcionarios-modal',
   standalone: true,
-  imports: [NgbDatepickerModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    NgxCurrencyDirective,
+  ],
   templateUrl: './adicionar-funcionarios-modal.component.html',
   styleUrl: './adicionar-funcionarios-modal.component.css',
 })
 export class AdicionarFuncionariosModalComponent {
-  model!: NgbDateStruct;
-  funcionario: FuncionarioModel = new FuncionarioModel();
-  novoFuncionario: FuncionarioModel = new FuncionarioModel();
+  @Output() voltarClicked = new EventEmitter<void>();
+  @Output() adicaoConcluida = new EventEmitter<void>();
+  @ViewChild('formAdicionarFuncionario') formAdicionarFuncionario!: NgForm;
 
-  constructor(private _service: FuncionarioService) {}
+  nomeFuncionario: string = '';
+  emailFuncionario: string = '';
+  dataNascimentoFuncionario: string = '';
+  senhaFuncionario: string = '';
 
-  adicionarFuncionario() {
-    this._service.createFuncionario(this.novoFuncionarioSemID()).subscribe({
-      next: (novoFuncionario: FuncionarioModel) => {
-        console.log(novoFuncionario);
-      },
-    });
+  valueInvalid: boolean = false;
+
+  cancelar(): void {
+    this.voltarClicked.emit();
   }
 
-  novoFuncionarioSemID(): FuncionarioModel {
-    const novoFuncionarioSemID: FuncionarioModel = {
-      nome: this.novoFuncionario.nome,
-      email: this.novoFuncionario.email,
-      dataNascimento: this.formatarData(this.novoFuncionario.dataNascimento),
-      senha: this.novoFuncionario.senha,
-    };
+  adicionar(): void {
+    if (
+      this.formAdicionarFuncionario.form.valid &&
+      this.nomeFuncionario &&
+      this.emailFuncionario &&
+      this.dataNascimentoFuncionario &&
+      this.senhaFuncionario
+    ) {
+      const newFuncionario: FuncionarioModel = new FuncionarioModel();
+      newFuncionario.id = 0;
+      newFuncionario.nome = this.nomeFuncionario;
+      newFuncionario.email = this.emailFuncionario;
+      newFuncionario.dataNascimento = this.dataNascimentoFuncionario;
+      newFuncionario.senha = this.senhaFuncionario;
 
-    return novoFuncionarioSemID;
+      console.log('Funcionário criado com sucesso: ', newFuncionario);
+
+      this.adicaoConcluida.emit();
+    } else {
+      console.log('Erro ao criar funcionário!');
+      this.valueInvalid = true;
+    }
   }
 
-  formatarData(dataNascimento: any): string {
-    const dia = this.adicionarZero(dataNascimento.day);
-    const mes = this.adicionarZero(dataNascimento.month);
-    const ano = dataNascimento.year;
-
-    return `${dia}-${mes}-${ano}`;
+  diasParaMinutos(dias: number): number {
+    const minutosPorDia = 24 * 60;
+    return dias * minutosPorDia;
   }
 
-  adicionarZero(numero: number): string {
-    return numero < 10 ? `0${numero}` : `${numero}`;
+  clearValueInvalid(): void {
+    this.valueInvalid = false;
   }
-
-  listarFuncionarios() {
-    this._service.getFuncionarios().subscribe({
-      next: (funcionarios: FuncionarioModel[]) => {
-        console.log('Funcionários: ', funcionarios);
-      },
-    });
-  }
-
-  // alterarFuncionario()
 }

@@ -36,60 +36,45 @@
     }
 }
 
-.container-adicionar-funcionario-texto {
+.container-editar-funcionario-texto {
     margin-bottom: 20px;
 }
 
-.adicionar-funcionario-text {
+.editar-funcionario-text {
     text-align: left;
     font-size: 30px;
     font-weight: 300;
     color: #32445c;
 }
 
-.adicionar-funcionario-phrase {
+.editar-funcionario-phrase {
     text-align: left;
     font-size: 16px;
     color: #32445c;
 }
 
 
-
-#form-floating-tempo-funcionario {
-    margin-top: 10px;
-}
-
-#form-floating-preco-funcionario {
-    margin-top: 10px;
-}
-
-.form-floating input:focus ~ label,
-.form-floating input:placeholder-shown ~ label {
+.table-items-body td{
     color: #32445c;
+    font-size: 18px;
 }
 
-.form-floating input:focus ~ label {
-    color: #6b6771;
+.tbody-header {
+    font-weight: 600;
 }
 
-.form-floating label {
-    margin-top: -2px;
+.tbody-result {
+    font-weight: 500;
 }
 
-.custom-input:focus {
-    border-color: #6fb5df;
-    box-shadow: 0 0 0 0.2rem #a5d7f3;
+.container-table tbody td {
+    border: 1px solid #ccc;
 }
 
-.custom-input:hover {
-    outline: none;
-    border-color: #6fb5df;
-    cursor: text;
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #e2f5fff1;
 }
 
-.invalid-border {
-    border-color: red;
-}
 
 .container-button{
     margin-top: 20px;
@@ -107,34 +92,30 @@
     width: 120px;
 }
 
-.btn-voltar {
+.btn-cancelar {
     background-color: #3dabe1;
 }
 
-.btn-voltar:hover {
+.btn-cancelar:hover {
     background-color: #1c8bc1;
 }
 
-.btn-voltar:active {
+.btn-cancelar:active {
     background-color: #66c0eb;
 }
 
-.btn-adicionar {
-    background-color: green;
+.btn-excluir {
+    background-color: red;
 }
 
-.btn-adicionar:hover {
-    background-color: rgb(0, 100, 0);
+.btn-excluir:hover {
+    background-color: rgb(211, 0, 0);
 }
 
-.btn-adicionar:active {
-    background-color: rgb(0, 182, 0);
+.btn-excluir:active {
+    background-color: rgb(255, 88, 88);
 }
 
-.btn-adicionar:disabled {
-    background-color: rgba(0, 160, 0, 0.637);
-}
-
-.btn-voltar {
+.btn-cancelar {
     margin-right: 20px;
 }
