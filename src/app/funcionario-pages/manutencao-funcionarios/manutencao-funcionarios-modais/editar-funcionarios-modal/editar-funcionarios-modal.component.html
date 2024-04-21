@@ -106,6 +106,36 @@
               </div>
             </div>
           </div>
+
+
+          <div class="imput-form">
+            <div id="form-floating-tempo-funcionario">
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control custom-input"
+                  name="senha"
+                  id="senha"
+                  placeholder=" "
+                  [(ngModel)]="senhaFuncionario"
+                  #senha="ngModel"
+                  required
+                  [class.invalid-border]="
+                    senha.invalid && (senha.dirty || senha.touched)
+                  "
+                />
+                <label for="senha">Senha</label>
+              </div>
+            </div>
+            <div
+              *ngIf="senha.errors && (senha.dirty || senha.touched)"
+              class="left-align text-danger"
+            >
+              <div [hidden]="!senha.errors['required']">
+                Insira o senha do funcionário
+              </div>
+            </div>
+          </div>
         </form>
 
         <div class="container-button d-flex justify-content-end">

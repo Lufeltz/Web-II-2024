@@ -11,6 +11,7 @@ import { HomepageComponent } from './funcionario-pages/homepage/homepage.compone
 import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
 import { VisualizacaoPedidosComponent } from './funcionario-pages/visualizacao-pedidos/visualizacao-pedidos.component';
 import { ManutencaoFuncionariosComponent } from './funcionario-pages/manutencao-funcionarios';
+import { RelatorioClientesComponent } from './funcionario-pages/relatorio-clientes/relatorio-clientes.component';
 
 
 export const routes: Routes = [
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
     { path: 'manutencao-funcionario', title: 'Funcionários Cadastrados', component: ManutencaoFuncionariosComponent },
     { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
+    { path: 'relatorio-clientes', title: 'Clientes', component: RelatorioClientesComponent },
     { path: 'visualizacao-pedidos', title: 'Visualização de pedidos', component: VisualizacaoPedidosComponent },
     
     //components

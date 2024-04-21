@@ -1,0 +1,195 @@
+<div class="background">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <div class="container-relatorio-clientes-texto">
+            <h5 class="relatorio-clientes-text card-title">
+              Relatório de Clientes
+            </h5>
+            <h6 class="relatorio-clientes-phrase card-subtitle">
+              Visualize e gere um PDF do relatório dos clientes por período.
+            </h6>
+          </div>
+
+          <form [formGroup]="formRelatorioClientes">
+            <div class="container-input-data">
+              <label class="data-label data-inicial-text">Data Inicial:</label>
+              <input
+                type="date"
+                class="input-data input-data-inicial"
+                formControlName="dataInicial"
+                required
+                [max]="currentDate"
+              />
+
+              <label class="data-label data-final-text">Data Final:</label>
+              <input
+                type="date"
+                class="input-data input-data-final"
+                formControlName="dataFinal"
+                required
+                [max]="currentDate"
+              />
+
+              <button
+                type="button"
+                class="btn btn-primary custom-btn btn-relatorio"
+                (click)="gerarRelatorio()"
+                [disabled]="formRelatorioClientes.invalid"
+              >
+                Gerar Relatório
+              </button>
+            </div>
+          </form>
+
+          <div class="container-text-danger">
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataInicial')?.invalid &&
+                formRelatorioClientes.get('dataInicial')?.touched &&
+                !(
+                  formRelatorioClientes.get('dataFinal')?.invalid &&
+                  formRelatorioClientes.get('dataFinal')?.touched
+                ) &&
+                !formRelatorioClientes.get('dataInicial')?.hasError('dataMax')
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data inicial
+            </div>
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataFinal')?.invalid &&
+                formRelatorioClientes.get('dataFinal')?.touched &&
+                !(
+                  formRelatorioClientes.get('dataInicial')?.invalid &&
+                  formRelatorioClientes.get('dataInicial')?.touched
+                ) &&
+                !formRelatorioClientes.get('dataFinal')?.hasError('dataMax')
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data final
+            </div>
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataFinal')?.invalid &&
+                formRelatorioClientes.get('dataFinal')?.touched &&
+                formRelatorioClientes.get('dataInicial')?.invalid &&
+                formRelatorioClientes.get('dataInicial')?.touched &&
+                !(
+                  formRelatorioClientes
+                    .get('dataInicial')
+                    ?.hasError('dataMax') ||
+                  formRelatorioClientes.get('dataFinal')?.hasError('dataMax')
+                )
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data inicial e final
+            </div>
+
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataInicial')?.hasError('dataMax') &&
+                !formRelatorioClientes.get('dataFinal')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data inicial não pode ser posterior à data atual
+            </div>
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataFinal')?.hasError('dataMax') &&
+                !formRelatorioClientes.get('dataInicial')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data final não pode ser posterior à data atual
+            </div>
+            <div
+              *ngIf="
+                formRelatorioClientes.get('dataInicial')?.hasError('dataMax') &&
+                formRelatorioClientes.get('dataFinal')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data inicial e final não podem ser posterior à data atual
+            </div>
+          </div>
+
+          <div *ngIf="dataInicialMaiorDataFinal === false">
+            <div class="container-periodo-clientes">
+              <div class="container-card-periodo-clientes card">
+                <td id="codigo-periodo-text">
+                  Período:
+                  <span id="codigo-periodo-results">{{
+                    getPeriodoRelatorioClientes()
+                  }}</span>
+                </td>
+              </div>
+            </div>
+            <div class="container-table shadow-sm alarm-table table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="custom-headers-tfoot">
+                    <th>Nome:</th>
+                    <th>CPF:</th>
+                    <th>Email:</th>
+                    <th>Telefone:</th>
+                    <th>Endereço:</th>
+                  </tr>
+                </thead>
+                <tbody class="table-items-body custom-tr-items">
+                  <tr *ngFor="let item of relatorioClientes">
+                    <td style="width: auto;">{{ item.nome }}</td>
+                    <td style="width: auto;">{{ item.cpf }}</td>
+                    <td style="width: auto;">{{ item.email }}</td>
+                    <td style="width: auto;">{{ item.telefone }}</td>
+                    <td style="width: auto;">{{ item.endereco }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div
+            *ngIf="dataInicialMaiorDataFinal === true"
+            class="alert-container"
+          >
+            <div class="alert-container row justify-content-center">
+              <div class="alert alert-danger mt-3 text-center">
+                <p class="mb-0">Por favor, revise as datas informadas.</p>
+                <p class="mb-0">
+                  A data inicial não pode ser posterior à data final.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="container-buttons d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-voltar"
+              (click)="voltar()"
+            >
+              Voltar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-pdf"
+              (click)="gerarPDF()"
+              [disabled]="!relatorioClientesGerado"
+            >
+              Gerar PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
