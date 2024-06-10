@@ -1,0 +1,91 @@
+<div class="background">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: calc(100vh - 80px)"
+    >
+      <div class="container">
+        <div class="card shadow-lg custom-card border-0">
+          <div class="card-body">
+            <div class="container-relatorio-clientes-texto">
+              <h5 class="relatorio-clientes-text card-title">
+                Relatório de Clientes Fiéis
+              </h5>
+              <h6 class="relatorio-clientes-phrase card-subtitle">
+                Visualize e gere um PDF do relatório dos três clientes mais fiéis.
+              </h6>
+            </div>
+  
+            <form [formGroup]="formRelatorioClientesFieis">
+              <div class="container-input-data">
+                <label class="data-label data-inicial-text">Período:</label>
+                <select formControlName="periodo">
+                  <option value="todo">Todo</option>
+                  <option value="7">Últimos 7 dias</option>
+                  <option value="30">Últimos 30 dias</option>
+                  <option value="90">Últimos 90 dias</option>
+                </select>
+  
+                <label class="data-label data-final-text">Critério:</label>
+                <select formControlName="criterio">
+                  <option value="0">Mais pedidos</option>
+                  <option value="1">Mais receita</option>
+                </select>
+  
+                <button
+                  type="button"
+                  class="btn btn-primary custom-btn btn-relatorio"
+                  (click)="gerarRelatorio()"
+                >
+                  Gerar Relatório
+                </button>
+              </div>
+            </form>
+  
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>Email</th>
+                  <th>Telefone</th>
+                  <th>Endereço</th>
+                  <th>Qntd Pedidos</th>
+                  <th>Receita gerada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cliente of relatorioClientesFieis">
+                  <td>{{ cliente.cliente.nome }}</td>
+                  <td>{{ cliente.cliente.cpf }}</td>
+                  <td>{{ cliente.cliente.email }}</td>
+                  <td>{{ cliente.cliente.telefone }}</td>
+                  <td>{{ cliente.cliente.endereco }}</td>
+                  <td>{{ cliente.qntdPedidos }}</td>
+                  <td>{{ cliente.receita | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <div class="container-buttons d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-primary custom-btn btn-voltar"
+                (click)="voltar()"
+              >
+                Voltar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary custom-btn btn-pdf"
+                (click)="gerarPDF()"
+                [disabled]="!relatorioClientesGerado"
+              >
+                Gerar PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

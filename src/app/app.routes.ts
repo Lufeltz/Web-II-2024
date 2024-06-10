@@ -12,7 +12,7 @@ import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receit
 import { VisualizacaoPedidosComponent } from './funcionario-pages/visualizacao-pedidos/visualizacao-pedidos.component';
 import { ManutencaoFuncionariosComponent } from './funcionario-pages/manutencao-funcionarios';
 import { RelatorioClientesComponent } from './funcionario-pages/relatorio-clientes/relatorio-clientes.component';
-
+import { RelatorioClientesFieisComponent } from './funcionario-pages/relatorio-clientes-fieis/relatorio-clientes-fieis.component';
 
 export const routes: Routes = [
     //default
@@ -35,6 +35,7 @@ export const routes: Routes = [
     { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
     { path: 'relatorio-clientes', title: 'Clientes', component: RelatorioClientesComponent },
     { path: 'visualizacao-pedidos', title: 'Visualização de pedidos', component: VisualizacaoPedidosComponent },
+    { path: 'relatorio-clientes-fieis', title: 'ClientesFieis', component: RelatorioClientesFieisComponent },
     
     //components
     { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404

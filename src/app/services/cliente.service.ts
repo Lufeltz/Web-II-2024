@@ -15,4 +15,8 @@ export class ClienteService {
   getClientes(): Observable<PessoaModel[]> {
     return this._http.get<PessoaModel[]>(BASE_URL + '/clientes');
   }
+
+  getClienteById(clienteId: number): Observable<PessoaModel> {
+    return this._http.get<PessoaModel>(`${BASE_URL}/clientes/${clienteId}`);
+  }
 }
