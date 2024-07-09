@@ -41,7 +41,7 @@
                         <button *ngIf="pedido.situacao === 'RECOLHIDO'" class="btn btn-success" (click)="confirmarLavagem(pedido)">Confirmar Lavagem</button>
                     </td>
                     <td>
-                        <button *ngIf="pedido.situacao === 'PAGO'" class="btn btn-success">Finalizar</button>
+                        <button *ngIf="pedido.situacao === 'AGUARDANDO_PAGAMENTO'" class="btn btn-success" (click)="finalizarPedido(pedido)">Finalizar Pedido</button>
                     </td>
                 </tr>
             </table>

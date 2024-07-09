@@ -120,5 +120,13 @@ export class VisualizacaoPedidosComponent implements OnInit {
     }
   }
 
-}
+  finalizarPedido(pedido: PedidoModel) {
+    if (pedido.situacao === Status.PAGO) {
+      pedido.situacao = Status.FINALIZADO;
+      console.log('Pedido finalizado com sucesso!');
+    } else {
+      console.warn('Este pedido não está pago.');
+    }
 
+}
+}
