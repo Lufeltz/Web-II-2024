@@ -111,5 +111,14 @@ export class VisualizacaoPedidosComponent implements OnInit {
     this.router.navigate(['/visualizacao-pedidos']);
   }
 
+  confirmarLavagem(pedido: PedidoModel) {
+    if (pedido.situacao === Status.RECOLHIDO) {
+      pedido.situacao = Status.AGUARDANDO_PAGAMENTO;
+      console.log('Lavagem confirmada com sucesso!');
+    } else {
+      console.warn('Este pedido não foi recolhido.');
+    }
+  }
+
 }
 

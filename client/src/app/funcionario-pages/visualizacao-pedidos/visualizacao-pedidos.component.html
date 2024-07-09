@@ -38,7 +38,7 @@
                         <button *ngIf="pedido.situacao === 'EM ABERTO'" class="btn btn-success" (click)="recolherPedido(pedido)">Recolher</button>
                     </td>
                     <td>
-                        <button *ngIf="pedido.situacao === 'RECOLHIDO'" class="btn btn-success">Confirmar</button>
+                        <button *ngIf="pedido.situacao === 'RECOLHIDO'" class="btn btn-success" (click)="confirmarLavagem(pedido)">Confirmar Lavagem</button>
                     </td>
                     <td>
                         <button *ngIf="pedido.situacao === 'PAGO'" class="btn btn-success">Finalizar</button>
