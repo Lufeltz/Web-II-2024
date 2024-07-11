@@ -16,22 +16,22 @@
             </div>
   
             <form [formGroup]="formRelatorioClientesFieis">
-              <div class="container-input-data">
-                <label class="data-label data-inicial-text">Período:</label>
-                <select formControlName="periodo">
+              <div class="container-select-periodo">
+                <label class="periodo">Período:</label>
+                <select class="custom-select" formControlName="periodo">
                   <option value="todo">Todo</option>
                   <option value="7">Últimos 7 dias</option>
                   <option value="30">Últimos 30 dias</option>
                   <option value="90">Últimos 90 dias</option>
                 </select>
   
-                <label class="data-label data-final-text">Critério:</label>
-                <select formControlName="criterio">
+                <label class="criterio">Critério:</label>
+                <select class="custom-select" formControlName="criterio">
                   <option value="0">Mais pedidos</option>
                   <option value="1">Mais receita</option>
                 </select>
   
-                <button
+                <button class="btn-relatorio"
                   type="button"
                   class="btn btn-primary custom-btn btn-relatorio"
                   (click)="gerarRelatorio()"

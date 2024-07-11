@@ -63,8 +63,8 @@ export class RelatorioClientesFieisComponent implements OnInit {
     this.formRelatorioClientesFieis = this.formBuilder.group({
       dataInicial: [''],
       dataFinal: [''],
-      periodo: [''],
-      criterio: ['']
+      periodo: ['todo'],
+      criterio: ['0']
     });
   }
   
