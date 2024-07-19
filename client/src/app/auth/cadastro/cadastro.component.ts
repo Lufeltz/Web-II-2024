@@ -19,13 +19,11 @@ export class CadastroComponent {
   CadastroComplemento?: string;
   CadastroTelefone?: string;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   cadastro() {
     if (this.formCadastro.form.valid) {
-
+      // Lógica para cadastro
     }
   }
 }
