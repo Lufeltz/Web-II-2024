@@ -14,32 +14,30 @@
                 Visualize e gere um PDF do relatório dos três clientes mais fiéis.
               </h6>
             </div>
-  
-            <form [formGroup]="formRelatorioClientesFieis">
-              <div class="container-select-periodo">
-                <label class="periodo">Período:</label>
-                <select class="custom-select" formControlName="periodo">
-                  <option value="todo">Todo</option>
-                  <option value="7">Últimos 7 dias</option>
-                  <option value="30">Últimos 30 dias</option>
-                  <option value="90">Últimos 90 dias</option>
-                </select>
-  
-                <label class="criterio">Critério:</label>
-                <select class="custom-select" formControlName="criterio">
-                  <option value="0">Mais pedidos</option>
-                  <option value="1">Mais receita</option>
-                </select>
-  
-                <button class="btn-relatorio"
-                  type="button"
-                  class="btn btn-primary custom-btn btn-relatorio"
-                  (click)="gerarRelatorio()"
-                >
-                  Gerar Relatório
-                </button>
+              <div class="container-buttons d-flex justify-content-end">
+                  <button class="btn-relatorio"
+                    type="button"
+                    class="btn btn-primary custom-btn btn-relatorio"
+                    (click)="gerarRelatorio()"
+                  >
+                    Gerar Relatório
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary custom-btn btn-voltar"
+                    (click)="voltar()"
+                  >
+                    Voltar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary custom-btn btn-pdf"
+                    (click)="gerarPDF()"
+                    [disabled]="!relatorioClientesGerado"
+                  >
+                    Gerar PDF
+                  </button>
               </div>
-            </form>
   
             <table class="table">
               <thead>
@@ -64,25 +62,7 @@
                   <td>{{ cliente.receita | currency }}</td>
                 </tr>
               </tbody>
-            </table>
-  
-            <div class="container-buttons d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-primary custom-btn btn-voltar"
-                (click)="voltar()"
-              >
-                Voltar
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary custom-btn btn-pdf"
-                (click)="gerarPDF()"
-                [disabled]="!relatorioClientesGerado"
-              >
-                Gerar PDF
-              </button>
-            </div>
+            </table> 
           </div>
         </div>
       </div>

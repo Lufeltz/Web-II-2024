@@ -70,6 +70,19 @@ export class PedidoComponent {
       alert("Seu pedido de número #00000 foi enviado com sucesso!");
     }
 
+    rejeitarPedido(){
+      let novoPedido: PedidoModel = new PedidoModel();
+      novoPedido.dataCriacao = new Date();
+      novoPedido.prazoServico = ((this.prazo.getDate() - novoPedido.dataCriacao.getDate())/ 1000 * 60 * 60 * 24);
+      novoPedido.precoTotal = this.valorTotal;
+      novoPedido.roupas = this.roupas;
+      novoPedido.situacao = Status.REJEITADO;
+
+      this.listaRoupas.splice(0, this.listaRoupas.length);
+      this.mostrarValores = false;
+      alert("O orçamento foi rejeitado!");
+    }
+
     get total(): number{
       return this.valorTotal;
     }

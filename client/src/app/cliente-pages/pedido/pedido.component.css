@@ -43,10 +43,6 @@ body {
   .result {
     margin-top: 20px;
   }
-  
-  #cancelar{
-    background-color: red;
-  }
 
   #aprovar {
     margin-right: .5rem;
