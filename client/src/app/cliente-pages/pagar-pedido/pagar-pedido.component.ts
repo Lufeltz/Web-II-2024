@@ -17,14 +17,17 @@ export class PagarPedidoComponent {
 
 
   pagarPedido() {
-    if (this.pedido?.situacao === 'AGUARDANDO PAGAMENTO') {
-      this.pedido.situacao = Status.PAGO; // Alterar o estado do pedido para PAGO
-          console.log('Pedido pago com sucesso!');
-    } else {
-      console.warn('Este pedido não está aguardando pagamento.');
-    }
+    if (this.pedido) {
+      if (this.pedido.situacao === Status.AGUARDANDO_PAGAMENTO) {
+        this.pedido.situacao = Status.PAGO;
+        console.log('Pedido pago com sucesso!');
+      } else {
+        console.warn('Este pedido não está aguardando pagamento.');
+      }
+    } 
   }
 }
+
 @NgModule({
     declarations: [PagarPedidoComponent],
     imports: [

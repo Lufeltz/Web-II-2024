@@ -1,12 +1,19 @@
 .background {
-    background-color: #F2F8FF;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.d-flex.justify-content-center.align-items-start {
+    height: auto; 
+    padding-top: 10px; 
 }
 
 .container {
     max-width: 1000px;
-    margin: 0 auto;
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto; 
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
 }
 
 .custom-card {
@@ -18,10 +25,10 @@
     background-color: #3dabe1;
     color: #fff;
     border: none;
-    border-radius: 30px; 
+    border-radius: 30px;
     padding: 10px 20px;
     font-size: 18px;
-    cursor: pointer; 
+    cursor: pointer;
     letter-spacing: inherit;
 }
 
@@ -45,11 +52,11 @@
 }
 
 .container-card-pedido-codigo {
-    background-color: #dcf2ff;
+    /* background-color: #dcf2ff; */
     color: #32445c;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 900;
-    border-color: #ccc;
+    /* border-color: #fbfbfb; */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 10px 0;
