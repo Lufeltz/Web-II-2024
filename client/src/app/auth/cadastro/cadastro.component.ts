@@ -23,7 +23,7 @@ export class CadastroComponent {
 
   cadastro() {
     if (this.formCadastro.form.valid) {
-      // Lógica para cadastro
+      // Inserir aqui lógica para cadastro
     }
   }
 }
