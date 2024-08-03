@@ -1,55 +1,105 @@
-
 <div class="background">
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class="container">
-            <div class="card shadow-lg custom-card border-0">
-                <div class="card-body">
-                    <div class="container-logo">
-                        <img src="assets/logo-lol.png" alt="Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
-                        <h1 id="login-text">Login</h1>
-                    </div>
-                    <form #formLogin="ngForm" class="container-form d-flex flex-column justify-content-center">
-                        
-                        <div class="imput-form">
-                            <div id="form-floating-email">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control custom-input" name="email" id="email" placeholder=" " [(ngModel)]="emailUser" 
-                                    #email="ngModel" required [class.invalid-border]="email.invalid && (email.dirty || email.touched)" (focus)="clearLoginError()"/>
-                                    <label for="email">E-mail</label>
-                                </div>
-                            </div>
-                            <div *ngIf="email.errors && (email.dirty || email.touched)" class="left-align text-danger">
-                                <div [hidden]="!email?.errors?.['required']">Insira seu e-mail</div>
-                            </div>
-                        </div>
-
-                        <div class="imput-form">
-                            <div id="form-floating-password">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control custom-input" name="password" id="password" placeholder=" " [(ngModel)]="passwordUser" 
-                                    #password="ngModel" required [class.invalid-border]="password.invalid && (password.dirty || password.touched)" (focus)="clearLoginError()"/>
-                                    <label for="password">Senha</label>
-                                </div>
-                            </div>
-                            <div *ngIf="password.errors && (password.dirty || password.touched)" class="left-align text-danger">
-                                <div [hidden]="!password?.errors?.['required']">Insira sua senha</div>
-                            </div>
-                            <div *ngIf="loginError" class="left-align text-danger">
-                                Credenciais inválidas. Por favor, verifique seu e-mail e senha.
-                            </div>
-                        </div>
-
-                        <div class="container-link mt-auto">
-                            <a id="text-cadastro">Não possui cadastro? </a><a id="text-cadastro-link" routerLink="/cadastro">Criar conta</a>
-                        </div>
-
-                        <div class="container-button">
-                            <button type="submit" class="btn btn-primary custom-btn" (click)="login()" [disabled]="!formLogin.form.valid">Entrar</button>
-                        </div>
-
-                    </form>
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="height: 100vh"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <div class="container-logo">
+            <img
+              src="assets/logo-lol.png"
+              alt="Logo"
+              style="width: 100px; height: auto; margin-bottom: 20px"
+            />
+            <h1 id="login-text">Login</h1>
+          </div>
+          <form
+            #formLogin="ngForm"
+            class="container-form d-flex flex-column justify-content-center"
+          >
+            <div class="imput-form">
+              <div id="form-floating-email">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control custom-input"
+                    name="email"
+                    id="email"
+                    placeholder=" "
+                    [(ngModel)]="emailUser"
+                    #email="ngModel"
+                    required
+                    [class.invalid-border]="
+                      email.invalid && (email.dirty || email.touched)
+                    "
+                    (focus)="clearLoginError()"
+                  />
+                  <label for="email">E-mail</label>
                 </div>
+              </div>
+              <div
+                *ngIf="email.errors && (email.dirty || email.touched)"
+                class="left-align text-danger"
+              >
+                <div [hidden]="!email?.errors?.['required']">
+                  Insira seu e-mail
+                </div>
+              </div>
             </div>
+
+            <div class="imput-form">
+              <div id="form-floating-password">
+                <div class="form-floating">
+                  <input
+                    type="password"
+                    class="form-control custom-input"
+                    name="password"
+                    id="password"
+                    placeholder=" "
+                    [(ngModel)]="passwordUser"
+                    #password="ngModel"
+                    required
+                    [class.invalid-border]="
+                      password.invalid && (password.dirty || password.touched)
+                    "
+                    (focus)="clearLoginError()"
+                    numerico
+                  />
+                  <label for="password">Senha</label>
+                </div>
+              </div>
+              <div
+                *ngIf="password.errors && (password.dirty || password.touched)"
+                class="left-align text-danger"
+              >
+                <div [hidden]="!password?.errors?.['required']">
+                  Insira sua senha
+                </div>
+              </div>
+              <div *ngIf="loginError" class="left-align text-danger">
+                Credenciais inválidas. Por favor, verifique seu e-mail e senha.
+              </div>
+            </div>
+
+            <div class="container-link mt-auto">
+              <a id="text-cadastro">Não possui cadastro? </a
+              ><a id="text-cadastro-link" routerLink="/cadastro">Criar conta</a>
+            </div>
+
+            <div class="container-button">
+              <button
+                type="submit"
+                class="btn btn-primary custom-btn"
+                (click)="login()"
+                [disabled]="!formLogin.form.valid"
+              >
+                Entrar
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>

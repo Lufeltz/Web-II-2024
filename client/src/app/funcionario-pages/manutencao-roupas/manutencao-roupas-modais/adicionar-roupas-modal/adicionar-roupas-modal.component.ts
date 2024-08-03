@@ -3,15 +3,23 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { RoupaModel } from '../../../../models/roupa.model';
+import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
+import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 
 @Component({
   selector: 'app-adicionar-roupas-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, NgxCurrencyDirective],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    NgxCurrencyDirective,
+    NumericoDirective,
+    LetrasSomenteDirective
+  ],
   templateUrl: './adicionar-roupas-modal.component.html',
-  styleUrl: './adicionar-roupas-modal.component.css'
+  styleUrl: './adicionar-roupas-modal.component.css',
 })
-
 export class AdicionarRoupasModalComponent {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() adicaoConcluida = new EventEmitter<void>();
@@ -28,7 +36,12 @@ export class AdicionarRoupasModalComponent {
   }
 
   adicionar(): void {
-    if (this.formAdicionarRoupa.form.valid && this.descricaoRoupa && this.prazoRoupa && this.precoRoupa > 0) {
+    if (
+      this.formAdicionarRoupa.form.valid &&
+      this.descricaoRoupa &&
+      this.prazoRoupa &&
+      this.precoRoupa > 0
+    ) {
       const newRoupa: RoupaModel = new RoupaModel();
       newRoupa.id = 0;
       newRoupa.roupa = this.descricaoRoupa;
@@ -51,5 +64,4 @@ export class AdicionarRoupasModalComponent {
   clearValueInvalid(): void {
     this.valueInvalid = false;
   }
-
 }

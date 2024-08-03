@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoModel } from '../../models/pedido.model';
+import { Pedido } from '../../shared/models/pedido.model';
 import { PedidosService } from '../../services/pedidos.service';
-import { Status } from '../../models/status.enum';
+import { Status } from '../../shared/models/status.enum';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalPagamentoComponent } from './modal-pagamento/modal-pagamento.component';
 
 @Component({
   selector: 'app-pedidos',
@@ -11,11 +13,11 @@ import { Status } from '../../models/status.enum';
   styleUrl: './pedidos.component.css',
 })
 export class PedidosComponent implements OnInit {
-  pedidos: PedidoModel[] = [];
+  pedidos: Pedido[] = [];
   statusEnum = Status;
-  filteredPedidos: PedidoModel[] = [];
+  filteredPedidos: Pedido[] = [];
 
-  constructor(private pedidosService: PedidosService) {}
+  constructor(private pedidosService: PedidosService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadPedidos();
@@ -23,17 +25,15 @@ export class PedidosComponent implements OnInit {
 
   loadPedidos() {
     this.pedidosService.getPedidos().subscribe({
-      next: (pedidos: PedidoModel[]) => {
+      next: (pedidos: Pedido[]) => {
         this.pedidos = pedidos;
         this.filteredPedidos = pedidos
-          .filter((p) => p.situacao === this.statusEnum.EM_ABERTO)
+          .filter((p) => p.situacao.tipoSituacao === this.statusEnum.EM_ABERTO)
           .sort((a, b) => {
-            const dateA = new Date(a.dataCriacao).getTime();
-            const dateB = new Date(b.dataCriacao).getTime();
+            const dateA = new Date(a.dataPedido).getTime();
+            const dateB = new Date(b.dataPedido).getTime();
             return dateB - dateA;
           });
-        console.log('Pedidos obtidos com sucesso!');
-        console.log(pedidos);
       },
       error: (error) => console.log('Erro ao requisitar os pedidos: ', error),
     });
@@ -41,7 +41,12 @@ export class PedidosComponent implements OnInit {
 
   filtroPedidos(e: any) {
     this.filteredPedidos = this.pedidos.filter(
-      (pedido) => e.target.value === pedido.situacao
+      (pedido) => e.target.value === pedido.situacao.tipoSituacao
     );
+  }
+
+  abrirModal(usuario: Pedido) {
+    const modalRef = this.modalService.open(ModalPagamentoComponent);
+    modalRef.componentInstance.usuario = usuario;
   }
 }

@@ -8,6 +8,7 @@ import { EditarFuncionariosModalComponent } from './manutencao-funcionarios-moda
 import { ExcluirFuncionariosModalComponent } from './manutencao-funcionarios-modais/excluir-funcionarios-modal/excluir-funcionarios-modal.component';
 import { FuncionarioService } from '../../services/funcionario.service';
 import { FuncionarioModel } from '../../models/funcionario.model';
+import { Funcionario } from '../../shared/models/funcionario.model';
 
 @Component({
   selector: 'app-manutencao-funcionarios',
@@ -17,11 +18,11 @@ import { FuncionarioModel } from '../../models/funcionario.model';
   styleUrl: './manutencao-funcionarios.component.css',
 })
 export class ManutencaoFuncionariosComponent implements OnInit {
-  funcionario: FuncionarioModel[] = [];
-  orderFuncionario: FuncionarioModel[] = [];
+  funcionario: Funcionario[] = [];
+  orderFuncionario: Funcionario[] = [];
   funcionariosIsPresent: boolean | any = null;
-  funcionarioParaEditar: FuncionarioModel | undefined;
-  funcionarioParaExcluir: FuncionarioModel | undefined;
+  funcionarioParaEditar: Funcionario | undefined;
+  funcionarioParaExcluir: Funcionario | undefined;
 
   constructor(
     private router: Router,
@@ -35,7 +36,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
 
   loadRoupas() {
     this.funcionarioService.getFuncionarios().subscribe({
-      next: (funcionario: FuncionarioModel[]) => {
+      next: (funcionario: Funcionario[]) => {
         this.funcionario = funcionario;
         // this.orderFuncionario = funcionario
         //   .sort((a, b) => {
@@ -75,7 +76,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  editar(funcionario: FuncionarioModel) {
+  editar(funcionario: Funcionario) {
     this.funcionarioParaEditar = funcionario;
     const modalRef = this.modalService.open(EditarFuncionariosModalComponent, {
       backdrop: 'static',
@@ -92,7 +93,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  excluir(funcionario: FuncionarioModel) {
+  excluir(funcionario: Funcionario) {
     this.funcionarioParaExcluir = funcionario;
     const modalRef = this.modalService.open(ExcluirFuncionariosModalComponent, {
       backdrop: 'static',

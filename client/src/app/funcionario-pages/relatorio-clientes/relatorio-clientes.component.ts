@@ -12,10 +12,11 @@ import {
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { PedidosService } from '../../services/pedidos.service';
-import { PedidoModel } from '../../models/pedido.model';
+import { Pedido } from '../../shared/models/pedido.model';
 import autoTable from 'jspdf-autotable';
-import { PessoaModel } from '../../models/pessoa.model';
 import { ClienteService } from '../../services/cliente.service';
+import { Cliente } from '../../shared/models/cliente.model';
+import { RelatorioCliente } from '../../shared/models/relatorio-cliente.model';
 
 @Component({
   selector: 'app-relatorio-clientes',
@@ -29,13 +30,13 @@ export class RelatorioClientesComponent implements OnInit {
   formRelatorioClientes: FormGroup;
   dataInicial!: string;
   dataFinal!: string;
-  relatorioClientes: PessoaModel[] = [];
+  relatorioClientes: RelatorioCliente[] = [];
   dataInicialMaiorDataFinal: boolean | null = null;
   relatorioClientesGerado: boolean | null = null;
-  pedidos!: PedidoModel[];
+  pedidos!: Pedido[];
   diasTotais!: number;
   clienteTotal!: number;
-  clientes: PessoaModel[] = [];
+  clientes: Cliente[] = [];
 
   constructor(
     private router: Router,
@@ -65,8 +66,8 @@ export class RelatorioClientesComponent implements OnInit {
     this.dataFinal = this.formRelatorioClientes.get('dataFinal')?.value;
 
     if (this.dataInicial <= this.dataFinal) {
-      this.clienteService.getClientes().subscribe({
-        next: (clientes: PessoaModel[]) => {
+      this.clienteService.getClientesRelatorio().subscribe({
+        next: (clientes: RelatorioCliente[]) => {
           clientes.forEach((cliente) => {
             this.relatorioClientes.push({
               id: cliente.id,
@@ -75,13 +76,12 @@ export class RelatorioClientesComponent implements OnInit {
               email: cliente.email,
               telefone: cliente.telefone,
               endereco: cliente.endereco,
-              funcionario: cliente.funcionario,
             });
           });
 
           this.pedidosService
             .getPedidosByDates(this.dataInicial, this.dataFinal)
-            .subscribe((pedidos: PedidoModel[]) => {
+            .subscribe((pedidos: Pedido[]) => {
               this.relatorioClientesGerado = false;
 
               let dataAtual = new Date(this.dataInicial);
@@ -131,7 +131,7 @@ export class RelatorioClientesComponent implements OnInit {
         cliente.cpf,
         cliente.email,
         cliente.telefone,
-        cliente.endereco,
+        cliente.endereco.rua,
       ];
     });
 

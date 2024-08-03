@@ -1,0 +1,600 @@
+{
+  "clientesFieis": [
+    {
+      "id": 1,
+      "cliente": {
+        "id": 1,
+        "cpf": "123.456.789-00",
+        "telefone": "(11) 98765-4321",
+        "usuario": {
+          "id": 1,
+          "nome": "João Silva",
+          "senha": "senha123",
+          "permissao": {
+            "id": 1,
+            "tipoPermissao": "Administrador"
+          }
+        },
+        "endereco": {
+          "id": 1,
+          "cep": "12345-678",
+          "uf": "SP",
+          "cidade": "São Paulo",
+          "bairro": "Centro",
+          "rua": "Rua das Flores",
+          "numero": "123",
+          "complemento": "Apto 101"
+        }
+      },
+      "quantidadePedidos": 15,
+      "receita": 1500.5
+    },
+    {
+      "id": 2,
+      "cliente": {
+        "id": 2,
+        "cpf": "987.654.321-00",
+        "telefone": "(21) 91234-5678",
+        "usuario": {
+          "id": 2,
+          "nome": "Maria Souza",
+          "senha": "senha456",
+          "permissao": {
+            "id": 2,
+            "tipoPermissao": "Usuário"
+          }
+        },
+        "endereco": {
+          "id": 2,
+          "cep": "87654-321",
+          "uf": "RJ",
+          "cidade": "Rio de Janeiro",
+          "bairro": "Copacabana",
+          "rua": "Avenida Atlântica",
+          "numero": "456",
+          "complemento": "Bloco B"
+        }
+      },
+      "quantidadePedidos": 20,
+      "receita": 2000.75
+    },
+    {
+      "id": 3,
+      "cliente": {
+        "id": 3,
+        "cpf": "111.222.333-44",
+        "telefone": "(31) 99876-5432",
+        "usuario": {
+          "id": 3,
+          "nome": "Carlos Pereira",
+          "senha": "senha789",
+          "permissao": {
+            "id": 3,
+            "tipoPermissao": "Gerente"
+          }
+        },
+        "endereco": {
+          "id": 3,
+          "cep": "45678-123",
+          "uf": "MG",
+          "cidade": "Belo Horizonte",
+          "bairro": "Savassi",
+          "rua": "Rua da Harmonia",
+          "numero": "789",
+          "complemento": "Casa"
+        }
+      },
+      "quantidadePedidos": 25,
+      "receita": 3000.25
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "João Silva",
+      "senha": "senha123",
+      "permissao": {
+        "id": 1,
+        "tipoPermissao": "Administrador"
+      }
+    },
+    {
+      "id": 2,
+      "nome": "Maria Souza",
+      "senha": "senha456",
+      "permissao": {
+        "id": 2,
+        "tipoPermissao": "Usuário"
+      }
+    },
+    {
+      "id": 3,
+      "nome": "Carlos Pereira",
+      "senha": "senha789",
+      "permissao": {
+        "id": 3,
+        "tipoPermissao": "Gerente"
+      }
+    }
+  ],
+  "clientes": [
+    {
+      "id": 1,
+      "cpf": "123.456.789-00",
+      "telefone": "(11) 98765-4321",
+      "usuario": {
+        "id": 1,
+        "nome": "João Silva",
+        "senha": "senha123",
+        "permissao": {
+          "id": 1,
+          "tipoPermissao": "Administrador"
+        }
+      },
+      "endereco": {
+        "id": 1,
+        "cep": "12345-678",
+        "uf": "SP",
+        "cidade": "São Paulo",
+        "bairro": "Centro",
+        "rua": "Rua das Flores",
+        "numero": "123",
+        "complemento": "Apto 101"
+      }
+    },
+    {
+      "id": 2,
+      "cpf": "987.654.321-00",
+      "telefone": "(21) 91234-5678",
+      "usuario": {
+        "id": 2,
+        "nome": "Maria Souza",
+        "senha": "senha456",
+        "permissao": {
+          "id": 2,
+          "tipoPermissao": "Usuário"
+        }
+      },
+      "endereco": {
+        "id": 2,
+        "cep": "87654-321",
+        "uf": "RJ",
+        "cidade": "Rio de Janeiro",
+        "bairro": "Copacabana",
+        "rua": "Avenida Atlântica",
+        "numero": "456",
+        "complemento": "Bloco B"
+      }
+    },
+    {
+      "id": 3,
+      "cpf": "111.222.333-44",
+      "telefone": "(31) 99876-5432",
+      "usuario": {
+        "id": 3,
+        "nome": "Carlos Pereira",
+        "senha": "senha789",
+        "permissao": {
+          "id": 3,
+          "tipoPermissao": "Gerente"
+        }
+      },
+      "endereco": {
+        "id": 3,
+        "cep": "45678-123",
+        "uf": "MG",
+        "cidade": "Belo Horizonte",
+        "bairro": "Savassi",
+        "rua": "Rua da Harmonia",
+        "numero": "789",
+        "complemento": "Casa"
+      }
+    }
+  ],
+  "enderecos": [
+    {
+      "id": 1,
+      "cep": "12345-678",
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "bairro": "Centro",
+      "rua": "Rua das Flores",
+      "numero": "123",
+      "complemento": "Apto 101"
+    },
+    {
+      "id": 2,
+      "cep": "87654-321",
+      "uf": "RJ",
+      "cidade": "Rio de Janeiro",
+      "bairro": "Copacabana",
+      "rua": "Avenida Atlântica",
+      "numero": "456",
+      "complemento": "Bloco B"
+    },
+    {
+      "id": 3,
+      "cep": "45678-123",
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "bairro": "Savassi",
+      "rua": "Rua da Harmonia",
+      "numero": "789",
+      "complemento": "Casa"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": 1,
+      "dataNascimento": "1985-05-15",
+      "usuario": {
+        "id": 1,
+        "nome": "João Silva",
+        "senha": "senha123",
+        "permissao": {
+          "id": 1,
+          "tipoPermissao": "Administrador"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "dataNascimento": "1990-07-20",
+      "usuario": {
+        "id": 2,
+        "nome": "Maria Souza",
+        "senha": "senha456",
+        "permissao": {
+          "id": 2,
+          "tipoPermissao": "Usuário"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "dataNascimento": "1992-03-10",
+      "usuario": {
+        "id": 3,
+        "nome": "Carlos Pereira",
+        "senha": "senha789",
+        "permissao": {
+          "id": 3,
+          "tipoPermissao": "Gerente"
+        }
+      }
+    }
+  ],
+  "orcamentos": [
+    {
+      "id": 1,
+      "valor": 500.0,
+      "dataPrazo": "2024-08-15",
+      "aprovado": true
+    },
+    {
+      "id": 2,
+      "valor": 750.0,
+      "dataPrazo": "2024-08-20",
+      "aprovado": false
+    },
+    {
+      "id": 3,
+      "valor": 1000.0,
+      "dataPrazo": "2024-09-01",
+      "aprovado": true
+    }
+  ],
+  "pedidosRoupas": [
+    {
+      "id": 1,
+      "quantidade": 3,
+      "pedido": {
+        "id": 1,
+        "numeroPedido": 1001,
+        "dataPedido": "2024-07-01",
+        "dataPagamento": "2024-07-03",
+        "cliente": {
+          "id": 1,
+          "cpf": "123.456.789-00",
+          "telefone": "(11) 98765-4321",
+          "usuario": {
+            "id": 1,
+            "nome": "João Silva",
+            "senha": "senha123",
+            "permissao": {
+              "id": 1,
+              "tipoPermissao": "Administrador"
+            }
+          },
+          "endereco": {
+            "id": 1,
+            "cep": "12345-678",
+            "uf": "SP",
+            "cidade": "São Paulo",
+            "bairro": "Centro",
+            "rua": "Rua das Flores",
+            "numero": "123",
+            "complemento": "Apto 101"
+          }
+        },
+        "situacao": {
+          "id": 1,
+          "tipoSituacao": "REJEITADO"
+        },
+        "orcamento": {
+          "id": 1,
+          "valor": 500.0,
+          "dataPrazo": "2024-08-15",
+          "aprovado": true
+        },
+        "listaPedidoRoupa": []
+      },
+      "roupa": {
+        "id": 1,
+        "descricao": "Camiseta",
+        "preco": 30.0,
+        "prazoDias": 5
+      }
+    },
+    {
+      "id": 2,
+      "quantidade": 5,
+      "pedido": {
+        "id": 2,
+        "numeroPedido": 1002,
+        "dataPedido": "2024-07-05",
+        "dataPagamento": "2024-07-07",
+        "cliente": {
+          "id": 2,
+          "cpf": "987.654.321-00",
+          "telefone": "(21) 91234-5678",
+          "usuario": {
+            "id": 2,
+            "nome": "Maria Souza",
+            "senha": "senha456",
+            "permissao": {
+              "id": 2,
+              "tipoPermissao": "Usuário"
+            }
+          },
+          "endereco": {
+            "id": 2,
+            "cep": "87654-321",
+            "uf": "RJ",
+            "cidade": "Rio de Janeiro",
+            "bairro": "Copacabana",
+            "rua": "Avenida Atlântica",
+            "numero": "456",
+            "complemento": "Bloco B"
+          }
+        },
+        "situacao": {
+          "id": 2,
+          "tipoSituacao": "FINALIZADO"
+        },
+        "orcamento": {
+          "id": 2,
+          "valor": 750.0,
+          "dataPrazo": "2024-08-20",
+          "aprovado": false
+        },
+        "listaPedidoRoupa": []
+      },
+      "roupa": {
+        "id": 2,
+        "descricao": "Calça Jeans",
+        "preco": 80.0,
+        "prazoDias": 7
+      }
+    },
+    {
+      "id": 3,
+      "quantidade": 2,
+      "pedido": {
+        "id": 3,
+        "numeroPedido": 1003,
+        "dataPedido": "2024-07-10",
+        "dataPagamento": "2024-07-12",
+        "cliente": {
+          "id": 3,
+          "cpf": "111.222.333-44",
+          "telefone": "(31) 99876-5432",
+          "usuario": {
+            "id": 3,
+            "nome": "Carlos Pereira",
+            "senha": "senha789",
+            "permissao": {
+              "id": 3,
+              "tipoPermissao": "Gerente"
+            }
+          },
+          "endereco": {
+            "id": 3,
+            "cep": "45678-123",
+            "uf": "MG",
+            "cidade": "Belo Horizonte",
+            "bairro": "Savassi",
+            "rua": "Rua da Harmonia",
+            "numero": "789",
+            "complemento": "Casa"
+          }
+        },
+        "situacao": {
+          "id": 3,
+          "tipoSituacao": "PAGO"
+        },
+        "orcamento": {
+          "id": 3,
+          "valor": 1000.0,
+          "dataPrazo": "2024-09-01",
+          "aprovado": true
+        },
+        "listaPedidoRoupa": []
+      },
+      "roupa": {
+        "id": 3,
+        "descricao": "Vestido",
+        "preco": 120.0,
+        "prazoDias": 10
+      }
+    }
+  ],
+  "pedidos": [
+    {
+      "id": 1,
+      "numeroPedido": 1001,
+      "dataPedido": "2024-07-01",
+      "dataPagamento": "2024-07-03",
+      "cliente": {
+        "id": 1,
+        "cpf": "123.456.789-00",
+        "telefone": "(11) 98765-4321",
+        "usuario": {
+          "id": 1,
+          "nome": "João Silva",
+          "senha": "senha123",
+          "permissao": {
+            "id": 1,
+            "tipoPermissao": "Administrador"
+          }
+        },
+        "endereco": {
+          "id": 1,
+          "cep": "12345-678",
+          "uf": "SP",
+          "cidade": "São Paulo",
+          "bairro": "Centro",
+          "rua": "Rua das Flores",
+          "numero": "123",
+          "complemento": "Apto 101"
+        }
+      },
+      "situacao": {
+        "id": 1,
+        "tipoSituacao": "PAGO"
+      },
+      "orcamento": {
+        "id": 1,
+        "valor": 500.0,
+        "dataPrazo": "2024-08-15",
+        "aprovado": true
+      },
+      "listaPedidoRoupa": [
+        {
+          "id": 1,
+          "quantidade": 3,
+          "roupa": {
+            "id": 1,
+            "descricao": "Camiseta",
+            "preco": 30.0,
+            "prazoDias": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "numeroPedido": 1002,
+      "dataPedido": "2024-07-05",
+      "dataPagamento": "2024-07-07",
+      "cliente": {
+        "id": 2,
+        "cpf": "987.654.321-00",
+        "telefone": "(21) 91234-5678",
+        "usuario": {
+          "id": 2,
+          "nome": "Maria Souza",
+          "senha": "senha456",
+          "permissao": {
+            "id": 2,
+            "tipoPermissao": "Usuário"
+          }
+        },
+        "endereco": {
+          "id": 2,
+          "cep": "87654-321",
+          "uf": "RJ",
+          "cidade": "Rio de Janeiro",
+          "bairro": "Copacabana",
+          "rua": "Avenida Atlântica",
+          "numero": "456",
+          "complemento": "Bloco B"
+        }
+      },
+      "situacao": {
+        "id": 2,
+        "tipoSituacao": "EM_ABERTO"
+      },
+      "orcamento": {
+        "id": 2,
+        "valor": 750.0,
+        "dataPrazo": "2024-08-20",
+        "aprovado": false
+      },
+      "listaPedidoRoupa": [
+        {
+          "id": 2,
+          "quantidade": 5,
+          "roupa": {
+            "id": 2,
+            "descricao": "Calça Jeans",
+            "preco": 80.0,
+            "prazoDias": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "numeroPedido": 1003,
+      "dataPedido": "2024-07-10",
+      "dataPagamento": "2024-07-12",
+      "cliente": {
+        "id": 3,
+        "cpf": "111.222.333-44",
+        "telefone": "(31) 99876-5432",
+        "usuario": {
+          "id": 3,
+          "nome": "Carlos Pereira",
+          "senha": "senha789",
+          "permissao": {
+            "id": 3,
+            "tipoPermissao": "Gerente"
+          }
+        },
+        "endereco": {
+          "id": 3,
+          "cep": "45678-123",
+          "uf": "MG",
+          "cidade": "Belo Horizonte",
+          "bairro": "Savassi",
+          "rua": "Rua da Harmonia",
+          "numero": "789",
+          "complemento": "Casa"
+        }
+      },
+      "situacao": {
+        "id": 3,
+        "tipoSituacao": "AGUARDANDO_PAGAMENTO"
+      },
+      "orcamento": {
+        "id": 3,
+        "valor": 1000.0,
+        "dataPrazo": "2024-09-01",
+        "aprovado": true
+      },
+      "listaPedidoRoupa": [
+        {
+          "id": 3,
+          "quantidade": 2,
+          "roupa": {
+            "id": 3,
+            "descricao": "Vestido",
+            "preco": 120.0,
+            "prazoDias": 10
+          }
+        }
+      ]
+    }
+  ]
+}

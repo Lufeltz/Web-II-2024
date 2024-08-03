@@ -1,58 +1,105 @@
 <div class="background">
-    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 80px);">
-        <div class="container">
-            <div class="card shadow-lg custom-card border-0">
-                <div class="card-body">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <div class="container-manutencao-roupas-texto">
+            <h5 class="manutencao-roupas-text card-title">
+              Roupas Cadastradas
+            </h5>
+            <h6 class="manutencao-roupas-phrase card-subtitle">
+              Gerencie aqui as roupas cadastradas.
+            </h6>
+          </div>
 
-                    <div class="container-manutencao-roupas-texto">
-                        <h5 class="manutencao-roupas-text card-title">Roupas Cadastradas</h5>
-                        <h6 class="manutencao-roupas-phrase card-subtitle">Gerencie aqui as roupas cadastradas.</h6>
-                    </div>
+          <div
+            class="container-btn-adicionar d-flex justify-content-end mt-auto"
+          >
+            <button
+              type="submit"
+              class="btn btn-primary custom-btn btn-add"
+              (click)="adicionar()"
+            >
+              Adicionar
+            </button>
+          </div>
 
-                    <div class="container-btn-adicionar d-flex justify-content-end mt-auto">
-                        <button type="submit" class="btn btn-primary custom-btn btn-add" (click)="adicionar()">Adicionar</button>
-                    </div>
-
-                    <div *ngIf="roupasIsPresent === true">
-                        <div class="container-table shadow-sm alarm-table table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr class="custom-headers">
-                                        <th scope="col">Itens:</th>
-                                        <th scope="col">Prazo (dias úteis):</th>
-                                        <th scope="col">Valor:</th>
-                                        <th scope="col" style="border-right: none;"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-items-body custom-tr-items">
-                                    <tr *ngFor="let item of orderRoupa;">
-                                        <td style="width: 54%;">{{ item.roupa }}</td>
-                                        <td style="width: 20%;">{{ formatarMinutosParaDiasUteis(item.tempoDeServicoMinutos) }}</td>
-                                        <td style="width: 10%;">R${{ formatarValor(item.preco) }}</td>
-                                        <td style="width: 8%; text-align: center; border-right: none;"><button type="button" class="btn-table btn-edit" (click)="editar(item)">Editar</button></td>
-                                        <td style="width: 8%; text-align: center;"><button type="button" class="btn-table btn-remove" (click)="excluir(item)">Excluir</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <div *ngIf="roupasIsPresent === false" class="alert-container">
-                        <div class="alert-container row justify-content-center">
-                            <div class="alert alert-danger mt-3 text-center">
-                                <p class="mb-0">Nenhuma roupa cadastrada!</p>
-                                <p class="mb-0">Clique no botão "Adicionar" para adicionar uma nova roupa.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-button-voltar d-flex justify-content-end mt-auto">
-                        <button type="button" class="btn btn-primary custom-btn btn-voltar" (click)="voltar()">Voltar</button>
-                    </div>
-                    
-                </div>
+          <div *ngIf="roupasIsPresent === true">
+            <div class="container-table shadow-sm alarm-table table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="custom-headers">
+                    <th scope="col">Itens:</th>
+                    <th scope="col">Prazo (dias úteis):</th>
+                    <th scope="col">Valor:</th>
+                    <th scope="col" style="border-right: none"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="table-items-body custom-tr-items">
+                  <tr *ngFor="let item of orderRoupa">
+                    <td style="width: 54%">{{ item.descricao }}</td>
+                    <td style="width: 20%">
+                      {{
+                        formatarMinutosParaDiasUteis(item.prazoDias)
+                      }}
+                    </td>
+                    <td style="width: 10%">
+                      R${{ formatarValor(item.preco) }}
+                    </td>
+                    <td
+                      style="width: 8%; text-align: center; border-right: none"
+                    >
+                      <button
+                        type="button"
+                        class="btn-table btn-edit"
+                        (click)="editar(item)"
+                      >
+                        Editar
+                      </button>
+                    </td>
+                    <td style="width: 8%; text-align: center">
+                      <button
+                        type="button"
+                        class="btn-table btn-remove"
+                        (click)="excluir(item)"
+                      >
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+
+          <div *ngIf="roupasIsPresent === false" class="alert-container">
+            <div class="alert-container row justify-content-center">
+              <div class="alert alert-danger mt-3 text-center">
+                <p class="mb-0">Nenhuma roupa cadastrada!</p>
+                <p class="mb-0">
+                  Clique no botão "Adicionar" para adicionar uma nova roupa.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="container-button-voltar d-flex justify-content-end mt-auto"
+          >
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-voltar"
+              (click)="voltar()"
+            >
+              Voltar
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

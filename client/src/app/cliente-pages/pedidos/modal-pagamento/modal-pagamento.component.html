@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Pessoa</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>Número do pedido: {{ pedido.numeroPedido }}</p>
+  <p>Data do pedido: {{ pedido.dataPedido }}</p>
+  <p>Data do pagamento: {{ pedido.dataPagamento }}</p>
+  <p>Situação: {{ pedido.situacao.tipoSituacao }}</p>
+  <p>Prazo: {{ pedido.orcamento.dataPrazo }}</p>
+  <p>Valor: {{ pedido.orcamento.valor }}</p>
+  <p *ngFor="let roupa of pedido.listaPedidoRoupa">
+    Perfil1: {{ roupa.pedido }} Perfil2: {{ roupa.quantidade }} Perfil3:
+    {{ roupa.roupa.descricao }} Perfil4: {{ roupa.roupa.prazoDias }} Perfil5:
+    {{ roupa.roupa.preco }}
+  </p>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close()"
+  >
+    Fechar
+  </button>
+</div>

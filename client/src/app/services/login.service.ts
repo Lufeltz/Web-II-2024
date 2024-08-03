@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Login } from '../models/login.model';
+import { Login } from '../shared/models/login.model';
 
 const BASE_URL = 'http://localhost:3000/';
 @Injectable({

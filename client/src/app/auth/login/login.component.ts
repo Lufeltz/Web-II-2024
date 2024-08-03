@@ -4,11 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Login } from '../../models/login.model';
+import { NumericoDirective } from '../../shared/directives/numerico.directive';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, NumericoDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

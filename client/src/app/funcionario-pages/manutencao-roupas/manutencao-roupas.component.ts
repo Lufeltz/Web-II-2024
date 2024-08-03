@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdicionarRoupasModalComponent } from './manutencao-roupas-modais/adicionar-roupas-modal';
 import { EditarRoupasModalComponent } from './manutencao-roupas-modais/editar-roupas-modal';
 import { ExcluirRoupasModalComponent } from './manutencao-roupas-modais/excluir-roupas-modal';
+import { Roupa } from '../../shared/models/roupa.model';
 
 
 @Component({
@@ -19,11 +20,11 @@ import { ExcluirRoupasModalComponent } from './manutencao-roupas-modais/excluir-
 })
 
 export class ManutencaoRoupasComponent implements OnInit {
-  roupa: RoupaModel[] = [];
-  orderRoupa: RoupaModel[] = [];
+  roupa: Roupa[] = [];
+  orderRoupa: Roupa[] = [];
   roupasIsPresent: boolean | any = null;
-  roupaParaEditar: RoupaModel | undefined;
-  roupaParaExcluir: RoupaModel | undefined;
+  roupaParaEditar: Roupa | undefined;
+  roupaParaExcluir: Roupa | undefined;
 
   constructor(private router: Router, private roupaService: RoupaService, private modalService: NgbModal) {}
 
@@ -33,12 +34,12 @@ export class ManutencaoRoupasComponent implements OnInit {
 
   loadRoupas() {
     this.roupaService.getRoupas().subscribe({
-      next: (roupa: RoupaModel[]) => {
+      next: (roupa: Roupa[]) => {
         this.roupa = roupa;
         this.orderRoupa = roupa
           .sort((a, b) => {
-            const descricaoA = a.roupa.toLowerCase();
-            const descricaoB = b.roupa.toLowerCase();
+            const descricaoA = a.descricao.toLowerCase();
+            const descricaoB = b.descricao.toLowerCase();
             return descricaoA.localeCompare(descricaoB);
           });
           if (this.roupa.length === 0) {
@@ -65,7 +66,7 @@ export class ManutencaoRoupasComponent implements OnInit {
     modalRef.componentInstance.adicaoConcluida.subscribe(() => {this.loadRoupas();modalRef.close()});
   }
 
-  editar(roupa: RoupaModel) {
+  editar(roupa: Roupa) {
     this.roupaParaEditar = roupa;
     const modalRef = this.modalService.open(EditarRoupasModalComponent, { backdrop: 'static', centered: true});
     modalRef.componentInstance.roupaParaEditar = this.roupaParaEditar;
@@ -73,7 +74,7 @@ export class ManutencaoRoupasComponent implements OnInit {
     modalRef.componentInstance.edicaoConcluida.subscribe(() => {this.loadRoupas();modalRef.close()});
   }
 
-  excluir(roupa: RoupaModel) {
+  excluir(roupa: Roupa) {
     this.roupaParaExcluir = roupa;
     const modalRef = this.modalService.open(ExcluirRoupasModalComponent, { backdrop: 'static', centered: true});
     modalRef.componentInstance.roupaParaExcluir = this.roupaParaExcluir;

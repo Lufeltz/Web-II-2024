@@ -53,12 +53,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let cliente of relatorioClientesFieis">
-                  <td>{{ cliente.cliente.nome }}</td>
-                  <td>{{ cliente.cliente.cpf }}</td>
-                  <td>{{ cliente.cliente.email }}</td>
-                  <td>{{ cliente.cliente.telefone }}</td>
-                  <td>{{ cliente.cliente.endereco }}</td>
-                  <td>{{ cliente.qntdPedidos }}</td>
+                  <td>{{ cliente.quantidadePedidos }}</td>
                   <td>{{ cliente.receita | currency }}</td>
                 </tr>
               </tbody>

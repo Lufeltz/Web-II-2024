@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PedidoModel } from '../../models/pedido.model';
-import { Status } from '../../models/status.enum';
+import { Status } from '../../shared/models/status.enum';
 import { PedidosService } from '../../services/pedidos.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Pedido } from '../../shared/models/pedido.model';
 
 @Component({
   selector: 'app-visualizacao-pedidos',
@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
   styleUrl: './visualizacao-pedidos.component.css'
 })
 export class VisualizacaoPedidosComponent implements OnInit {
-  pedidos: PedidoModel[] = [];
-  orderedPedidos: PedidoModel[] = [];
+  pedidos: Pedido[] = [];
+  orderedPedidos: Pedido[] = [];
   pedidosArePresent: boolean | any = null;
   statusEnum = Status;
   startDate?: Date;
@@ -33,11 +33,11 @@ export class VisualizacaoPedidosComponent implements OnInit {
 
   getPedidos() {
     this.pedidoService.getPedidos().subscribe({
-      next: (pedidos: PedidoModel[]) => {
+      next: (pedidos: Pedido[]) => {
         this.pedidos = pedidos;
         this.orderedPedidos = pedidos
-          .filter((p) => p.situacao === this.statusEnum.EM_ABERTO)
-          .sort((a, b) => a.dataCriacao.getTime() - b.dataCriacao.getTime());
+          .filter((p) => p.situacao.tipoSituacao === this.statusEnum.EM_ABERTO)
+          .sort((a, b) => a.dataPedido.getTime() - b.dataPedido.getTime());
         this.pedidosArePresent = true;
         console.log('Pedidos obtidos com sucesso!');
         console.log(pedidos);
@@ -57,13 +57,13 @@ export class VisualizacaoPedidosComponent implements OnInit {
         const hoje = new Date();
         const inicioHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
         const fimHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 1);
-        this.orderedPedidos = this.pedidos.filter(pedido => pedido.dataCriacao >= inicioHoje && pedido.dataCriacao < fimHoje);
+        this.orderedPedidos = this.pedidos.filter(pedido => pedido.dataPedido >= inicioHoje && pedido.dataPedido < fimHoje);
         break;
       case 'PEDIDOS POR DATA':
         if (this.startDate && this.endDate) {
           const inicio = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate());
           const fim = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1);
-          this.orderedPedidos = this.pedidos.filter(pedido => pedido.dataCriacao >= inicio && pedido.dataCriacao < fim);
+          this.orderedPedidos = this.pedidos.filter(pedido => pedido.dataPedido >= inicio && pedido.dataPedido < fim);
         } else {
           console.log('Por favor, selecione as datas de início e fim.');
         }
@@ -86,7 +86,7 @@ export class VisualizacaoPedidosComponent implements OnInit {
     return formattedDate;
   }
 
-  getStatusColor(status: Status): string {
+  getStatusColor(status: string): string {
     switch (status){
       case Status.EM_ABERTO:
         return 'amarelo';
@@ -106,23 +106,23 @@ export class VisualizacaoPedidosComponent implements OnInit {
     }
   }
 
-  recolherPedido(pedido: PedidoModel) {
-    pedido.situacao = Status.RECOLHIDO;
+  recolherPedido(pedido: Pedido) {
+    pedido.situacao.tipoSituacao = Status.RECOLHIDO;
     this.router.navigate(['/visualizacao-pedidos']);
   }
 
-  confirmarLavagem(pedido: PedidoModel) {
-    if (pedido.situacao === Status.RECOLHIDO) {
-      pedido.situacao = Status.AGUARDANDO_PAGAMENTO;
+  confirmarLavagem(pedido: Pedido) {
+    if (pedido.situacao.tipoSituacao === Status.RECOLHIDO) {
+      pedido.situacao.tipoSituacao = Status.AGUARDANDO_PAGAMENTO;
       console.log('Lavagem confirmada com sucesso!');
     } else {
       console.warn('Este pedido não foi recolhido.');
     }
   }
 
-  finalizarPedido(pedido: PedidoModel) {
-    if (pedido.situacao === Status.PAGO) {
-      pedido.situacao = Status.FINALIZADO;
+  finalizarPedido(pedido: Pedido) {
+    if (pedido.situacao.tipoSituacao === Status.PAGO) {
+      pedido.situacao.tipoSituacao = Status.FINALIZADO;
       console.log('Pedido finalizado com sucesso!');
     } else {
       console.warn('Este pedido não está pago.');

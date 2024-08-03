@@ -12,7 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() tipo: string = 'funcionario';
+  @Input() tipo: string = 'cliente';
 
   constructor(
     private router: Router,

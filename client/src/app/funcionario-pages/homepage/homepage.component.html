@@ -1,40 +1,51 @@
 <h1 class="text-center">Pedidos em Aberto</h1>
 <div class="container">
-    <div class="shadow-lg p-3 mb-5 bg-white rounded">
-        <div id="listaPedidos" *ngIf="!exibeLista">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Nº Pedido</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Roupas</th>
-                        <th scope="col">Prazo</th>
-                        <th scope="col">Valor Total</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let pedido of listaPedidos">
-                    <td>{{ pedido.codigoPedido }}</td>
-                    <td>{{ pedido.dataCriacao | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td><p style="word-spacing: 10px">Peça | Preço | Tempo de Serviço</p>
-                        <ul class="list-inline" *ngFor="let roupa of pedido.roupas">
-                            <li> {{ roupa.roupa }} R$ {{ roupa.preco }} {{ roupa.tempoDeServicoMinutos }} min</li>
-                        </ul>
-                    </td>
-                    <td>{{ pedido.prazoServico }} min</td>
-                    <td>R$ {{ pedido.precoTotal }}</td>
-                    <td>
-                        <button *ngIf="pedido.situacao === 'EM ABERTO'" class="btn btn-success" (click)="recolherPedido(pedido)">Recolher</button>
-                    </td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-            <div class="text-center" *ngIf="exibeLista">
-                <p>Não há pedidos em aberto a serem exibidos</p>
-            </div>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div id="listaPedidos" *ngIf="!exibeLista">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nº Pedido</th>
+            <th scope="col">Data</th>
+            <th scope="col">Roupas</th>
+            <th scope="col">Prazo</th>
+            <th scope="col">Valor Total</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of listaPedidos">
+            <td>{{ pedido.numeroPedido }}</td>
+            <td>{{ pedido.dataPedido | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td>
+              <p style="word-spacing: 10px">Peça | Preço | Tempo de Serviço</p>
+              <ul
+                class="list-inline"
+                *ngFor="let roupa of pedido.listaPedidoRoupa"
+              >
+                <li>
+                  {{ roupa.roupa }} R$ {{ roupa.roupa.preco }}
+                  {{ roupa.roupa.prazoDias }} min
+                </li>
+              </ul>
+            </td>
+            <td>{{ pedido.orcamento.dataPrazo }} min</td>
+            <td>R$ {{ pedido.orcamento.dataPrazo }}</td>
+            <td>
+              <button
+                *ngIf="pedido.situacao.tipoSituacao === 'EM ABERTO'"
+                class="btn btn-success"
+                (click)="recolherPedido(pedido)"
+              >
+                Recolher
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div class="text-center" *ngIf="exibeLista">
+      <p>Não há pedidos em aberto a serem exibidos</p>
+    </div>
+  </div>
 </div>
-
-

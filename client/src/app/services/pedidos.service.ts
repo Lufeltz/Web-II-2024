@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
-import { PedidoModel } from '../models/pedido.model';
+import { Pedido } from '../shared/models/pedido.model';
 
 const BASE_URL = 'http://localhost:3000/';
 @Injectable({
@@ -10,16 +10,16 @@ const BASE_URL = 'http://localhost:3000/';
 export class PedidosService {
   constructor(private http: HttpClient) {}
 
-  getPedidos(): Observable<PedidoModel[]> {
-    return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos');
+  getPedidos(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(BASE_URL + 'pedidos');
   }
   
-  getPedidoByCodigo(codigoPedido: string): Observable<PedidoModel[]> {
+  getPedidoByCodigo(codigoPedido: string): Observable<Pedido[]> {
     const params = new HttpParams().set('codigoPedido', codigoPedido);
-    return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos', { params });
+    return this.http.get<Pedido[]>(`${BASE_URL}pedidos`, { params });
   }
 
-  getPedidosByDates(dataInicio: string, dataFim: string): Observable<PedidoModel[]> {
+  getPedidosByDates(dataInicio: string, dataFim: string): Observable<Pedido[]> {
     const datasEntrePeriodo = this.getDatasEntrePeriodo(dataInicio, dataFim);
     const pedidosPorData = datasEntrePeriodo.map(data =>this.getPedidosDate(data));
     return forkJoin(pedidosPorData).pipe(map(pedidosArrays => pedidosArrays.reduce((acc, cur) => acc.concat(cur), [])));
@@ -45,9 +45,9 @@ export class PedidosService {
     return `${year}-${month}-${day}`;
   }
 
-  private getPedidosDate(dataCriacao: string): Observable<PedidoModel[]> {
+  private getPedidosDate(dataCriacao: string): Observable<Pedido[]> {
     const params = new HttpParams().set('dataCriacao', dataCriacao);
-    return this.http.get<PedidoModel[]>(BASE_URL + 'pedidos', { params });
+    return this.http.get<Pedido[]>(BASE_URL + 'pedidos', { params });
   }
 
 }

@@ -3,7 +3,9 @@
     <div class="card shadow-lg custom-card border-0">
       <div class="card-body">
         <div class="container-adicionar-funcionario-texto">
-          <h5 class="adicionar-funcionario-text card-title">Adicionar Funcionário</h5>
+          <h5 class="adicionar-funcionario-text card-title">
+            Adicionar Funcionário
+          </h5>
           <h6 class="adicionar-funcionario-phrase card-subtitle">
             Adicione aqui um novo funcionário.
           </h6>
@@ -27,6 +29,7 @@
                       nome.invalid && (nome.dirty || nome.touched)
                     "
                     maxlength="100"
+                    letras-somente
                   />
                   <label for="descricao">Nome do funcionário</label>
                 </div>
@@ -82,6 +85,7 @@
                     [(ngModel)]="dataNascimentoFuncionario"
                     #dataNascimento="ngModel"
                     (focus)="clearValueInvalid()"
+                    mask="d0/M0/0000"
                   />
                   <label for="dataNascimento">Data de Nascimento</label>
                 </div>
@@ -115,6 +119,7 @@
                     [class.invalid-border]="
                       senha.invalid && (senha.dirty || senha.touched)
                     "
+                    numerico
                   />
                   <label for="senha">Senha</label>
                 </div>

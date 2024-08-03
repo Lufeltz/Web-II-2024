@@ -1,102 +1,158 @@
 <div class="background">
-    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 80px);">
-        <div class="container">
-            <div class="card shadow-lg custom-card border-0">
-                <div class="card-body">
-
-                    <form #formConsultaPedido="ngForm" class="container-form d-flex flex-column justify-content-start">
-                        <div class="container-consulta-pedido-texto">
-                            <h5 class="consulta-pedido-text card-title">Consultar Pedido</h5>
-                            <h6 class="consulta-pedido-phrase card-subtitle">Busque aqui seus pedidos por código.</h6>
-                        </div>
-
-                        <div class="d-flex align-items-start justify-content-start mb-3">
-                            <div class="imput-form" style="flex: 1;">
-                                <div id="form-floating-consulta-pedido">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control custom-input" name="consulta" id="consulta" placeholder=" " [(ngModel)]="consultaPedido" 
-                                        #consulta="ngModel" required pattern="[0-9]*" [class.invalid-border]="consulta.invalid && (consulta.dirty || consulta.touched)" maxlength="12"/>
-                                        <label for="consulta">Código do pedido</label>
-                                    </div>
-                                </div>
-                                <div *ngIf="consulta.errors && (consulta.dirty || consulta.touched)" class="left-align text-danger">
-                                    <div [hidden]="!consulta.errors['required']">Insira o código do pedido</div>
-                                    <div [hidden]="!consulta.errors['pattern']">Insira somente números</div>
-                                </div>
-                            </div>
-
-                            <div class="container-button">
-                                <button type="submit" class="btn btn-primary custom-btn custom-btn-consultar" (click)="consultar()" [disabled]="!formConsultaPedido.form.valid">Consultar</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div *ngIf="pedidoEncontrado === true">
-
-                        <div class="container-dados-pedido">
-                            <div class="container-card-pedido-codigo card">
-                                <td id="codigo-pedido-text">N° do pedido: <span id="codigo-pedido-results">{{ pedido.codigoPedido }}</span></td>
-                            </div>
-                            <div class="container-situacao-prazo-pedido-text">
-                                <div class="container-situacao-text">
-                                    Situação: 
-                                    <span [ngClass]="{
-                                        'text-yellow': pedido.situacao === 'EM ABERTO',
-                                        'text-red': pedido.situacao === 'REJEITADO' || pedido.situacao === 'CANCELADO',
-                                        'text-gray': pedido.situacao === 'RECOLHIDO',
-                                        'text-blue': pedido.situacao === 'AGUARDANDO PAGAMENTO',
-                                        'text-orange': pedido.situacao === 'PAGO',
-                                        'text-green': pedido.situacao === 'FINALIZADO'}">
-                                        {{ pedido.situacao }}
-                                    </span>
-                                </div>
-                                <div class="container-prazo-pedido-text">
-                                    Prazo: 
-                                    <span id="prazo-pedido-results">{{ prazoServico }}</span>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="container-table shadow-sm alarm-table table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr class="custom-headers-tfoot">
-                                        <th scope="col">Itens:</th>
-                                        <th scope="col">Valor:</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-items-body custom-tr-items">
-                                    <tr *ngFor="let item of pedido.roupas;">
-                                        <td>{{ item.roupa }}</td>
-                                        <td>R${{ formatarValor(item.preco) }}</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="custom-headers-tfoot"> 
-                                        <th>Itens totais: {{ totalItens }}</th>
-                                        <th>Valor total: R${{ formatarValor(precoTotal) }}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                    </div>
-                    
-                    <div *ngIf="pedidoEncontrado === false" class="alert-container">
-                        <div class="alert-container row justify-content-center">
-                            <div class="alert alert-danger mt-3 text-center">
-                                <p class="mb-0">Nenhum pedido encontrado para o código <strong>{{ consultaPedidoSubmetido }}</strong>.</p>
-                                <p class="mb-0">Revise o código informado e tente novamente.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-button d-flex justify-content-end mt-auto">
-                        <button type="button" class="btn btn-primary custom-btn custom-btn-voltar" (click)="voltar()">Voltar</button>
-                    </div>
-                    
-                </div>
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <form
+            #formConsultaPedido="ngForm"
+            class="container-form d-flex flex-column justify-content-start"
+          >
+            <div class="container-consulta-pedido-texto">
+              <h5 class="consulta-pedido-text card-title">Consultar Pedido</h5>
+              <h6 class="consulta-pedido-phrase card-subtitle">
+                Busque aqui seus pedidos por código.
+              </h6>
             </div>
+
+            <div class="d-flex align-items-start justify-content-start mb-3">
+              <div class="imput-form" style="flex: 1">
+                <div id="form-floating-consulta-pedido">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control custom-input"
+                      name="consulta"
+                      id="consulta"
+                      placeholder=" "
+                      [(ngModel)]="consultaPedido"
+                      #consulta="ngModel"
+                      required
+                      pattern="[0-9]*"
+                      [class.invalid-border]="
+                        consulta.invalid && (consulta.dirty || consulta.touched)
+                      "
+                      maxlength="12"
+                    />
+                    <label for="consulta">Código do pedido</label>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    consulta.errors && (consulta.dirty || consulta.touched)
+                  "
+                  class="left-align text-danger"
+                >
+                  <div [hidden]="!consulta.errors['required']">
+                    Insira o código do pedido
+                  </div>
+                  <div [hidden]="!consulta.errors['pattern']">
+                    Insira somente números
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-button">
+                <button
+                  type="submit"
+                  class="btn btn-primary custom-btn custom-btn-consultar"
+                  (click)="consultar()"
+                  [disabled]="!formConsultaPedido.form.valid"
+                >
+                  Consultar
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div *ngIf="pedidoEncontrado === true">
+            <div class="container-dados-pedido">
+              <div class="container-card-pedido-codigo card">
+                <td id="codigo-pedido-text">
+                  N° do pedido:
+                  <span id="codigo-pedido-results">{{
+                    pedido.numeroPedido
+                  }}</span>
+                </td>
+              </div>
+              <div class="container-situacao-prazo-pedido-text">
+                <div class="container-situacao-text">
+                  Situação:
+                  <span
+                    [ngClass]="{
+                      'text-yellow':
+                        pedido.situacao.tipoSituacao === 'EM ABERTO',
+                      'text-red':
+                        pedido.situacao.tipoSituacao === 'REJEITADO' ||
+                        pedido.situacao.tipoSituacao === 'CANCELADO',
+                      'text-gray': pedido.situacao.tipoSituacao === 'RECOLHIDO',
+                      'text-blue':
+                        pedido.situacao.tipoSituacao === 'AGUARDANDO PAGAMENTO',
+                      'text-orange': pedido.situacao.tipoSituacao === 'PAGO',
+                      'text-green':
+                        pedido.situacao.tipoSituacao === 'FINALIZADO'
+                    }"
+                  >
+                    {{ pedido.situacao.tipoSituacao }}
+                  </span>
+                </div>
+                <div class="container-prazo-pedido-text">
+                  Prazo:
+                  <span id="prazo-pedido-results">{{ prazoServico }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-table shadow-sm alarm-table table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="custom-headers-tfoot">
+                    <th scope="col">Itens:</th>
+                    <th scope="col">Valor:</th>
+                  </tr>
+                </thead>
+                <tbody class="table-items-body custom-tr-items">
+                  <tr *ngFor="let item of pedido.listaPedidoRoupa">
+                    <td>{{ item.roupa }}</td>
+                    <td>R${{ formatarValor(item.roupa.preco) }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="custom-headers-tfoot">
+                    <th>Itens totais: {{ totalItens }}</th>
+                    <th>Valor total: R${{ formatarValor(precoTotal) }}</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div *ngIf="pedidoEncontrado === false" class="alert-container">
+            <div class="alert-container row justify-content-center">
+              <div class="alert alert-danger mt-3 text-center">
+                <p class="mb-0">
+                  Nenhum pedido encontrado para o código
+                  <strong>{{ consultaPedidoSubmetido }}</strong
+                  >.
+                </p>
+                <p class="mb-0">Revise o código informado e tente novamente.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="container-button d-flex justify-content-end mt-auto">
+            <button
+              type="button"
+              class="btn btn-primary custom-btn custom-btn-voltar"
+              (click)="voltar()"
+            >
+              Voltar
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

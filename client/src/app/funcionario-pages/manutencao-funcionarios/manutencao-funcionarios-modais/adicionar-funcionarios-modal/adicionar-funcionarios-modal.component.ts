@@ -3,6 +3,9 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { FuncionarioModel } from '../../../../models/funcionario.model';
+import { NgxMaskDirective } from 'ngx-mask';
+import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
+import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 
 @Component({
   selector: 'app-adicionar-funcionarios-modal',
@@ -12,6 +15,9 @@ import { FuncionarioModel } from '../../../../models/funcionario.model';
     CommonModule,
     ReactiveFormsModule,
     NgxCurrencyDirective,
+    NgxMaskDirective,
+    NumericoDirective,
+    LetrasSomenteDirective
   ],
   templateUrl: './adicionar-funcionarios-modal.component.html',
   styleUrl: './adicionar-funcionarios-modal.component.css',

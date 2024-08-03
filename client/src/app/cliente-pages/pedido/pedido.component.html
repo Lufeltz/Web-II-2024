@@ -1,56 +1,88 @@
-  <div class="container">
-    <h1>Pedido On-line</h1>
-      <div class="row">
-        <div class="col-md-4">
-          <label for="roupa">Roupa:</label>
-          <select id="roupa" #descrRoupa class="form-control">
-            <option value="Camiseta">Camiseta</option>
-            <option value="Calça">Calça</option>
-            <option value="Blusa">Blusa</option>
-            <option value="Bermuda">Bermuda</option>
-            <option value="Vestido">Vestido</option>
-            <option value="Meia">Meia</option>
-            <option value="Toalha">Toalha</option>
-          </select>
-        </div>
-        <div class="col-md-4">
-          <label for="qntd">Quantidade:</label>
-          <input type="number" class="form-control" id="qntd" #quantidade min="1" max="100" value="1">
-        </div>
-        <div class="col-md-4">
-          <button id="addRoupa" class="btn btn-primary mt-4" (click)="inserirRoupa(descrRoupa.value, quantidade.value)">Inserir</button>
-        </div>
-      </div>
-    <table class="table max-width">
-      <thead>
-        <tr>
-          <th class="col-8">Peça</th>
-          <th class="col-2">Quantidade</th>
-          <th class="col-2">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let roupa of tabela">
-          <td>{{ roupa.roupa }}</td>
-          <td>{{ roupa.quantidade }}</td>
-          <td><button class="btn btn-danger btn-circle" (click)="removerRoupa(roupa)">X</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="btn btn-primary" (click)="cadastrarPedido()">Cadastrar pedido</button>
-    <div class="result" *ngIf="exibir">
-      <p class="d-flex align-items-center">
-        <label for="total">Valor total:&nbsp;</label>
-        <span id="total">R$ {{ total }}</span>
-      </p>
-      <p class="d-flex align-items-center">
-        <label for="dias">Prazo estimado:&nbsp;</label>
-        <span id="dias"> {{ tempo | date: "dd/MM/yyyy HH:mm"}}</span>
-      </p>
+<div class="container">
+  <h1>Pedido On-line</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <label for="roupa">Roupa:</label>
+      <select id="roupa" #descrRoupa class="form-control">
+        <option value="Camiseta">Camiseta</option>
+        <option value="Calça">Calça</option>
+        <option value="Blusa">Blusa</option>
+        <option value="Bermuda">Bermuda</option>
+        <option value="Vestido">Vestido</option>
+        <option value="Meia">Meia</option>
+        <option value="Toalha">Toalha</option>
+      </select>
     </div>
-    <div class="d-flex align-items-center">
-      <button class="btn btn-success mt-2 mr-md-2" id="aprovar" (click)="aprovarPedido()">Aprovar</button>
-      <div class="cancelar">
-        <button class= "btn btn-danger btn mt-2" (click)="rejeitarPedido()">Cancelar</button>
+    <div class="col-md-4">
+      <label for="qntd">Quantidade:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="qntd"
+        #quantidade
+        min="1"
+        max="100"
+        value="1"
+      />
+    </div>
+    <div class="col-md-4">
+      <button
+        id="addRoupa"
+        class="btn btn-primary mt-4"
+        (click)="inserirRoupa(descrRoupa.value, quantidade.value)"
+      >
+        Inserir
+      </button>
     </div>
   </div>
+  <table class="table max-width">
+    <thead>
+      <tr>
+        <th class="col-8">Peça</th>
+        <th class="col-2">Quantidade</th>
+        <th class="col-2">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let roupa of tabela">
+        <td>{{ roupa.roupa }}</td>
+        <td>{{ roupa.quantidade }}</td>
+        <td>
+          <button
+            class="btn btn-danger btn-circle"
+            (click)="removerRoupa(roupa)"
+          >
+            X
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary" (click)="cadastrarPedido()">
+    Cadastrar pedido
+  </button>
+  <div class="result" *ngIf="exibir">
+    <p class="d-flex align-items-center">
+      <label for="total">Valor total:&nbsp;</label>
+      <span id="total">R$ {{ total }}</span>
+    </p>
+    <p class="d-flex align-items-center">
+      <label for="dias">Prazo estimado:&nbsp;</label>
+      <span id="dias"> {{ tempo | date : "dd/MM/yyyy HH:mm" }}</span>
+    </p>
+  </div>
+  <div class="d-flex align-items-center">
+    <button
+      class="btn btn-success mt-2 mr-md-2"
+      id="aprovar"
+      (click)="aprovarPedido()"
+    >
+      Aprovar
+    </button>
+    <div class="cancelar">
+      <button class="btn btn-danger btn mt-2" (click)="rejeitarPedido()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,9 +4,9 @@ import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModu
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { PedidosService } from '../../services/pedidos.service';
-import { PedidoModel } from '../../models/pedido.model';
 import autoTable from 'jspdf-autotable';
 import { ReceitaModel } from '../../models/receita.model';
+import { Pedido } from '../../shared/models/pedido.model';
 
 @Component({
   selector: 'app-relatorio-receitas',
@@ -24,7 +24,7 @@ export class RelatorioReceitasComponent implements OnInit {
   relatorioReceitas: ReceitaModel[] = [];
   dataInicialMaiorDataFinal: boolean | null = null;
   relatorioReceitasGerado: boolean | null = null;
-  pedidos!: PedidoModel[];
+  pedidos!: Pedido[];
   diasTotais!: number;
   receitaTotal!: number;
 
@@ -44,12 +44,12 @@ export class RelatorioReceitasComponent implements OnInit {
     this.dataFinal = this.formRelatorioReceitas.get('dataFinal')?.value;
 
     if (this.dataInicial <= this.dataFinal) {
-      this.pedidosService.getPedidosByDates(this.dataInicial, this.dataFinal).subscribe((pedidos: PedidoModel[]) => {
+      this.pedidosService.getPedidosByDates(this.dataInicial, this.dataFinal).subscribe((pedidos: Pedido[]) => {
         this.pedidos = pedidos;
-        const pedidosAgrupados: { [data: string]: PedidoModel[] } = {};
+        const pedidosAgrupados: { [data: string]: Pedido[] } = {};
     
         for (const pedido of this.pedidos) {
-          const dataCriacaoString = this.formatarData(pedido.dataCriacao.toISOString().slice(0, 10));
+          const dataCriacaoString = this.formatarData(pedido.dataPedido.toISOString().slice(0, 10));
           if (!pedidosAgrupados[dataCriacaoString]) {
             pedidosAgrupados[dataCriacaoString] = [];
           }
@@ -64,7 +64,7 @@ export class RelatorioReceitasComponent implements OnInit {
           const pedidosDoDia = pedidosAgrupados[dataAtualString] || [];
           let receitaTotalDia = 0;
           for (const pedido of pedidosDoDia) {
-            receitaTotalDia += pedido.precoTotal;
+            receitaTotalDia += pedido.orcamento.valor;
           }
     
           this.relatorioReceitas.push({ dataFormatada: dataAtualString, valor: receitaTotalDia });

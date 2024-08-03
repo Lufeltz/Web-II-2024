@@ -15,28 +15,60 @@ import { RelatorioClientesComponent } from './funcionario-pages/relatorio-client
 import { RelatorioClientesFieisComponent } from './funcionario-pages/relatorio-clientes-fieis/relatorio-clientes-fieis.component';
 
 export const routes: Routes = [
-    //default
-    { path: '', redirectTo: 'login', pathMatch: 'full'}, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
-    
-    //auth
-    { path: 'login', title: 'Login', component: LoginComponent },
-    { path: 'cadastro', title: 'Cadastro', component: CadastroComponent },
+  //default
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Rota padrão, se colocar o path do component em "redirectTo:", não precisará da tag/selector do seu component em app.component.html
 
-    //cliente-pages
-    { path: 'pedidos', title:'Pedidos', component: PedidosComponent },
-    { path: 'pedido', title:'Pedido', component: PedidoComponent },
-    { path: 'consulta-pedido', title: 'Consultar Pedido', component: ConsultaPedidoComponent },
-    { path: 'pagar-pedido', title: 'Pagar Pedido', component: PagarPedidoComponent},
+  //auth
+  { path: 'login', title: 'Login', component: LoginComponent },
+  { path: 'cadastro', title: 'Cadastro', component: CadastroComponent },
 
-    //funcionario-pages
-    { path: 'homepage', title: 'Homepage', component: HomepageComponent },
-    { path: 'manutencao-roupa', title: 'Roupas Cadastradas', component: ManutencaoRoupasComponent },
-    { path: 'manutencao-funcionario', title: 'Funcionários Cadastrados', component: ManutencaoFuncionariosComponent },
-    { path: 'relatorio-receitas', title: 'Receitas', component: RelatorioReceitasComponent },
-    { path: 'relatorio-clientes', title: 'Clientes', component: RelatorioClientesComponent },
-    { path: 'visualizacao-pedidos', title: 'Visualização de pedidos', component: VisualizacaoPedidosComponent },
-    { path: 'relatorio-clientes-fieis', title: 'ClientesFieis', component: RelatorioClientesFieisComponent },
-    
-    //components
-    { path: '**', title: 'Error 404', component: PageNotFoundComponent },  // Rota para um component quando página der erro 404
+  //cliente-pages
+  { path: 'pedidos', title: 'Pedidos', component: PedidosComponent },
+  { path: 'pedido', title: 'Pedido', component: PedidoComponent },
+  {
+    path: 'consulta-pedido',
+    title: 'Consultar Pedido',
+    component: ConsultaPedidoComponent,
+  },
+  {
+    path: 'pagar-pedido',
+    title: 'Pagar Pedido',
+    component: PagarPedidoComponent,
+  },
+
+  //funcionario-pages
+  { path: 'homepage', title: 'Homepage', component: HomepageComponent },
+  {
+    path: 'manutencao-roupa',
+    title: 'Roupas Cadastradas',
+    component: ManutencaoRoupasComponent,
+  },
+  {
+    path: 'manutencao-funcionario',
+    title: 'Funcionários Cadastrados',
+    component: ManutencaoFuncionariosComponent,
+  },
+  {
+    path: 'relatorio-receitas',
+    title: 'Receitas',
+    component: RelatorioReceitasComponent,
+  },
+  {
+    path: 'relatorio-clientes',
+    title: 'Clientes',
+    component: RelatorioClientesComponent,
+  },
+  {
+    path: 'visualizacao-pedidos',
+    title: 'Visualização de pedidos',
+    component: VisualizacaoPedidosComponent,
+  },
+  {
+    path: 'relatorio-clientes-fieis',
+    title: 'ClientesFieis',
+    component: RelatorioClientesFieisComponent,
+  },
+
+  //components
+  { path: '**', title: 'Error 404', component: PageNotFoundComponent }, // Rota para um component quando página der erro 404
 ];

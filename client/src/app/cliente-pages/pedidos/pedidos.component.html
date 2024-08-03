@@ -32,50 +32,60 @@
       <tr
         class="
             {{
-          pedido.situacao === statusEnum.EM_ABERTO ? 'table-warning' : ''
+          pedido.situacao.tipoSituacao === statusEnum.EM_ABERTO
+            ? 'table-warning'
+            : ''
         }}
             {{
-          pedido.situacao === statusEnum.REJEITADO ||
-          pedido.situacao === statusEnum.CANCELADO
+          pedido.situacao.tipoSituacao === statusEnum.REJEITADO ||
+          pedido.situacao.tipoSituacao === statusEnum.CANCELADO
             ? 'table-danger'
             : ''
         }}
             {{
-          pedido.situacao === statusEnum.RECOLHIDO ? 'table-secondary' : ''
+          pedido.situacao.tipoSituacao === statusEnum.RECOLHIDO
+            ? 'table-secondary'
+            : ''
         }}
             {{
-          pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO
+          pedido.situacao.tipoSituacao === statusEnum.AGUARDANDO_PAGAMENTO
             ? 'table-info'
             : ''
         }}
-            {{ pedido.situacao === statusEnum.PAGO ? 'table-success' : '' }}
             {{
-          pedido.situacao === statusEnum.FINALIZADO ? 'table-primary' : ''
+          pedido.situacao.tipoSituacao === statusEnum.PAGO
+            ? 'table-success'
+            : ''
+        }}
+            {{
+          pedido.situacao.tipoSituacao === statusEnum.FINALIZADO
+            ? 'table-primary'
+            : ''
         }}
         "
       >
         <td>{{ pedido.id }}</td>
-        <td>{{ pedido.situacao }}</td>
-        <td>{{ pedido.dataCriacao }}</td>
+        <td>{{ pedido.situacao.tipoSituacao }}</td>
+        <td>{{ pedido.dataPedido }}</td>
 
         <td>
           <ul class="list-group">
-            @for(roupa of pedido.roupas; track roupa.id){
+            @for(roupa of pedido.listaPedidoRoupa; track roupa.id){
             <li>
-              {{ roupa.roupa }}, R${{ roupa.preco }},
-              {{ roupa.tempoDeServicoMinutos }} Min
+              {{ roupa.roupa.descricao }}, R${{ roupa.roupa.preco }},
+              {{ roupa.roupa.prazoDias }} Dias
             </li>
             }
           </ul>
         </td>
 
-        <td>{{ pedido.prazoServico }} Min</td>
-        <td>R$ {{ pedido.precoTotal }}</td>
+        <td>{{ pedido.orcamento.dataPrazo }} Min</td>
+        <td>R$ {{ pedido.orcamento.valor }}</td>
 
         <td>
-          @if(pedido.situacao == statusEnum.AGUARDANDO_PAGAMENTO){
-          <button type="button" class="btn btn-success">Pagar</button>
-          } @if(pedido.situacao == statusEnum.EM_ABERTO){
+          @if(pedido.situacao.tipoSituacao == statusEnum.AGUARDANDO_PAGAMENTO){
+          <button type="button" class="btn btn-success" (click)="abrirModal(pedido)">Pagar</button>
+          } @if(pedido.situacao.tipoSituacao == statusEnum.EM_ABERTO){
           <button type="button" class="btn btn-danger">Cancelar</button>
           }
         </td>

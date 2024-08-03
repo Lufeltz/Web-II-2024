@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
-import { PedidoModel } from '../../models/pedido.model';
 import { Status } from '../../models/status.enum';
 import { Router } from '@angular/router';
+import { Pedido } from '../../shared/models/pedido.model';
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent implements OnInit {
-    private pedidosEmAberto : PedidoModel[] = [];
+    private pedidosEmAberto : Pedido[] = [];
     private listaVazia : boolean = false;
 
     constructor(
@@ -29,26 +29,26 @@ export class HomepageComponent implements OnInit {
     }
 
     listaPedidosEmAberto(): void {
-      this.pedidosService.getPedidos().subscribe((pedidos : PedidoModel[]) => {
+      this.pedidosService.getPedidos().subscribe((pedidos : Pedido[]) => {
         for(let i=0; i<pedidos.length; i++){
-          if(pedidos[i].situacao == Status.EM_ABERTO){
+          if(pedidos[i].situacao.tipoSituacao == Status.EM_ABERTO){
             this.pedidosEmAberto.push(pedidos[i]);
           }
         }
         if(this.pedidosEmAberto.length > 0){
-            this.pedidosEmAberto.sort((a, b) => new Date(a.dataCriacao).getTime() - new Date(b.dataCriacao).getTime());
+            this.pedidosEmAberto.sort((a, b) => new Date(a.dataPedido).getTime() - new Date(b.dataPedido).getTime());
         } else {
           this.listaVazia = true;
         }
       });
     }
 
-    recolherPedido(pedido: PedidoModel) {
-      pedido.situacao = Status.RECOLHIDO;
+    recolherPedido(pedido: Pedido) {
+      pedido.situacao.tipoSituacao = Status.RECOLHIDO;
       this.router.navigate(['/visualizacao-pedidos']);
     }
 
-    get listaPedidos() : PedidoModel[] {
+    get listaPedidos() : Pedido[] {
       return this.pedidosEmAberto;
     }
 
