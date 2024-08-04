@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
 
 const BASE_URL = 'http://localhost:3000';
@@ -10,6 +10,119 @@ const BASE_URL = 'http://localhost:3000';
 })
 export class FuncionarioService {
   constructor(private _http: HttpClient) {}
+
+  // ===============================[NEW]===============================
+
+  NEW_URL = 'http://localhost:8080/?????';
+
+  httpOptions = {
+    observe: 'response' as 'response',
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+
+  // arrumar a URL em NEW_URL e nos métodos
+  getAllFuncionarios(): Observable<Funcionario[] | null> {
+    return this._http.get<Funcionario[]>(this.NEW_URL, this.httpOptions).pipe(
+      map((resp: HttpResponse<Funcionario[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  getFuncionarioById(id: number): Observable<Funcionario | null> {
+    return this._http
+      .get<Funcionario>(`${this.NEW_URL}/????/${id}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of(null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  postFuncionario(funcionario: Funcionario): Observable<Funcionario | null> {
+    return this._http
+      .post<Funcionario>(
+        this.NEW_URL,
+        JSON.stringify(funcionario),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  putFuncionario(funcionario: Funcionario): Observable<Funcionario | null> {
+    return this._http
+      .put<Funcionario>(
+        `${this.NEW_URL}/???/${funcionario.id}`,
+        JSON.stringify(funcionario),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  deleteFuncionario(id: number): Observable<Funcionario | null> {
+    return this._http
+      .delete<Funcionario>(`${this.NEW_URL}/???/${id}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  // ===============================[NEW]===============================
 
   getFuncionarios(): Observable<Funcionario[]> {
     return this._http.get<Funcionario[]>(BASE_URL + '/funcionarios');
@@ -26,9 +139,7 @@ export class FuncionarioService {
     );
   }
 
-  deleteFuncionario(id: number) {
-    return this._http.delete<Funcionario>(
-      `${BASE_URL}/funcionarios/${id}`
-    );
-  }
+  // deleteFuncionario(id: number) {
+  //   return this._http.delete<Funcionario>(`${BASE_URL}/funcionarios/${id}`);
+  // }
 }

@@ -7,10 +7,12 @@ import {
   Input,
 } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { RoupaModel } from '../../../../models/roupa.model';
+import { Roupa } from '../../../../shared/models/roupa.model';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { CommonModule } from '@angular/common';
-import { FuncionarioModel } from '../../../../models/funcionario.model';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
+import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-editar-funcionarios-modal',
@@ -19,7 +21,8 @@ import { FuncionarioModel } from '../../../../models/funcionario.model';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    NgxCurrencyDirective,
+    NgxMaskDirective,
+    LetrasSomenteDirective
   ],
   templateUrl: './editar-funcionarios-modal.component.html',
   styleUrl: './editar-funcionarios-modal.component.css',
@@ -27,12 +30,12 @@ import { FuncionarioModel } from '../../../../models/funcionario.model';
 export class EditarFuncionariosModalComponent implements OnInit {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() edicaoConcluida = new EventEmitter<void>();
-  @Input() funcionarioParaEditar: FuncionarioModel | undefined;
+  @Input() funcionarioParaEditar: Funcionario | undefined;
   @ViewChild('formEditarFuncionario') formEditarFuncionario!: NgForm;
 
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
-  dataNascimentoFuncionario: string = '';
+  dataNascimentoFuncionario: Date = new Date();
   senhaFuncionario: string = '';
 
   valueInvalid: boolean = false;
@@ -61,7 +64,7 @@ export class EditarFuncionariosModalComponent implements OnInit {
       this.dataNascimentoFuncionario &&
       this.senhaFuncionario
     ) {
-      const editFuncionario: FuncionarioModel = new FuncionarioModel();
+      const editFuncionario: Funcionario = new Funcionario();
       editFuncionario.id = this.funcionarioParaEditar?.id || 0;
       editFuncionario.nome = this.nomeFuncionario;
       editFuncionario.email = this.emailFuncionario;

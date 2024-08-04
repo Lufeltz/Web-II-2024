@@ -24,18 +24,16 @@
                     #nome="ngModel"
                     required
                     [class.invalid-border]="
-                      nome.invalid &&
-                      (nome.dirty || nome.touched)
+                      nome.invalid && (nome.dirty || nome.touched)
                     "
                     maxlength="100"
+                    letras-somente
                   />
                   <label for="nome">Nome do funcionário</label>
                 </div>
               </div>
               <div
-                *ngIf="
-                  nome.errors && (nome.dirty || nome.touched)
-                "
+                *ngIf="nome.errors && (nome.dirty || nome.touched)"
                 class="left-align text-danger"
               >
                 <div [hidden]="!nome.errors['required']">
@@ -59,6 +57,7 @@
                     [class.invalid-border]="
                       email.invalid && (email.dirty || email.touched)
                     "
+                    email
                   />
                   <label for="email">Email</label>
                 </div>
@@ -69,6 +68,9 @@
               >
                 <div [hidden]="!email.errors['required']">
                   Insira o email do funcionário
+                </div>
+                <div [hidden]="!email?.errors?.['email']">
+                  Formato de email inválido
                 </div>
               </div>
             </div>
@@ -85,19 +87,21 @@
                     [(ngModel)]="dataNascimentoFuncionario"
                     #dataNascimento="ngModel"
                     required
-                    currencyMask
-                    [options]="{ 
-                                        prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left', allowNegative: false, allowZero: false, precision: 2, }"
                     [class.invalid-border]="
-                      dataNascimento.invalid && (dataNascimento.dirty || dataNascimento.touched)
+                      dataNascimento.invalid &&
+                      (dataNascimento.dirty || dataNascimento.touched)
                     "
+                    mask="d0/M0/0000"
                     (focus)="clearValueInvalid()"
                   />
                   <label for="dataNascimento">Data de nascimento</label>
                 </div>
               </div>
               <div
-                *ngIf="dataNascimento.errors && (dataNascimento.dirty || dataNascimento.touched)"
+                *ngIf="
+                  dataNascimento.errors &&
+                  (dataNascimento.dirty || dataNascimento.touched)
+                "
                 class="left-align text-danger"
               >
                 <div [hidden]="!dataNascimento.errors['required']">
@@ -106,7 +110,6 @@
               </div>
             </div>
           </div>
-
 
           <div class="imput-form">
             <div id="form-floating-tempo-funcionario">

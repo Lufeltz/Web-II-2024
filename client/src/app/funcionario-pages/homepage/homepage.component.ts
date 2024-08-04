@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
-import { Status } from '../../models/status.enum';
+import { Status } from '../../shared/models/status.enum';
 import { Router } from '@angular/router';
 import { Pedido } from '../../shared/models/pedido.model';
 

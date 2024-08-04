@@ -226,7 +226,7 @@
   "funcionarios": [
     {
       "id": 1,
-      "dataNascimento": "1985-05-15",
+      "dataNascimento": "15051985",
       "usuario": {
         "id": 1,
         "nome": "João Silva",

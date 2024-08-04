@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { PedidosService } from '../../services/pedidos.service';
 import autoTable from 'jspdf-autotable';
@@ -14,6 +14,7 @@ import { ClienteService } from '../../services/cliente.service';
 import { Observable, forkJoin } from 'rxjs';
 import { Pedido } from '../../shared/models/pedido.model';
 import { ClienteFiel } from '../../shared/models/cliente-fiel.model';
+import { Cliente } from '../../shared/models/cliente.model';
 
 @Component({
   selector: 'app-relatorio-clientes-fieis',
@@ -23,6 +24,17 @@ import { ClienteFiel } from '../../shared/models/cliente-fiel.model';
   styleUrls: ['./relatorio-clientes-fieis.component.css'],
 })
 export class RelatorioClientesFieisComponent implements OnInit {
+  // teste
+  newClient: boolean = false;
+  client: Cliente = new Cliente();
+  id!: string;
+  loading!: boolean;
+  senhaAntiga: string = '';
+  mensagem: string = '';
+  mensagem_detalhes: string = '';
+  botaoDesabilitado = false;
+  // teste
+
   currentDate: string;
   formRelatorioClientesFieis: FormGroup;
   periodo: string = '';
@@ -38,7 +50,8 @@ export class RelatorioClientesFieisComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private pedidosService: PedidosService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private route: ActivatedRoute
   ) {
     this.currentDate = new Date().toISOString().slice(0, 10);
     console.log(this.currentDate);
@@ -50,7 +63,39 @@ export class RelatorioClientesFieisComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+
+  // TUDO NO NGONINIT É TESTE POR PADRÃO NÃO NADA
+  // New everything in here
+  ngOnInit(): void {
+    // this.client = new Cliente();
+    // this.loading = false;
+
+    // this.id = this.route.snapshot.params['id'];
+    // // this.newClient = !this.id;
+
+    // if (!this.newClient) {
+    //   this.clienteService.getClienteById(1).subscribe({
+    //     next: (client) => {
+    //       if (client == null) {
+    //         this.mensagem = `Erro buscando cliente ${this.id}`;
+    //         this.mensagem_detalhes = `Cliente não encontrado ${this.id}`;
+    //         this.botaoDesabilitado = true;
+    //       } else {
+    //         this.client = client;
+    //         this.senhaAntiga = client.usuario.senha ? client.usuario.senha : '';
+    //         this.client.usuario.senha = '';
+    //         this.botaoDesabilitado = false;
+    //         console.log(this.client);
+    //       }
+    //     },
+    //     error: (err) => {
+    //       this.mensagem = `Erro buscando cliente ${this.id}`;
+    //       this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+    //       this.botaoDesabilitado = true;
+    //     },
+    //   });
+    // }
+  }
 
   gerarRelatorio() {
     this.relatorioClientesFieis = [];

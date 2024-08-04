@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { RoupaModel } from '../../models/roupa.model';
 import { RoupaService } from '../../services/roupa.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdicionarRoupasModalComponent } from './manutencao-roupas-modais/adicionar-roupas-modal';

@@ -59,6 +59,7 @@
                     [class.invalid-border]="
                       email.invalid && (email.dirty || email.touched)
                     "
+                    email
                   />
                   <label for="email">Email</label>
                 </div>
@@ -69,6 +70,9 @@
               >
                 <div [hidden]="!email.errors['required']">
                   Insira o email do funcionário
+                </div>
+                <div [hidden]="!email?.errors?.['email']">
+                  Formato de email inválido
                 </div>
               </div>
             </div>
@@ -119,7 +123,6 @@
                     [class.invalid-border]="
                       senha.invalid && (senha.dirty || senha.touched)
                     "
-                    numerico
                   />
                   <label for="senha">Senha</label>
                 </div>

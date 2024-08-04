@@ -4,7 +4,7 @@ import { RoupaService } from '../../services/roupa.service';
 import { Roupa } from '../../shared/models/roupa.model';
 import { Orcamento } from '../../shared/models/orcamento.model';
 import { Pedido } from '../../shared/models/pedido.model'; 
-import { Status } from '../../models/status.enum';
+import { Status } from '../../shared/models/status.enum';
 import { PedidoRoupa } from '../../shared/models/pedido-roupa.model';
 
 

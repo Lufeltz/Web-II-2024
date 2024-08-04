@@ -1,62 +1,163 @@
+<div *ngIf="usuarioLogado">
+  <nav class="navbar navbar-expand-md n" style="background-color: #32445c">
+    <a
+      class="navbar-brand nav-link"
+      [routerLink]="['pedidos']"
+      style="margin-left: 20px"
+    >
+      <img
+        src="assets/logo-lol.png"
+        alt="Logo"
+        style="width: 45px; height: 45px"
+      />
+    </a>
+    <div class="navbar-collapse collapsed" id="navbarContent">
+      <ul class="navbar-nav navbar-links ml-auto">
+        <li class="nav-item">
+          <a
+            *ngIf="temPermissao('CLIENTE')"
+            class="nav-link"
+            [routerLink]="['pedidos']"
+            >Início</a
+          >
+        </li>
+        <li class="nav-item" ngbDropdown>
+          <a
+            *ngIf="temPermissao('CLIENTE')"
+            class="nav-link"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown"
+            role="button"
+            >Pedidos</a
+          >
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown"
+            class="dropdown-menu custom-dropdown-menu"
+          >
+            <a
+              *ngIf="temPermissao('CLIENTE')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['pedido']"
+              >Novo</a
+            >
+            <a
+              *ngIf="temPermissao('CLIENTE')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['pedidos']"
+              >Listar</a
+            >
+            <a
+              *ngIf="temPermissao('CLIENTE')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['consulta-pedido']"
+              >Consultar</a
+            >
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="temPermissao('FUNCIONARIO')"
+            class="nav-link"
+            [routerLink]="['/homepage']"
+            >Início</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="temPermissao('FUNCIONARIO')"
+            class="nav-link"
+            [routerLink]="['/visualizacao-pedidos']"
+            >Visualizar Pedidos</a
+          >
+        </li>
+        <li class="nav-item" ngbDropdown>
+          <a
+            *ngIf="temPermissao('FUNCIONARIO')"
+            class="nav-link"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown"
+            role="button"
+            >Gerenciar</a
+          >
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown"
+            class="dropdown-menu custom-dropdown-menu"
+          >
+            <a
+              *ngIf="temPermissao('FUNCIONARIO')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['manutencao-roupa']"
+              >Roupas</a
+            >
+            <a
+              *ngIf="temPermissao('FUNCIONARIO')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['manutencao-funcionario']"
+              >Funcionários</a
+            >
+          </div>
+        </li>
+        <li class="nav-item" ngbDropdown>
+          <a
+            *ngIf="temPermissao('FUNCIONARIO')"
+            class="nav-link"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown"
+            role="button"
+            >Relatórios</a
+          >
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown"
+            class="dropdown-menu custom-dropdown-menu"
+          >
+            <a
+              *ngIf="temPermissao('FUNCIONARIO')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['relatorio-receitas']"
+              >Receitas</a
+            >
+            <a
+              *ngIf="temPermissao('FUNCIONARIO')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['relatorio-clientes']"
+              >Clientes</a
+            >
+            <a
+              *ngIf="temPermissao('FUNCIONARIO')"
+              ngbDropdownItem
+              class="dropdown-item-hover"
+              [routerLink]="['relatorio-clientes-fieis']"
+              >Clientes Fiéis</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
 
-<div *ngIf="tipo === 'cliente'">
-    <nav class="navbar navbar-expand-md n" style="background-color: #32445c">
-        <a class="navbar-brand nav-link" [routerLink]="['pedidos']" style="margin-left: 20px">
-            <img src="assets/logo-lol.png" alt="Logo" style="width: 45px; height: 45px;">
-        </a>
-        <div class="navbar-collapse collapsed" id="navbarContent">
-            <ul class="navbar-nav navbar-links ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['pedidos']">Início</a>
-                </li>
-                <li class="nav-item" ngbDropdown>
-                    <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown" role="button">Pedidos</a>
-                    <div ngbDropdownMenu aria-labelledby="navbarDropdown" class="dropdown-menu custom-dropdown-menu">
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['pedido']">Novo</a>
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['pedidos']">Listar</a>
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['consulta-pedido']">Consultar</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="sair()">Sair</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div *ngIf="usuarioLogado" id="navbarContent2">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()">Logout</a>
+        </li>
+        <li class="nav-item">
+          <p class="navbar-text mb-0 text-white">
+            <i class="fa fa-user"></i> {{ usuarioLogado.nome }}
+          </p>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
-<div *ngIf="tipo === 'funcionario'">
-    <nav class="navbar navbar-expand-md n" style="background-color: #32445c">
-        <a class="navbar-brand nav-link" [routerLink]="['pedidos']" style="margin-left: 20px">
-            <img src="assets/logo-lol.png" alt="Logo" style="width: 45px; height: 45px;">
-        </a>
-        <div class="navbar-collapse collapsed" id="navbarContent">
-            <ul class="navbar-nav navbar-links ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['']">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/visualizacao-pedidos']">Visualizar Pedidos</a>
-                </li>
-                <li class="nav-item" ngbDropdown>
-                    <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown" role="button">Gerenciar</a>
-                    <div ngbDropdownMenu aria-labelledby="navbarDropdown" class="dropdown-menu custom-dropdown-menu">
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['manutencao-roupa']">Roupas</a>
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['manutencao-funcionario']">Funcionários</a>
-                    </div>
-                </li>
-                <li class="nav-item" ngbDropdown>
-                    <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown" role="button">Relatórios</a>
-                    <div ngbDropdownMenu aria-labelledby="navbarDropdown" class="dropdown-menu custom-dropdown-menu">
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['relatorio-receitas']">Receitas</a>
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['relatorio-clientes']">Clientes</a>
-                        <a ngbDropdownItem class="dropdown-item-hover" [routerLink]="['relatorio-clientes-fieis']">Clientes Fiéis</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="sair()">Sair</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-

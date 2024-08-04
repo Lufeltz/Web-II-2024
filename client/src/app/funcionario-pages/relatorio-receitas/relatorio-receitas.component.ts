@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { PedidosService } from '../../services/pedidos.service';
 import autoTable from 'jspdf-autotable';
-import { ReceitaModel } from '../../models/receita.model';
+import { Receita } from '../../shared/models/receita.model';
 import { Pedido } from '../../shared/models/pedido.model';
 
 @Component({
@@ -21,7 +21,7 @@ export class RelatorioReceitasComponent implements OnInit {
   formRelatorioReceitas: FormGroup;
   dataInicial!: string;
   dataFinal!: string;
-  relatorioReceitas: ReceitaModel[] = [];
+  relatorioReceitas: Receita[] = [];
   dataInicialMaiorDataFinal: boolean | null = null;
   relatorioReceitasGerado: boolean | null = null;
   pedidos!: Pedido[];

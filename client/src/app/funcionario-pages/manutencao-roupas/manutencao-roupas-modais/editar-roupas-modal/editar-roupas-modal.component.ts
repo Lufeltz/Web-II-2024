@@ -1,20 +1,32 @@
-import { Component, EventEmitter, Output, ViewChild, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+  OnInit,
+  Input,
+} from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { RoupaModel } from '../../../../models/roupa.model';
+import { Roupa } from '../../../../shared/models/roupa.model';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-editar-roupas-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, NgxCurrencyDirective],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    NgxCurrencyDirective,
+  ],
   templateUrl: './editar-roupas-modal.component.html',
-  styleUrl: './editar-roupas-modal.component.css'
+  styleUrl: './editar-roupas-modal.component.css',
 })
 export class EditarRoupasModalComponent implements OnInit {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() edicaoConcluida = new EventEmitter<void>();
-  @Input() roupaParaEditar: RoupaModel | undefined;
+  @Input() roupaParaEditar: Roupa | undefined;
   @ViewChild('formEditarRoupa') formEditarRoupa!: NgForm;
 
   descricaoRoupa?: string;
@@ -23,14 +35,14 @@ export class EditarRoupasModalComponent implements OnInit {
 
   valueInvalid: boolean = false;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     if (this.roupaParaEditar) {
-      this.descricaoRoupa = this.roupaParaEditar.roupa;
-      this.prazoRoupa = this.formatarMinutosParaDiasUteis(this.roupaParaEditar.tempoDeServicoMinutos);
+      this.descricaoRoupa = this.roupaParaEditar.descricao;
+      this.prazoRoupa = this.formatarMinutosParaDiasUteis(
+        this.roupaParaEditar.prazoDias
+      );
       this.precoRoupa = this.roupaParaEditar.preco;
     }
   }
@@ -40,11 +52,16 @@ export class EditarRoupasModalComponent implements OnInit {
   }
 
   salvar(): void {
-    if (this.formEditarRoupa.form.valid && this.descricaoRoupa && this.prazoRoupa && this.precoRoupa > 0) {
-      const editRoupa: RoupaModel = new RoupaModel();
+    if (
+      this.formEditarRoupa.form.valid &&
+      this.descricaoRoupa &&
+      this.prazoRoupa &&
+      this.precoRoupa > 0
+    ) {
+      const editRoupa: Roupa = new Roupa();
       editRoupa.id = this.roupaParaEditar?.id || 0;
-      editRoupa.roupa = this.descricaoRoupa;
-      editRoupa.tempoDeServicoMinutos = this.formatarDiasUteisParaMinutos(this.prazoRoupa);
+      editRoupa.descricao = this.descricaoRoupa;
+      editRoupa.prazoDias = this.formatarDiasUteisParaMinutos(this.prazoRoupa);
       editRoupa.preco = this.precoRoupa;
       console.log('Roupa editada com sucesso: ', editRoupa);
 
@@ -67,5 +84,4 @@ export class EditarRoupasModalComponent implements OnInit {
     const minutosPorDia = 24 * 60;
     return dias * minutosPorDia;
   }
-
 }

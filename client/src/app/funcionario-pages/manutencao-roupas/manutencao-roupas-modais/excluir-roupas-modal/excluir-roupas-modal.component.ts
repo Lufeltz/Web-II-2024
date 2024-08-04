@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RoupaModel } from '../../../../models/roupa.model';
+import { Roupa } from '../../../../shared/models/roupa.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class ExcluirRoupasModalComponent {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() exclusaoConcluida = new EventEmitter<void>();
-  @Input() roupaParaExcluir: RoupaModel | undefined;
+  @Input() roupaParaExcluir: Roupa | undefined;
 
   descricaoRoupa?: string;
   prazoRoupa?: number;
@@ -22,8 +22,8 @@ export class ExcluirRoupasModalComponent {
 
   ngOnInit(): void {
     if (this.roupaParaExcluir) {
-      this.descricaoRoupa = this.roupaParaExcluir.roupa;
-      this.prazoRoupa = this.formatarMinutosParaDiasUteis(this.roupaParaExcluir.tempoDeServicoMinutos);
+      this.descricaoRoupa = this.roupaParaExcluir.descricao;
+      this.prazoRoupa = this.formatarMinutosParaDiasUteis(this.roupaParaExcluir.prazoDias);
       this.precoRoupa = this.roupaParaExcluir.preco;
     }
   }

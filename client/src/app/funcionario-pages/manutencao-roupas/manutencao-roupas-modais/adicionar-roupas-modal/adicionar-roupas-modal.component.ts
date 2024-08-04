@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { RoupaModel } from '../../../../models/roupa.model';
+import { Roupa } from '../../../../shared/models/roupa.model';
 import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 
@@ -42,10 +42,10 @@ export class AdicionarRoupasModalComponent {
       this.prazoRoupa &&
       this.precoRoupa > 0
     ) {
-      const newRoupa: RoupaModel = new RoupaModel();
+      const newRoupa: Roupa = new Roupa();
       newRoupa.id = 0;
-      newRoupa.roupa = this.descricaoRoupa;
-      newRoupa.tempoDeServicoMinutos = this.diasParaMinutos(this.prazoRoupa);
+      newRoupa.descricao = this.descricaoRoupa;
+      newRoupa.prazoDias = this.diasParaMinutos(this.prazoRoupa);
       newRoupa.preco = this.precoRoupa;
       console.log('Roupa criada com sucesso: ', newRoupa);
 

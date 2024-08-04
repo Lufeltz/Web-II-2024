@@ -1,6 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, map } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of, throwError } from 'rxjs';
 import { Pedido } from '../shared/models/pedido.model';
 
 const BASE_URL = 'http://localhost:3000/';
@@ -8,21 +13,136 @@ const BASE_URL = 'http://localhost:3000/';
   providedIn: 'root',
 })
 export class PedidosService {
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
+
+  // ===============================[NEW]===============================
+
+  NEW_URL = 'http://localhost:8080/?????';
+
+  httpOptions = {
+    observe: 'response' as 'response',
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+
+  // arrumar a URL em NEW_URL e nos métodos
+  getAllPedidos(): Observable<Pedido[] | null> {
+    return this._http.get<Pedido[]>(this.NEW_URL, this.httpOptions).pipe(
+      map((resp: HttpResponse<Pedido[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  getPedidoById(id: number): Observable<Pedido | null> {
+    return this._http
+      .get<Pedido>(`${this.NEW_URL}/????/${id}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of(null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  postPedido(pedido: Pedido): Observable<Pedido | null> {
+    return this._http
+      .post<Pedido>(this.NEW_URL, JSON.stringify(pedido), this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  putPedido(pedido: Pedido): Observable<Pedido | null> {
+    return this._http
+      .put<Pedido>(
+        `${this.NEW_URL}/???/${pedido.id}`,
+        JSON.stringify(pedido),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  deletePedido(id: number): Observable<Pedido | null> {
+    return this._http
+      .delete<Pedido>(`${this.NEW_URL}/???/${id}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  // ===============================[NEW]===============================
 
   getPedidos(): Observable<Pedido[]> {
-    return this.http.get<Pedido[]>(BASE_URL + 'pedidos');
+    return this._http.get<Pedido[]>(BASE_URL + 'pedidos');
   }
-  
+
   getPedidoByCodigo(codigoPedido: string): Observable<Pedido[]> {
     const params = new HttpParams().set('codigoPedido', codigoPedido);
-    return this.http.get<Pedido[]>(`${BASE_URL}pedidos`, { params });
+    return this._http.get<Pedido[]>(`${BASE_URL}pedidos`, { params });
   }
 
   getPedidosByDates(dataInicio: string, dataFim: string): Observable<Pedido[]> {
     const datasEntrePeriodo = this.getDatasEntrePeriodo(dataInicio, dataFim);
-    const pedidosPorData = datasEntrePeriodo.map(data =>this.getPedidosDate(data));
-    return forkJoin(pedidosPorData).pipe(map(pedidosArrays => pedidosArrays.reduce((acc, cur) => acc.concat(cur), [])));
+    const pedidosPorData = datasEntrePeriodo.map((data) =>
+      this.getPedidosDate(data)
+    );
+    return forkJoin(pedidosPorData).pipe(
+      map((pedidosArrays) =>
+        pedidosArrays.reduce((acc, cur) => acc.concat(cur), [])
+      )
+    );
   }
 
   private getDatasEntrePeriodo(dataInicio: string, dataFim: string): string[] {
@@ -47,7 +167,6 @@ export class PedidosService {
 
   private getPedidosDate(dataCriacao: string): Observable<Pedido[]> {
     const params = new HttpParams().set('dataCriacao', dataCriacao);
-    return this.http.get<Pedido[]>(BASE_URL + 'pedidos', { params });
+    return this._http.get<Pedido[]>(BASE_URL + 'pedidos', { params });
   }
-
 }

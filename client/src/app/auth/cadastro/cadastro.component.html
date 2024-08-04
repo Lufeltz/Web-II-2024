@@ -87,6 +87,7 @@
                     [class.invalid-border]="
                       email.invalid && (email.dirty || email.touched)
                     "
+                    email
                   />
                   <label for="email">Email:</label>
                 </div>
@@ -116,8 +117,9 @@
                     [class.invalid-border]="
                       endereco.invalid && (endereco.dirty || endereco.touched)
                     "
+                    mask="00000-000"
                   />
-                  <label for="endereco">Endereço:</label>
+                  <label for="endereco">CEP:</label>
                 </div>
                 <div
                   *ngIf="
@@ -158,6 +160,7 @@
                     [class.invalid-border]="
                       telefone.invalid && (telefone.dirty || telefone.touched)
                     "
+                    prefix="+55 " 
                     mask="(00) 0 0000-0000"
                   />
                   <label for="telefone">Telefone:</label>

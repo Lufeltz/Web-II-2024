@@ -1,40 +1,58 @@
 <div class="background">
-    <div class="d-flex justify-content-center align-items-start" style="height: 100vh; padding-top: 20px;">
-        <div class="container">
-            <div class="card shadow-lg custom-card border-0">
-                <div class="card-header">
-                    <h4>Número do Pedido</h4>
-                </div>
-                <div class="card-body">
-                    <div class="container-dados-pedido">
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Número do Pedido:</p>
-                                <p><strong>{{ pedido?.codigoPedido }}</strong></p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Situação do Pedido:</p>
-                                <p><strong>{{ pedido?.situacao }}</strong></p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Data de Criação:</p>
-                                <p><strong>{{ pedido?.dataCriacao | date: 'dd/MM/yyyy HH:mm' }}</strong></p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Preço Total:</p>
-                                <p><strong>{{ pedido?.precoTotal | currency:'BRL' }}</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-lg btn-block" (click)="pagarPedido()">Confirmar Pagamento</button>
-                </div>
-            </div>
+  <div
+    class="d-flex justify-content-center align-items-start"
+    style="height: 100vh; padding-top: 20px"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-header">
+          <h4>Número do Pedido</h4>
         </div>
+        <div class="card-body">
+          <div class="container-dados-pedido">
+            <div class="row mb-3">
+              <div class="col">
+                <p>Número do Pedido:</p>
+                <p>
+                  <strong>{{ pedido?.numeroPedido }}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <p>Situação do Pedido:</p>
+                <p>
+                  <strong>{{ pedido?.situacao }}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <p>Data de Criação:</p>
+                <p>
+                  <strong>{{
+                    pedido?.dataPedido | date : "dd/MM/yyyy HH:mm"
+                  }}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <p>Preço Total:</p>
+                <p>
+                  <strong>{{ pedido?.orcamento?.valor| currency : "BRL" }}</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary btn-lg btn-block"
+            (click)="pagarPedido()"
+          >
+            Confirmar Pagamento
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { FuncionarioModel } from '../../../../models/funcionario.model';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
@@ -29,7 +29,7 @@ export class AdicionarFuncionariosModalComponent {
 
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
-  dataNascimentoFuncionario: string = '';
+  dataNascimentoFuncionario: Date = new Date();
   senhaFuncionario: string = '';
 
   valueInvalid: boolean = false;
@@ -46,7 +46,7 @@ export class AdicionarFuncionariosModalComponent {
       this.dataNascimentoFuncionario &&
       this.senhaFuncionario
     ) {
-      const newFuncionario: FuncionarioModel = new FuncionarioModel();
+      const newFuncionario: Funcionario = new Funcionario();
       newFuncionario.id = 0;
       newFuncionario.nome = this.nomeFuncionario;
       newFuncionario.email = this.emailFuncionario;

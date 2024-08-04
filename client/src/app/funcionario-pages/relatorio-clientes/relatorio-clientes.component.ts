@@ -62,8 +62,6 @@ export class RelatorioClientesComponent implements OnInit {
 
   gerarRelatorio() {
     this.relatorioClientes = []
-    this.dataInicial = this.formRelatorioClientes.get('dataInicial')?.value;
-    this.dataFinal = this.formRelatorioClientes.get('dataFinal')?.value;
 
     if (this.dataInicial <= this.dataFinal) {
       this.clienteService.getClientesRelatorio().subscribe({
@@ -155,18 +153,6 @@ export class RelatorioClientesComponent implements OnInit {
     });
 
     doc.save('relatorio-clientes.pdf');
-  }
-
-  calcularDiferencaDias(dataInicial: string, dataFinal: string): number {
-    const dataInicio = new Date(dataInicial);
-    const dataFim = new Date(dataFinal);
-    const diferencaMilissegundos = Math.abs(
-      dataFim.getTime() - dataInicio.getTime()
-    );
-    const diferencaDias = Math.ceil(
-      diferencaMilissegundos / (1000 * 3600 * 24)
-    );
-    return diferencaDias;
   }
 
   voltar() {

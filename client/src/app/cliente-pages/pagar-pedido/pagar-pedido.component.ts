@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { PedidoModel } from '../../models/pedido.model';
-import { Status } from '../../models/status.enum';
+import { Pedido } from '../../shared/models/pedido.model';
+import { Status } from '../../shared/models/status.enum';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,13 +13,13 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class PagarPedidoComponent {
-  @Input() pedido?: PedidoModel;
+  @Input() pedido?: Pedido;
 
 
   pagarPedido() {
     if (this.pedido) {
-      if (this.pedido.situacao === Status.AGUARDANDO_PAGAMENTO) {
-        this.pedido.situacao = Status.PAGO;
+      if (this.pedido.situacao.tipoSituacao === Status.AGUARDANDO_PAGAMENTO) {
+        this.pedido.situacao.tipoSituacao = Status.PAGO;
         console.log('Pedido pago com sucesso!');
       } else {
         console.warn('Este pedido não está aguardando pagamento.');

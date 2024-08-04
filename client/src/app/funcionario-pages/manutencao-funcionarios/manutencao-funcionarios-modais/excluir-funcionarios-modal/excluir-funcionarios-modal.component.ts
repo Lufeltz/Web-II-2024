@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RoupaModel } from '../../../../models/roupa.model';
+import { Roupa } from '../../../../shared/models/roupa.model';
 import { CommonModule } from '@angular/common';
-import { FuncionarioModel } from '../../../../models/funcionario.model';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
 
 @Component({
   selector: 'app-excluir-funcionarios-modal',
@@ -13,11 +13,11 @@ import { FuncionarioModel } from '../../../../models/funcionario.model';
 export class ExcluirFuncionariosModalComponent {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() exclusaoConcluida = new EventEmitter<void>();
-  @Input() funcionarioParaExcluir: FuncionarioModel | undefined;
+  @Input() funcionarioParaExcluir: Funcionario | undefined;
 
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
-  dataNascimentoFuncionario: string = '';
+  dataNascimentoFuncionario: Date = new Date();
   senhaFuncionario: string = '';
 
   constructor() {}

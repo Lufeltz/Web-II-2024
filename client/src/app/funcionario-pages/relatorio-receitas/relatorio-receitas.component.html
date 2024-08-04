@@ -1,103 +1,195 @@
 <div class="background">
-    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 80px);">
-        <div class="container">
-            <div class="card shadow-lg custom-card border-0">
-                <div class="card-body">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <div class="container-relatorio-receitas-texto">
+            <h5 class="relatorio-receitas-text card-title">
+              Relatório de Receitas
+            </h5>
+            <h6 class="relatorio-receitas-phrase card-subtitle">
+              Visualize e gere um PDF do relatório das receitas por período.
+            </h6>
+          </div>
 
-                    <div class="container-relatorio-receitas-texto">
-                        <h5 class="relatorio-receitas-text card-title">Relatório de Receitas</h5>
-                        <h6 class="relatorio-receitas-phrase card-subtitle">Visualize e gere um PDF do relatório das receitas por período.</h6>
-                    </div>
+          <form [formGroup]="formRelatorioReceitas">
+            <div class="container-input-data">
+              <label class="data-label data-inicial-text">Data Inicial:</label>
+              <input
+                type="date"
+                class="input-data input-data-inicial"
+                formControlName="dataInicial"
+                required
+                [max]="currentDate"
+              />
 
-                    <form [formGroup]="formRelatorioReceitas">
-                        <div class="container-input-data">
-                            <label class="data-label data-inicial-text">Data Inicial:</label>
-                            <input type="date" class="input-data input-data-inicial" formControlName="dataInicial" required [max]="currentDate">
+              <label class="data-label data-final-text">Data Final:</label>
+              <input
+                type="date"
+                class="input-data input-data-final"
+                formControlName="dataFinal"
+                required
+                [max]="currentDate"
+              />
 
-                            <label class="data-label data-final-text">Data Final:</label>
-                            <input type="date" class="input-data input-data-final" formControlName="dataFinal" required [max]="currentDate">
-
-                            <button type="button" class="btn btn-primary custom-btn btn-relatorio" (click)="gerarRelatorio()" [disabled]="formRelatorioReceitas.invalid">Gerar Relatório</button>
-                        </div>
-                    </form>
-
-                    <div class="container-text-danger">
-                        <div *ngIf="(formRelatorioReceitas.get('dataInicial')?.invalid && formRelatorioReceitas.get('dataInicial')?.touched) && 
-                        !(formRelatorioReceitas.get('dataFinal')?.invalid && formRelatorioReceitas.get('dataFinal')?.touched) &&
-                        !(formRelatorioReceitas.get('dataInicial')?.hasError('dataMax'))" class="left-align text-danger d-inline">
-                            Insira a data inicial
-                        </div>
-                        <div *ngIf="(formRelatorioReceitas.get('dataFinal')?.invalid && formRelatorioReceitas.get('dataFinal')?.touched) && 
-                        !(formRelatorioReceitas.get('dataInicial')?.invalid && formRelatorioReceitas.get('dataInicial')?.touched) &&
-                        !(formRelatorioReceitas.get('dataFinal')?.hasError('dataMax'))" class="left-align text-danger d-inline">
-                            Insira a data final
-                        </div>
-                        <div *ngIf="(formRelatorioReceitas.get('dataFinal')?.invalid && formRelatorioReceitas.get('dataFinal')?.touched) && 
-                        (formRelatorioReceitas.get('dataInicial')?.invalid && formRelatorioReceitas.get('dataInicial')?.touched) &&
-                        !((formRelatorioReceitas.get('dataInicial')?.hasError('dataMax')) || (formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')))" class="left-align text-danger d-inline">
-                            Insira a data inicial e final
-                        </div>
-
-                        <div *ngIf="formRelatorioReceitas.get('dataInicial')?.hasError('dataMax') &&
-                        !(formRelatorioReceitas.get('dataFinal')?.hasError('dataMax'))" class="text-danger">
-                            Data inicial não pode ser posterior à data atual
-                        </div>
-                        <div *ngIf="formRelatorioReceitas.get('dataFinal')?.hasError('dataMax') &&
-                        !(formRelatorioReceitas.get('dataInicial')?.hasError('dataMax'))" class="text-danger">
-                            Data final não pode ser posterior à data atual
-                        </div>
-                        <div *ngIf="formRelatorioReceitas.get('dataInicial')?.hasError('dataMax') && 
-                        formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')" class="text-danger">
-                            Data inicial e final não podem ser posterior à data atual
-                        </div>
-                    </div>
-
-                    <div *ngIf="dataInicialMaiorDataFinal === false">
-                        <div class="container-periodo-receitas">
-                            <div class="container-card-periodo-receitas card">
-                                <td id="codigo-periodo-text">Período: <span id="codigo-periodo-results">{{ getPeriodoRelatorioReceitas() }}</span></td>
-                            </div>
-                        </div>
-                        <div class="container-table shadow-sm alarm-table table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr class="custom-headers-tfoot">
-                                        <th scope="col">Data:</th>
-                                        <th scope="col">Receita:</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-items-body custom-tr-items">
-                                    <tr *ngFor="let item of relatorioReceitas">
-                                        <td>{{ item.dataFormatada }}</td>
-                                        <td>R${{ formatarValor(item.valor) }}</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="custom-headers-tfoot"> 
-                                        <th>Dias totais: {{ diasTotais }}</th>
-                                        <th>Receita total: R${{ formatarValor(receitaTotal) }}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div *ngIf="dataInicialMaiorDataFinal === true" class="alert-container">
-                        <div class="alert-container row justify-content-center">
-                            <div class="alert alert-danger mt-3 text-center">
-                                <p class="mb-0">Por favor, revise as datas informadas.</p>
-                                <p class="mb-0">A data inicial não pode ser posterior à data final.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-buttons d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary custom-btn btn-voltar" (click)="voltar()">Voltar</button>
-                        <button type="button" class="btn btn-primary custom-btn btn-pdf" (click)="gerarPDF()" [disabled]="!relatorioReceitasGerado">Gerar PDF</button>
-                    </div>
-
-                </div>
+              <button
+                type="button"
+                class="btn btn-primary custom-btn btn-relatorio"
+                (click)="gerarRelatorio()"
+                [disabled]="formRelatorioReceitas.invalid"
+              >
+                Gerar Relatório
+              </button>
             </div>
+          </form>
+
+          <div class="container-text-danger">
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataInicial')?.invalid &&
+                formRelatorioReceitas.get('dataInicial')?.touched &&
+                !(
+                  formRelatorioReceitas.get('dataFinal')?.invalid &&
+                  formRelatorioReceitas.get('dataFinal')?.touched
+                ) &&
+                !formRelatorioReceitas.get('dataInicial')?.hasError('dataMax')
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data inicial
+            </div>
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataFinal')?.invalid &&
+                formRelatorioReceitas.get('dataFinal')?.touched &&
+                !(
+                  formRelatorioReceitas.get('dataInicial')?.invalid &&
+                  formRelatorioReceitas.get('dataInicial')?.touched
+                ) &&
+                !formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data final
+            </div>
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataFinal')?.invalid &&
+                formRelatorioReceitas.get('dataFinal')?.touched &&
+                formRelatorioReceitas.get('dataInicial')?.invalid &&
+                  formRelatorioReceitas.get('dataInicial')?.touched &&
+                !(
+                  formRelatorioReceitas
+                    .get('dataInicial')
+                    ?.hasError('dataMax') ||
+                  formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')
+                )
+              "
+              class="left-align text-danger d-inline"
+            >
+              Insira a data inicial e final
+            </div>
+
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataInicial')?.hasError('dataMax') &&
+                !formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data inicial não pode ser posterior à data atual
+            </div>
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataFinal')?.hasError('dataMax') &&
+                !formRelatorioReceitas.get('dataInicial')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data final não pode ser posterior à data atual
+            </div>
+            <div
+              *ngIf="
+                formRelatorioReceitas.get('dataInicial')?.hasError('dataMax') &&
+                formRelatorioReceitas.get('dataFinal')?.hasError('dataMax')
+              "
+              class="text-danger"
+            >
+              Data inicial e final não podem ser posterior à data atual
+            </div>
+          </div>
+
+          <div *ngIf="dataInicialMaiorDataFinal === false">
+            <div class="container-periodo-receitas">
+              <div class="container-card-periodo-receitas card">
+                <td id="codigo-periodo-text">
+                  Período:
+                  <span id="codigo-periodo-results">{{
+                    getPeriodoRelatorioReceitas()
+                  }}</span>
+                </td>
+              </div>
+            </div>
+            <div class="container-table shadow-sm alarm-table table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="custom-headers-tfoot">
+                    <th scope="col">Data:</th>
+                    <th scope="col">Receita:</th>
+                  </tr>
+                </thead>
+                <tbody class="table-items-body custom-tr-items">
+                  <tr *ngFor="let item of relatorioReceitas">
+                    <td>{{ item.dataFormatada }}</td>
+                    <td>R${{ formatarValor(item.valor) }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="custom-headers-tfoot">
+                    <th>Dias totais: {{ diasTotais }}</th>
+                    <th>Receita total: R${{ formatarValor(receitaTotal) }}</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div
+            *ngIf="dataInicialMaiorDataFinal === true"
+            class="alert-container"
+          >
+            <div class="alert-container row justify-content-center">
+              <div class="alert alert-danger mt-3 text-center">
+                <p class="mb-0">Por favor, revise as datas informadas.</p>
+                <p class="mb-0">
+                  A data inicial não pode ser posterior à data final.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="container-buttons d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-voltar"
+              (click)="voltar()"
+            >
+              Voltar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-pdf"
+              (click)="gerarPDF()"
+              [disabled]="!relatorioReceitasGerado"
+            >
+              Gerar PDF
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

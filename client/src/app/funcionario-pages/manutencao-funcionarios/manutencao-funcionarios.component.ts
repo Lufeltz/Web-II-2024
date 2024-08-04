@@ -7,13 +7,13 @@ import { AdicionarFuncionariosModalComponent } from './manutencao-funcionarios-m
 import { EditarFuncionariosModalComponent } from './manutencao-funcionarios-modais/editar-funcionarios-modal/editar-funcionarios-modal.component';
 import { ExcluirFuncionariosModalComponent } from './manutencao-funcionarios-modais/excluir-funcionarios-modal/excluir-funcionarios-modal.component';
 import { FuncionarioService } from '../../services/funcionario.service';
-import { FuncionarioModel } from '../../models/funcionario.model';
 import { Funcionario } from '../../shared/models/funcionario.model';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-manutencao-funcionarios',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule, NgxMaskPipe],
   templateUrl: './manutencao-funcionarios.component.html',
   styleUrl: './manutencao-funcionarios.component.css',
 })
