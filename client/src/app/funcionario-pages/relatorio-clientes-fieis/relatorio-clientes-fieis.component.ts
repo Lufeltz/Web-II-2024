@@ -67,34 +67,34 @@ export class RelatorioClientesFieisComponent implements OnInit {
   // TUDO NO NGONINIT É TESTE POR PADRÃO NÃO NADA
   // New everything in here
   ngOnInit(): void {
-    // this.client = new Cliente();
-    // this.loading = false;
+    this.client = new Cliente();
+    this.loading = false;
 
-    // this.id = this.route.snapshot.params['id'];
-    // // this.newClient = !this.id;
+    this.id = this.route.snapshot.params['id'];
+    // this.newClient = !this.id;
 
-    // if (!this.newClient) {
-    //   this.clienteService.getClienteById(1).subscribe({
-    //     next: (client) => {
-    //       if (client == null) {
-    //         this.mensagem = `Erro buscando cliente ${this.id}`;
-    //         this.mensagem_detalhes = `Cliente não encontrado ${this.id}`;
-    //         this.botaoDesabilitado = true;
-    //       } else {
-    //         this.client = client;
-    //         this.senhaAntiga = client.usuario.senha ? client.usuario.senha : '';
-    //         this.client.usuario.senha = '';
-    //         this.botaoDesabilitado = false;
-    //         console.log(this.client);
-    //       }
-    //     },
-    //     error: (err) => {
-    //       this.mensagem = `Erro buscando cliente ${this.id}`;
-    //       this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-    //       this.botaoDesabilitado = true;
-    //     },
-    //   });
-    // }
+    if (!this.newClient) {
+      this.clienteService.getClienteById(3).subscribe({
+        next: (client) => {
+          if (client == null) {
+            this.mensagem = `Erro buscando cliente ${this.id}`;
+            this.mensagem_detalhes = `Cliente não encontrado ${this.id}`;
+            this.botaoDesabilitado = true;
+          } else {
+            this.client = client;
+            this.senhaAntiga = client.usuario.senha ? client.usuario.senha : '';
+            this.client.usuario.senha = '';
+            this.botaoDesabilitado = false;
+            console.log(this.client);
+          }
+        },
+        error: (err) => {
+          this.mensagem = `Erro buscando cliente ${this.id}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+          this.botaoDesabilitado = true;
+        },
+      });
+    }
   }
 
   gerarRelatorio() {

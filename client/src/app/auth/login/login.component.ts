@@ -39,8 +39,10 @@ export class LoginComponent implements OnInit {
           if(usu.perfil == "FUNCIONARIO"){
             this.router.navigate(['/homepage']);
           }
-          else {
+          else if (usu.perfil == "CLIENTE"){
             this.router.navigate(['/pedidos']);
+          }else {
+            this.router.navigate(['/login'])
           }
         } else {
           this.message = 'Usuário/Senha inválidos.';
