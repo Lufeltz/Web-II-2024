@@ -27,10 +27,10 @@ import { FuncionarioDto } from '../../shared/models/dto/funcionario-dto.model';
 export class ManutencaoFuncionariosComponent implements OnInit {
   orderFuncionario: Funcionario[] = [];
   funcionariosIsPresent: boolean | any = null;
-  funcionarioParaEditar!: FuncionarioDto;
-  funcionarioParaExcluir!: FuncionarioDto;
+  funcionarioParaEditar!: Funcionario;
+  funcionarioParaExcluir!: Funcionario;
   //  ======================[NEW]======================
-  funcionarios: FuncionarioDto[] = [];
+  funcionarios: Funcionario[] = [];
   mensagem: string = '';
   mensagem_detalhes = '';
 
@@ -44,9 +44,9 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     this.listarFuncionarios();
   }
 
-  listarFuncionarios(): FuncionarioDto[] {
+  listarFuncionarios(): Funcionario[] {
     this.funcionarioService.getAllFuncionarios().subscribe({
-      next: (data: FuncionarioDto[] | null) => {
+      next: (data: Funcionario[] | null) => {
         if (data == null) {
           this.funcionarios = [];
           this.funcionariosIsPresent = false;
@@ -108,7 +108,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  editar(funcionario: FuncionarioDto) {
+  editar(funcionario: Funcionario) {
     this.funcionarioParaEditar = funcionario;
     const modalRef = this.modalService.open(EditarFuncionariosModalComponent, {
       backdrop: 'static',
@@ -125,7 +125,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  excluir(funcionario: FuncionarioDto) {
+  excluir(funcionario: Funcionario) {
     this.funcionarioParaExcluir = funcionario;
     const modalRef = this.modalService.open(ExcluirFuncionariosModalComponent, {
       backdrop: 'static',

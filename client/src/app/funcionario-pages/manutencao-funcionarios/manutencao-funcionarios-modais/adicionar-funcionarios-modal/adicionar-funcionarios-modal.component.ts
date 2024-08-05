@@ -36,9 +36,9 @@ export class AdicionarFuncionariosModalComponent {
     private router: Router
   ) {}
 
-  funcionarios: FuncionarioDto[] = [];
+  funcionarios: Funcionario[] = [];
   novoFuncionario: boolean = true;
-  funcionario: FuncionarioDto = new FuncionarioDto();
+  funcionario: Funcionario = new Funcionario();
   id!: string;
   loading!: boolean;
   mensagem: string = '';
@@ -76,9 +76,9 @@ export class AdicionarFuncionariosModalComponent {
     this.listarFuncionarios();
   }
 
-  listarFuncionarios(): FuncionarioDto[] {
+  listarFuncionarios(): Funcionario[] {
     this.funcionarioService.getAllFuncionarios().subscribe({
-      next: (data: FuncionarioDto[] | null) => {
+      next: (data: Funcionario[] | null) => {
         if (data == null) {
           this.funcionarios = [];
         } else {

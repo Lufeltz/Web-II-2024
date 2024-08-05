@@ -1,5 +1,4 @@
-export class Endereco {
-  idEndereco: number = 0;
+export class EnderecoDto {
   cep: string = '';
   uf: string = '';
   cidade: string = '';

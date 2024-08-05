@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
 export class EditarFuncionariosModalComponent implements OnInit {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() edicaoConcluida = new EventEmitter<void>();
-  @Input() funcionarioParaEditar!: FuncionarioDto;
+  @Input() funcionarioParaEditar!: Funcionario;
   @ViewChild('formEditarFuncionario') formEditarFuncionario!: NgForm;
 
   //  ======================[NEW]======================
@@ -42,7 +42,8 @@ export class EditarFuncionariosModalComponent implements OnInit {
     private router: Router
   ) {}
 
-  funcionarios: FuncionarioDto[] = [];
+  funcionarios: Funcionario[] = [];
+  funcionarios2: Funcionario[] = [];
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
@@ -51,7 +52,7 @@ export class EditarFuncionariosModalComponent implements OnInit {
       this.funcionarioService
         .putFuncionario(this.funcionarioParaEditar)
         .subscribe({
-          next: (roupa: FuncionarioDto | null) => {
+          next: (funcionario: Funcionario | null) => {
             this.router.navigate(['/manutencao-funcionario']);
             this.edicaoConcluida.emit();
             this.listarFuncionarios();
@@ -64,9 +65,9 @@ export class EditarFuncionariosModalComponent implements OnInit {
     }
   }
 
-  listarFuncionarios(): FuncionarioDto[] {
+  listarFuncionarios(): Funcionario[] {
     this.funcionarioService.getAllFuncionarios().subscribe({
-      next: (data: FuncionarioDto[] | null) => {
+      next: (data: Funcionario[] | null) => {
         if (data == null) {
           this.funcionarios = [];
         } else {

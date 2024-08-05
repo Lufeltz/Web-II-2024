@@ -1,7 +1,7 @@
 import { Permissao } from './permissao.model';
 
 export class Usuario{
-  id: number = 0;
+  idUsuario: number = 0;
   nome: string = '';
   email: string = '';
   senha: string = '';

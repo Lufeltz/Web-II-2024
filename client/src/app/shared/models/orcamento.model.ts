@@ -1,5 +1,5 @@
 export class Orcamento {
-    id: number = 0;
+    idOrcamento: number = 0;
     valor: number = 0;
     dataPrazo: Date = new Date();
     aprovado: boolean = false;

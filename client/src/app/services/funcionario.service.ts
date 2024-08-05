@@ -24,23 +24,25 @@ export class FuncionarioService {
   };
 
   // arrumar a URL em NEW_URL e nos métodos
-  getAllFuncionarios(): Observable<FuncionarioDto[] | null> {
-    return this._http.get<FuncionarioDto[]>(`${this.NEW_URL}/listar`, this.httpOptions).pipe(
-      map((resp: HttpResponse<FuncionarioDto[]>) => {
-        if (resp.status == 200) {
-          return resp.body;
-        } else {
-          return [];
-        }
-      }),
-      catchError((err, caught) => {
-        if (err.status == 404) {
-          return of([]);
-        } else {
-          return throwError(() => err);
-        }
-      })
-    );
+  getAllFuncionarios(): Observable<Funcionario[] | null> {
+    return this._http
+      .get<Funcionario[]>(`${this.NEW_URL}/listar`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Funcionario[]>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
   getFuncionarioById(id: number): Observable<Funcionario | null> {
@@ -64,15 +66,17 @@ export class FuncionarioService {
       );
   }
 
-  postFuncionario(funcionario: FuncionarioDto): Observable<FuncionarioDto | null> {
+  postFuncionario(
+    funcionario: Funcionario
+  ): Observable<Funcionario | null> {
     return this._http
-      .post<FuncionarioDto>(
+      .post<Funcionario>(
         this.NEW_URL,
         JSON.stringify(funcionario),
         this.httpOptions
       )
       .pipe(
-        map((resp: HttpResponse<FuncionarioDto>) => {
+        map((resp: HttpResponse<Funcionario>) => {
           if (resp.status == 201) {
             return resp.body;
           } else {
@@ -85,15 +89,17 @@ export class FuncionarioService {
       );
   }
 
-  putFuncionario(funcionario: FuncionarioDto): Observable<FuncionarioDto | null> {
+  putFuncionario(
+    funcionario: Funcionario
+  ): Observable<Funcionario | null> {
     return this._http
-      .put<FuncionarioDto>(
-        `${this.NEW_URL}/atualizar/${funcionario.idFuncionario}`,
+      .put<Funcionario>(
+        `${this.NEW_URL}/atualizar/${funcionario.idUsuario}`,
         JSON.stringify(funcionario),
         this.httpOptions
       )
       .pipe(
-        map((resp: HttpResponse<FuncionarioDto>) => {
+        map((resp: HttpResponse<Funcionario>) => {
           if (resp.status == 200) {
             return resp.body;
           } else {

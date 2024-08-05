@@ -86,7 +86,7 @@ export class ClienteService {
   putCliente(cliente: Cliente): Observable<Cliente | null> {
     return this._http
       .put<Cliente>(
-        `${this.NEW_URL}/???/${cliente.id}`,
+        `${this.NEW_URL}/???/${cliente.idUsuario}`,
         JSON.stringify(cliente),
         this.httpOptions
       )

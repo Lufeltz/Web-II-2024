@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FuncionarioService } from '../../../../services/funcionario.service';
 import { Router } from '@angular/router';
 import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.model';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
 
 @Component({
   selector: 'app-excluir-funcionarios-modal',
@@ -14,7 +15,7 @@ import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.mo
 export class ExcluirFuncionariosModalComponent {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() exclusaoConcluida = new EventEmitter<void>();
-  @Input() funcionarioParaExcluir!: FuncionarioDto;
+  @Input() funcionarioParaExcluir!: Funcionario;
 
   //  ======================[NEW]======================
   constructor(
@@ -22,7 +23,7 @@ export class ExcluirFuncionariosModalComponent {
     private router: Router
   ) {}
 
-  funcionarios: FuncionarioDto[] = [];
+  funcionarios: Funcionario[] = [];
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
@@ -32,22 +33,22 @@ export class ExcluirFuncionariosModalComponent {
 
     // console.log(this.roupaParaExcluir.idRoupa);
     this.funcionarioService
-      .deleteFuncionario(this.funcionarioParaExcluir.idFuncionario)
+      .deleteFuncionario(this.funcionarioParaExcluir.idUsuario)
       .subscribe({
         complete: () => {
           this.exclusaoConcluida.emit();
           this.listarFuncionarios();
         },
         error: (err) => {
-          this.mensagem = `Erro removendo funcionario ${this.funcionarioParaExcluir.idFuncionario} - ${this.funcionarioParaExcluir.usuario.nome}`;
+          this.mensagem = `Erro removendo funcionario ${this.funcionarioParaExcluir.idUsuario} - ${this.funcionarioParaExcluir.usuario.nome}`;
           this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         },
       });
   }
 
-  listarFuncionarios(): FuncionarioDto[] {
+  listarFuncionarios(): Funcionario[] {
     this.funcionarioService.getAllFuncionarios().subscribe({
-      next: (data: FuncionarioDto[] | null) => {
+      next: (data: Funcionario[] | null) => {
         if (data == null) {
           this.funcionarios = [];
         } else {
