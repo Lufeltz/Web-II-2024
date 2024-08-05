@@ -12,7 +12,7 @@ export class RoupaService {
 
   // ===============================[NEW]===============================
 
-  NEW_URL = 'http://localhost:8080/?????';
+  NEW_URL = 'http://localhost:8080/roupa';
 
   httpOptions = {
     observe: 'response' as 'response',
@@ -23,7 +23,7 @@ export class RoupaService {
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllRoupas(): Observable<Roupa[] | null> {
-    return this._http.get<Roupa[]>(this.NEW_URL, this.httpOptions).pipe(
+    return this._http.get<Roupa[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
       map((resp: HttpResponse<Roupa[]>) => {
         if (resp.status == 200) {
           return resp.body;

@@ -17,7 +17,7 @@ export class PedidosService {
 
   // ===============================[NEW]===============================
 
-  NEW_URL = 'http://localhost:8080/?????';
+  NEW_URL = 'http://localhost:8080/pedido';
 
   httpOptions = {
     observe: 'response' as 'response',
@@ -28,7 +28,7 @@ export class PedidosService {
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllPedidos(): Observable<Pedido[] | null> {
-    return this._http.get<Pedido[]>(this.NEW_URL, this.httpOptions).pipe(
+    return this._http.get<Pedido[]>(this.NEW_URL + "/cadastrar", this.httpOptions).pipe(
       map((resp: HttpResponse<Pedido[]>) => {
         if (resp.status == 200) {
           return resp.body;

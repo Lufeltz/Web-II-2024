@@ -6,45 +6,56 @@ import { Orcamento } from '../../shared/models/orcamento.model';
 import { Pedido } from '../../shared/models/pedido.model'; 
 import { Status } from '../../shared/models/status.enum';
 import { PedidoRoupa } from '../../shared/models/pedido-roupa.model';
-
+import { PedidosService } from '../../services/pedidos.service';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-pedido',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './pedido.component.html',
   styleUrl: './pedido.component.css'
 })
 export class PedidoComponent {
     private roupas : Roupa[] = [];
+    private roupaSelecionada: Roupa | undefined;
     private listaRoupas : PedidoRoupa[] = [];
-    private valorTotal : number = 0.0;
-    private prazo: Date = new Date();
+    private orcamentoAtual: Orcamento = new Orcamento;
     private mostrarValores: boolean = false;
 
-    constructor(private roupaService: RoupaService){
+    constructor(private roupaService: RoupaService, private pedidoService: PedidosService){
 
     }
 
-    inserirRoupa(roupa: string, qntd: string): void{
-      let nQntd = parseInt(qntd);
-      let novoItem: PedidoRoupa = new PedidoRoupa();
-      novoItem.roupa.descricao = roupa;
-      novoItem.quantidade = nQntd;
-      this.listaRoupas.push(novoItem);
-      //busca na base de dados dos valores (A SER IMPLEMENTADO)
-      /*
-      this.roupaService.getRoupas().subscribe((roupas: Roupa[]) => {
-        const totalRoupas: number = roupas.length;
-        for(let i=0;i<totalRoupas;i++){
-          if(roupa == roupas[i].roupa){
-            this.valorTotal += roupas[i].preco * nQntd;
-            this.tempoEstim += roupas[i].tempoDeServicoMinutos * nQntd;
-            this.roupas[this.cont] = roupas[i];
+    ngOnInit(): void{
+      this.loadRoupas();
+    }
+
+    loadRoupas(): Roupa[] {
+      this.roupaService.getAllRoupas().subscribe({
+        next: (data: Roupa[] | null) => {
+          if(data == null){
+            this.roupas = [];
           }
-        }        
-      });  
-      */            
+          else {
+            this.roupas = data;
+        }
+      },
+        error: (err) => {
+          console.log("Erro ao carregar roupas da base de dados");
+        }
+      });
+      return this.roupas;
+    }
+
+    inserirRoupa(roupa: Roupa | undefined, qntd: string): void{
+      if(roupa) {
+        let nQntd = parseInt(qntd);
+        let novoItem: PedidoRoupa = new PedidoRoupa();
+        novoItem.roupa = roupa;
+        novoItem.quantidade = nQntd;
+        this.listaRoupas.push(novoItem);
+      }            
     }
 
     removerRoupa(item : PedidoRoupa): void{
@@ -53,24 +64,33 @@ export class PedidoComponent {
     }
 
     cadastrarPedido(){
-      let novoOrcamento: Orcamento = new Orcamento();
-      novoOrcamento.dataPrazo = this.prazo;
-      novoOrcamento.valor = this.valorTotal;
-      novoOrcamento.aprovado = false;
+      this.orcamentoAtual = new Orcamento();
+      let i, diasMax: number = 0;
+      for(i=0; i<this.listaRoupas.length; i++){
+        this.orcamentoAtual.valor += this.listaRoupas[i].roupa.preco;
+        if(this.listaRoupas[i].roupa.prazoDias > diasMax){
+          diasMax = this.listaRoupas[i].roupa.prazoDias;
+        }
+      }
+      this.orcamentoAtual.dataPrazo.setDate(this.orcamentoAtual.dataPrazo.getDate() + diasMax);
+      this.orcamentoAtual.aprovado = false;
       this.mostrarValores = true;
     }
 
     aprovarPedido() {
       let novoPedido: Pedido = new Pedido();
+      novoPedido.orcamento = this.orcamentoAtual;
+      //novoPedido.cliente = null; obter o login do cliente
       novoPedido.dataPedido = new Date();
-    
+      
+      const prazoSimulado: Date = novoPedido.orcamento.dataPrazo;
       // Verifique se dataPrazo é um objeto Date
       if (!(novoPedido.orcamento.dataPrazo instanceof Date)) {
-        novoPedido.orcamento.dataPrazo = new Date(novoPedido.orcamento.dataPrazo);
+        novoPedido.orcamento.dataPrazo = new Date(); //reseta para data atual
       }
     
       // Calcule a diferença em milissegundos
-      const diferencaMillis = this.prazo.getTime() - novoPedido.orcamento.dataPrazo.getTime();
+      const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     
       // Converter para dias
       const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
@@ -82,52 +102,68 @@ export class PedidoComponent {
       console.log(`Diferença em dias: ${diferencaDias}`);
     
       // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
-      novoPedido.orcamento.dataPrazo = new Date(this.prazo.getTime() + diferencaMillis);
-    
-      novoPedido.orcamento.valor = this.valorTotal;
+      novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
+      novoPedido.orcamento.aprovado = true;
       novoPedido.listaPedidoRoupa = this.listaRoupas; // Corrigido para `this.listaRoupas`
       novoPedido.situacao.tipoSituacao = Status.EM_ABERTO;
-    
-      alert("Seu pedido de número #00000 foi enviado com sucesso!");
+      
+      this.pedidoService.postPedido(novoPedido).subscribe({
+        next: (pedido) => {
+          alert("Seu pedido de número #" + pedido?.id + "foi enviado com sucesso!");
+        },
+        error: (err) => {
+          console.log("Erro ao enviar pedido!");
+        }
+      });
     }
 
     rejeitarPedido() {
       let novoPedido: Pedido = new Pedido();
+      novoPedido.orcamento = this.orcamentoAtual;
+      //novoPedido.cliente = null; obter o login do cliente
       novoPedido.dataPedido = new Date();
-    
-      // Certifique-se de que dataPrazo é um objeto Date
+      
+      const prazoSimulado: Date = novoPedido.orcamento.dataPrazo;
+      // Verifique se dataPrazo é um objeto Date
       if (!(novoPedido.orcamento.dataPrazo instanceof Date)) {
-        novoPedido.orcamento.dataPrazo = new Date(novoPedido.orcamento.dataPrazo);
+        novoPedido.orcamento.dataPrazo = new Date(); //reseta para data atual
       }
     
-      // Calcule a diferença em milissegundos e converta para dias
-      const diferencaMillis = this.prazo.getTime() - novoPedido.orcamento.dataPrazo.getTime();
+      // Calcule a diferença em milissegundos
+      const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
+    
+      // Converter para dias
       const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
     
-      // Exibir a diferença em dias no console, se necessário
       console.log(`Diferença em dias: ${diferencaDias}`);
     
-      // Atualize a dataPrazo com a nova data se necessário
-      novoPedido.orcamento.dataPrazo = new Date(this.prazo.getTime() + diferencaMillis);
-    
-      novoPedido.orcamento.valor = this.valorTotal;
-      novoPedido.listaPedidoRoupa = this.listaRoupas; // Corrigido para atribuir diretamente a listaRoupas
+      // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
+      novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
+      novoPedido.orcamento.aprovado = true;
+      novoPedido.listaPedidoRoupa = this.listaRoupas; // Corrigido para `this.listaRoupas`
       novoPedido.situacao.tipoSituacao = Status.REJEITADO;
+      
+      this.pedidoService.postPedido(novoPedido).subscribe({
+        next: (pedido) => {
+          alert("O orçamento foi rejeitado");
+        },
+        error: (err) => {
+          console.log("Erro ao enviar pedido!");
+        }
+      });
     
       // Limpar a lista de roupas e ocultar valores
       this.listaRoupas.splice(0, this.listaRoupas.length);
       this.mostrarValores = false;
-    
-      alert("O orçamento foi rejeitado!");
     }
     
 
     get total(): number{
-      return this.valorTotal;
+      return this.orcamentoAtual.valor;
     }
 
     get tempo(): Date{
-      return this.prazo;
+      return this.orcamentoAtual.dataPrazo;
     }
 
     get tabela(): PedidoRoupa[]{
@@ -136,5 +172,17 @@ export class PedidoComponent {
     
     get exibir(): boolean{
       return this.mostrarValores;
+    }
+
+    get getRoupas(): Roupa[]{
+      return this.roupas;
+    }
+
+    get selectedRoupa(): Roupa | undefined{
+      return this.roupaSelecionada;
+    }
+
+    set selectedRoupa(value: Roupa | undefined) {
+      this.roupaSelecionada = value;
     }
 }

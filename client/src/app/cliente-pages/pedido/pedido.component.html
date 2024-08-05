@@ -3,14 +3,8 @@
   <div class="row">
     <div class="col-md-4">
       <label for="roupa">Roupa:</label>
-      <select id="roupa" #descrRoupa class="form-control">
-        <option value="Camiseta">Camiseta</option>
-        <option value="Calça">Calça</option>
-        <option value="Blusa">Blusa</option>
-        <option value="Bermuda">Bermuda</option>
-        <option value="Vestido">Vestido</option>
-        <option value="Meia">Meia</option>
-        <option value="Toalha">Toalha</option>
+      <select id="roupa" [(ngModel)]="selectedRoupa" class="form-control">
+        <option *ngFor="let roupa of getRoupas" [ngValue]="roupa">{{ roupa.descricao }}</option>
       </select>
     </div>
     <div class="col-md-4">
@@ -29,7 +23,7 @@
       <button
         id="addRoupa"
         class="btn btn-primary mt-4"
-        (click)="inserirRoupa(descrRoupa.value, quantidade.value)"
+        (click)="inserirRoupa(selectedRoupa, quantidade.value)"
       >
         Inserir
       </button>
@@ -45,7 +39,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let roupa of tabela">
-        <td>{{ roupa.roupa }}</td>
+        <td>{{ roupa.roupa.descricao }}</td>
         <td>{{ roupa.quantidade }}</td>
         <td>
           <button
@@ -64,7 +58,7 @@
   <div class="result" *ngIf="exibir">
     <p class="d-flex align-items-center">
       <label for="total">Valor total:&nbsp;</label>
-      <span id="total">R$ {{ total }}</span>
+      <span id="total">{{ total | currency:'BRL':'symbol':'1.2-2'}}</span>
     </p>
     <p class="d-flex align-items-center">
       <label for="dias">Prazo estimado:&nbsp;</label>
