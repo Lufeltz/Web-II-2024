@@ -17,6 +17,8 @@ import autoTable from 'jspdf-autotable';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../shared/models/cliente.model';
 import { RelatorioCliente } from '../../shared/models/relatorio-cliente.model';
+import { RelatorioTodosClientes } from '../../shared/models/dto/relatorio-todos-clientes';
+import { RelatorioService } from '../../services/relatorio.service';
 
 @Component({
   selector: 'app-relatorio-clientes',
@@ -38,11 +40,44 @@ export class RelatorioClientesComponent implements OnInit {
   clienteTotal!: number;
   clientes: Cliente[] = [];
 
+
+  // ====================[NEW]====================
+  clientes2: RelatorioTodosClientes[] = []
+  mensagem: string = '';
+  mensagem_detalhes = '';
+
+
+  ngOnInit(): void {
+    this.listarClientes();
+  }
+
+  listarClientes(): RelatorioTodosClientes[] {
+    this.relatorioService.getAllClientes().subscribe({
+      next: (data: RelatorioTodosClientes[] | null) => {
+        if (data == null) {
+          this.clientes2 = [];
+        } else {
+          this.clientes2 = data;
+          console.log(this.clientes2);
+        }
+      },
+      error: (err) => {
+        this.mensagem = 'Erro buscando lista de clientes';
+        this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+      },
+    });
+    return this.clientes2;
+  }
+
+  // ====================[NEW]====================
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private pedidosService: PedidosService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    // novo
+    private relatorioService: RelatorioService
   ) {
     this.currentDate = new Date().toISOString().slice(0, 10);
     console.log(this.currentDate);
@@ -57,8 +92,6 @@ export class RelatorioClientesComponent implements OnInit {
       ],
     });
   }
-
-  ngOnInit(): void {}
 
   gerarRelatorio() {
     this.relatorioClientes = []
