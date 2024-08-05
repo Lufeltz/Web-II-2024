@@ -39,12 +39,9 @@ export class AdicionarRoupasModalComponent implements OnInit {
   @ViewChild('formAdicionarRoupa') formAdicionarRoupa!: NgForm;
 
   //  ======================[NEW]======================
-  constructor(
-    private roupasService: RoupaService,
-    private router: Router
-  ) {}
+  constructor(private roupasService: RoupaService, private router: Router) {}
 
-  roupas: Roupa[] = []
+  roupas: Roupa[] = [];
   novaRoupa: boolean = true;
   roupa: Roupa = new Roupa();
   id!: string;
@@ -70,22 +67,19 @@ export class AdicionarRoupasModalComponent implements OnInit {
           },
           error: (err) => {
             this.loading = false;
-            this.mensagem = `Erro inserindo usuário ${this.roupa.descricao}`;
+            this.mensagem = `Erro inserindo roupa ${this.roupa.descricao}`;
             if (err.status == 409) {
               this.mensagem_detalhes = `[${err.status}] ${err.message}`;
             }
           },
         });
       }
-    }
-    else {
+    } else {
       this.loading = false;
     }
-
-    this.adicaoConcluida.emit()
-    this.listarRoupas()
+    this.adicaoConcluida.emit();
+    this.listarRoupas();
   }
-
 
   listarRoupas(): Roupa[] {
     this.roupasService.getAllRoupas().subscribe({

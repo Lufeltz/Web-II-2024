@@ -22,7 +22,7 @@
                     name="nome"
                     id="nome"
                     placeholder=" "
-                    [(ngModel)]="nomeFuncionario"
+                    [(ngModel)]="funcionario.usuario.nome"
                     #nome="ngModel"
                     required
                     [class.invalid-border]="
@@ -53,7 +53,7 @@
                     name="email"
                     id="email"
                     placeholder=" "
-                    [(ngModel)]="emailFuncionario"
+                    [(ngModel)]="funcionario.usuario.email"
                     #email="ngModel"
                     required
                     [class.invalid-border]="
@@ -86,7 +86,7 @@
                     name="dataNascimento"
                     id="dataNascimento"
                     placeholder=" "
-                    [(ngModel)]="dataNascimentoFuncionario"
+                    [(ngModel)]="funcionario.dataNascimento"
                     #dataNascimento="ngModel"
                     (focus)="clearValueInvalid()"
                     mask="d0/M0/0000"
@@ -116,7 +116,7 @@
                     name="senha"
                     id="senha"
                     placeholder=" "
-                    [(ngModel)]="senhaFuncionario"
+                    [(ngModel)]="funcionario.usuario.senha"
                     #senha="ngModel"
                     required
                     pattern="[0-9]*"

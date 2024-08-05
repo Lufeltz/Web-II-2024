@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
+import { FuncionarioDto } from '../shared/models/dto/funcionario-dto.model';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -13,7 +14,7 @@ export class FuncionarioService {
 
   // ===============================[NEW]===============================
 
-  NEW_URL = 'http://localhost:8080/?????';
+  NEW_URL = 'http://localhost:8080/funcionario';
 
   httpOptions = {
     observe: 'response' as 'response',
@@ -23,9 +24,9 @@ export class FuncionarioService {
   };
 
   // arrumar a URL em NEW_URL e nos métodos
-  getAllFuncionarios(): Observable<Funcionario[] | null> {
-    return this._http.get<Funcionario[]>(this.NEW_URL, this.httpOptions).pipe(
-      map((resp: HttpResponse<Funcionario[]>) => {
+  getAllFuncionarios(): Observable<FuncionarioDto[] | null> {
+    return this._http.get<FuncionarioDto[]>(`${this.NEW_URL}/listar`, this.httpOptions).pipe(
+      map((resp: HttpResponse<FuncionarioDto[]>) => {
         if (resp.status == 200) {
           return resp.body;
         } else {
@@ -63,15 +64,15 @@ export class FuncionarioService {
       );
   }
 
-  postFuncionario(funcionario: Funcionario): Observable<Funcionario | null> {
+  postFuncionario(funcionario: FuncionarioDto): Observable<FuncionarioDto | null> {
     return this._http
-      .post<Funcionario>(
+      .post<FuncionarioDto>(
         this.NEW_URL,
         JSON.stringify(funcionario),
         this.httpOptions
       )
       .pipe(
-        map((resp: HttpResponse<Funcionario>) => {
+        map((resp: HttpResponse<FuncionarioDto>) => {
           if (resp.status == 201) {
             return resp.body;
           } else {
@@ -84,15 +85,15 @@ export class FuncionarioService {
       );
   }
 
-  putFuncionario(funcionario: Funcionario): Observable<Funcionario | null> {
+  putFuncionario(funcionario: FuncionarioDto): Observable<FuncionarioDto | null> {
     return this._http
-      .put<Funcionario>(
-        `${this.NEW_URL}/???/${funcionario.id}`,
+      .put<FuncionarioDto>(
+        `${this.NEW_URL}/atualizar/${funcionario.idFuncionario}`,
         JSON.stringify(funcionario),
         this.httpOptions
       )
       .pipe(
-        map((resp: HttpResponse<Funcionario>) => {
+        map((resp: HttpResponse<FuncionarioDto>) => {
           if (resp.status == 200) {
             return resp.body;
           } else {
@@ -107,7 +108,7 @@ export class FuncionarioService {
 
   deleteFuncionario(id: number): Observable<Funcionario | null> {
     return this._http
-      .delete<Funcionario>(`${this.NEW_URL}/???/${id}`, this.httpOptions)
+      .delete<Funcionario>(`${this.NEW_URL}/remover/${id}`, this.httpOptions)
       .pipe(
         map((resp: HttpResponse<Funcionario>) => {
           if (resp.status == 200) {

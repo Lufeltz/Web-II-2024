@@ -6,6 +6,9 @@ import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
+import { FuncionarioService } from '../../../../services/funcionario.service';
+import { Router } from '@angular/router';
+import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.model';
 
 @Component({
   selector: 'app-adicionar-funcionarios-modal',
@@ -17,7 +20,7 @@ import { LetrasSomenteDirective } from '../../../../shared/directives/letras-som
     NgxCurrencyDirective,
     NgxMaskDirective,
     NumericoDirective,
-    LetrasSomenteDirective
+    LetrasSomenteDirective,
   ],
   templateUrl: './adicionar-funcionarios-modal.component.html',
   styleUrl: './adicionar-funcionarios-modal.component.css',
@@ -26,6 +29,71 @@ export class AdicionarFuncionariosModalComponent {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() adicaoConcluida = new EventEmitter<void>();
   @ViewChild('formAdicionarFuncionario') formAdicionarFuncionario!: NgForm;
+
+  //  ======================[NEW]======================
+  constructor(
+    private funcionarioService: FuncionarioService,
+    private router: Router
+  ) {}
+
+  funcionarios: FuncionarioDto[] = [];
+  novoFuncionario: boolean = true;
+  funcionario: FuncionarioDto = new FuncionarioDto();
+  id!: string;
+  loading!: boolean;
+  mensagem: string = '';
+  mensagem_detalhes: string = '';
+  botaoDesabilitado: boolean = false; // não está sendo utilizado
+
+  ngOnInit(): void {
+    this.loading = false;
+    this.novoFuncionario = !this.id;
+  }
+
+  adicionar(): void {
+    this.loading = true;
+    if (this.formAdicionarFuncionario.form.valid) {
+      if (this.novoFuncionario) {
+        this.funcionarioService.postFuncionario(this.funcionario).subscribe({
+          next: (funcionario) => {
+            this.loading = false;
+            this.router.navigate(['/manutencao-funcionario']);
+            // console.log(roupa);
+          },
+          error: (err) => {
+            this.loading = false;
+            this.mensagem = `Erro inserindo funcionario ${this.funcionario.usuario.nome}`;
+            if (err.status == 409) {
+              this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+            }
+          },
+        });
+      }
+    } else {
+      this.loading = false;
+    }
+    this.adicaoConcluida.emit();
+    this.listarFuncionarios();
+  }
+
+  listarFuncionarios(): FuncionarioDto[] {
+    this.funcionarioService.getAllFuncionarios().subscribe({
+      next: (data: FuncionarioDto[] | null) => {
+        if (data == null) {
+          this.funcionarios = [];
+        } else {
+          this.funcionarios = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = 'Erro buscando lista de usuários';
+        this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+      },
+    });
+    return this.funcionarios;
+  }
+
+  //  ======================[NEW]======================
 
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
@@ -38,29 +106,29 @@ export class AdicionarFuncionariosModalComponent {
     this.voltarClicked.emit();
   }
 
-  adicionar(): void {
-    if (
-      this.formAdicionarFuncionario.form.valid &&
-      this.nomeFuncionario &&
-      this.emailFuncionario &&
-      this.dataNascimentoFuncionario &&
-      this.senhaFuncionario
-    ) {
-      const newFuncionario: Funcionario = new Funcionario();
-      newFuncionario.id = 0;
-      newFuncionario.nome = this.nomeFuncionario;
-      newFuncionario.email = this.emailFuncionario;
-      newFuncionario.dataNascimento = this.dataNascimentoFuncionario;
-      newFuncionario.senha = this.senhaFuncionario;
+  // adicionar(): void {
+  //   if (
+  //     this.formAdicionarFuncionario.form.valid &&
+  //     this.nomeFuncionario &&
+  //     this.emailFuncionario &&
+  //     this.dataNascimentoFuncionario &&
+  //     this.senhaFuncionario
+  //   ) {
+  //     const newFuncionario: Funcionario = new Funcionario();
+  //     newFuncionario.id = 0;
+  //     newFuncionario.nome = this.nomeFuncionario;
+  //     newFuncionario.email = this.emailFuncionario;
+  //     newFuncionario.dataNascimento = this.dataNascimentoFuncionario;
+  //     newFuncionario.senha = this.senhaFuncionario;
 
-      console.log('Funcionário criado com sucesso: ', newFuncionario);
+  //     console.log('Funcionário criado com sucesso: ', newFuncionario);
 
-      this.adicaoConcluida.emit();
-    } else {
-      console.log('Erro ao criar funcionário!');
-      this.valueInvalid = true;
-    }
-  }
+  //     this.adicaoConcluida.emit();
+  //   } else {
+  //     console.log('Erro ao criar funcionário!');
+  //     this.valueInvalid = true;
+  //   }
+  // }
 
   diasParaMinutos(dias: number): number {
     const minutosPorDia = 24 * 60;

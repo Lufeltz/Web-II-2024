@@ -20,7 +20,7 @@
                     name="nome"
                     id="nome"
                     placeholder=" "
-                    [(ngModel)]="nomeFuncionario"
+                    [(ngModel)]="funcionarioParaEditar.usuario.nome"
                     #nome="ngModel"
                     required
                     [class.invalid-border]="
@@ -51,7 +51,7 @@
                     name="email"
                     id="email"
                     placeholder=" "
-                    [(ngModel)]="emailFuncionario"
+                    [(ngModel)]="funcionarioParaEditar.usuario.email"
                     #email="ngModel"
                     required
                     [class.invalid-border]="
@@ -84,7 +84,7 @@
                     name="dataNascimento"
                     id="dataNascimento"
                     placeholder=" "
-                    [(ngModel)]="dataNascimentoFuncionario"
+                    [(ngModel)]="funcionarioParaEditar.dataNascimento"
                     #dataNascimento="ngModel"
                     required
                     [class.invalid-border]="
@@ -120,9 +120,9 @@
                   name="senha"
                   id="senha"
                   placeholder=" "
-                  [(ngModel)]="senhaFuncionario"
+                  [(ngModel)]="funcionarioParaEditar.usuario.senha"
                   #senha="ngModel"
-                  required
+                  
                   [class.invalid-border]="
                     senha.invalid && (senha.dirty || senha.touched)
                   "

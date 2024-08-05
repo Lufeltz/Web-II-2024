@@ -49,7 +49,7 @@ export class ManutencaoRoupasComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.mensagem = 'Erro buscando lista de usuários';
+        this.mensagem = 'Erro buscando lista de roupas';
         this.mensagem_detalhes = `[${err.status} ${err.message}]`;
       },
     });
@@ -75,7 +75,6 @@ export class ManutencaoRoupasComponent implements OnInit {
   //     error: (error) => console.log('Erro ao requisitar as roupas: ', error),
   //   });
   // }
-
 
   // apagar depois
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {

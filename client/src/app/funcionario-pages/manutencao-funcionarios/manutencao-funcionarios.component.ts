@@ -9,20 +9,30 @@ import { ExcluirFuncionariosModalComponent } from './manutencao-funcionarios-mod
 import { FuncionarioService } from '../../services/funcionario.service';
 import { Funcionario } from '../../shared/models/funcionario.model';
 import { NgxMaskPipe } from 'ngx-mask';
+import { FuncionarioDto } from '../../shared/models/dto/funcionario-dto.model';
 
 @Component({
   selector: 'app-manutencao-funcionarios',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule, NgxMaskPipe],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterLink,
+    ReactiveFormsModule,
+    NgxMaskPipe,
+  ],
   templateUrl: './manutencao-funcionarios.component.html',
   styleUrl: './manutencao-funcionarios.component.css',
 })
 export class ManutencaoFuncionariosComponent implements OnInit {
-  funcionario: Funcionario[] = [];
   orderFuncionario: Funcionario[] = [];
   funcionariosIsPresent: boolean | any = null;
-  funcionarioParaEditar: Funcionario | undefined;
-  funcionarioParaExcluir: Funcionario | undefined;
+  funcionarioParaEditar!: FuncionarioDto;
+  funcionarioParaExcluir!: FuncionarioDto;
+  //  ======================[NEW]======================
+  funcionarios: FuncionarioDto[] = [];
+  mensagem: string = '';
+  mensagem_detalhes = '';
 
   constructor(
     private router: Router,
@@ -31,28 +41,50 @@ export class ManutencaoFuncionariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadFuncionarios();
+    this.listarFuncionarios();
   }
 
-  loadFuncionarios() {
-    this.funcionarioService.getFuncionarios().subscribe({
-      next: (funcionario: Funcionario[]) => {
-        this.funcionario = funcionario;
-        // this.orderFuncionario = funcionario
-        //   .sort((a, b) => {
-        //     const descricaoA = a..toLowerCase();
-        //     const descricaoB = b.funcionario.toLowerCase();
-        //     return descricaoA.localeCompare(descricaoB);
-        //   });
-        if (this.funcionario.length === 0) {
+  listarFuncionarios(): FuncionarioDto[] {
+    this.funcionarioService.getAllFuncionarios().subscribe({
+      next: (data: FuncionarioDto[] | null) => {
+        if (data == null) {
+          this.funcionarios = [];
           this.funcionariosIsPresent = false;
         } else {
+          this.funcionarios = data;
+          // console.log(this.roupas);
           this.funcionariosIsPresent = true;
         }
       },
-      error: (error) => console.log('Erro ao requisitar as roupas: ', error),
+      error: (err) => {
+        this.mensagem = 'Erro buscando lista de funcionários';
+        this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+      },
     });
+    return this.funcionarios;
   }
+
+  //  ======================[NEW]======================
+
+  // loadFuncionarios() {
+  //   this.funcionarioService.getFuncionarios().subscribe({
+  //     next: (funcionario: Funcionario[]) => {
+  //       this.funcionario = funcionario;
+  //       // this.orderFuncionario = funcionario
+  //       //   .sort((a, b) => {
+  //       //     const descricaoA = a..toLowerCase();
+  //       //     const descricaoB = b.funcionario.toLowerCase();
+  //       //     return descricaoA.localeCompare(descricaoB);
+  //       //   });
+  //       if (this.funcionario.length === 0) {
+  //         this.funcionariosIsPresent = false;
+  //       } else {
+  //         this.funcionariosIsPresent = true;
+  //       }
+  //     },
+  //     error: (error) => console.log('Erro ao requisitar as roupas: ', error),
+  //   });
+  // }
 
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
     return Math.ceil(tempoDeServicoMinutos / 1440);
@@ -71,12 +103,12 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.adicaoConcluida.subscribe(() => {
-      this.loadFuncionarios();
+      this.listarFuncionarios();
       modalRef.close();
     });
   }
 
-  editar(funcionario: Funcionario) {
+  editar(funcionario: FuncionarioDto) {
     this.funcionarioParaEditar = funcionario;
     const modalRef = this.modalService.open(EditarFuncionariosModalComponent, {
       backdrop: 'static',
@@ -88,12 +120,12 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.edicaoConcluida.subscribe(() => {
-      this.loadFuncionarios();
+      this.listarFuncionarios();
       modalRef.close();
     });
   }
 
-  excluir(funcionario: Funcionario) {
+  excluir(funcionario: FuncionarioDto) {
     this.funcionarioParaExcluir = funcionario;
     const modalRef = this.modalService.open(ExcluirFuncionariosModalComponent, {
       backdrop: 'static',
@@ -105,7 +137,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.exclusaoConcluida.subscribe(() => {
-      this.loadFuncionarios();
+      this.listarFuncionarios();
       modalRef.close();
     });
   }

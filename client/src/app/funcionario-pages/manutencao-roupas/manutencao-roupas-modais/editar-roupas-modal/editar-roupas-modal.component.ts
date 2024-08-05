@@ -43,7 +43,7 @@ export class EditarRoupasModalComponent implements OnInit {
     if (this.formEditarRoupa.form.valid) {
       this.roupaService.putRoupa(this.roupaParaEditar).subscribe({
         next: (roupa: RoupaDto | null) => {
-          this.router.navigate(['manutencao-roupa']);
+          this.router.navigate(['/manutencao-roupa']);
           this.edicaoConcluida.emit();
           this.listarRoupas();
         },
@@ -81,13 +81,13 @@ export class EditarRoupasModalComponent implements OnInit {
   valueInvalid: boolean = false;
 
   ngOnInit(): void {
-    if (this.roupaParaEditar) {
-      this.descricaoRoupa = this.roupaParaEditar.descricao;
-      this.prazoRoupa = this.formatarMinutosParaDiasUteis(
-        this.roupaParaEditar.prazoDias
-      );
-      this.precoRoupa = this.roupaParaEditar.preco;
-    }
+    // if (this.roupaParaEditar) {
+    //   this.descricaoRoupa = this.roupaParaEditar.descricao;
+    //   this.prazoRoupa = this.formatarMinutosParaDiasUteis(
+    //     this.roupaParaEditar.prazoDias
+    //   );
+    //   this.precoRoupa = this.roupaParaEditar.preco;
+    // }
   }
 
   cancelar(): void {

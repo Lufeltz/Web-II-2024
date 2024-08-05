@@ -29,7 +29,7 @@ export class ExcluirRoupasModalComponent {
     this.mensagem = '';
     this.mensagem_detalhes = '';
 
-    console.log(this.roupaParaExcluir.idRoupa);
+    // console.log(this.roupaParaExcluir.idRoupa);
     this.roupasService.deleteRoupa(this.roupaParaExcluir.idRoupa).subscribe({
       complete: () => {
         this.exclusaoConcluida.emit();
