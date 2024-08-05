@@ -31,10 +31,10 @@ export class ManutencaoFuncionariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadRoupas();
+    this.loadFuncionarios();
   }
 
-  loadRoupas() {
+  loadFuncionarios() {
     this.funcionarioService.getFuncionarios().subscribe({
       next: (funcionario: Funcionario[]) => {
         this.funcionario = funcionario;
@@ -71,7 +71,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.adicaoConcluida.subscribe(() => {
-      this.loadRoupas();
+      this.loadFuncionarios();
       modalRef.close();
     });
   }
@@ -88,7 +88,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.edicaoConcluida.subscribe(() => {
-      this.loadRoupas();
+      this.loadFuncionarios();
       modalRef.close();
     });
   }
@@ -105,7 +105,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       modalRef.close();
     });
     modalRef.componentInstance.exclusaoConcluida.subscribe(() => {
-      this.loadRoupas();
+      this.loadFuncionarios();
       modalRef.close();
     });
   }

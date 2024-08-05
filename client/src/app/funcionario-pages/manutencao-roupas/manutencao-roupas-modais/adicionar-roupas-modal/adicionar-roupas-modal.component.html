@@ -20,7 +20,7 @@
                     name="descricao"
                     id="descricao"
                     placeholder=" "
-                    [(ngModel)]="descricaoRoupa"
+                    [(ngModel)]="roupa.descricao"
                     #descricao="ngModel"
                     required
                     [class.invalid-border]="
@@ -54,7 +54,7 @@
                     name="prazo"
                     id="prazo"
                     placeholder=" "
-                    [(ngModel)]="prazoRoupa"
+                    [(ngModel)]="roupa.prazoDias"
                     #prazo="ngModel"
                     required
                     pattern="[0-9]*"
@@ -89,7 +89,7 @@
                     name="preco"
                     id="preco"
                     placeholder=" "
-                    [(ngModel)]="precoRoupa"
+                    [(ngModel)]="roupa.preco"
                     #preco="ngModel"
                     required
                     currencyMask

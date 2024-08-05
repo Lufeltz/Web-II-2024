@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Roupa } from '../shared/models/roupa.model';
+import { RoupaDto } from '../shared/models/dto/roupa-dto.model';
 
 const BASE_URL = 'http://localhost:3000/';
 @Injectable({
@@ -12,7 +13,7 @@ export class RoupaService {
 
   // ===============================[NEW]===============================
 
-  NEW_URL = 'http://localhost:8080/?????';
+  NEW_URL = 'http://localhost:8080/roupa';
 
   httpOptions = {
     observe: 'response' as 'response',
@@ -23,22 +24,24 @@ export class RoupaService {
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllRoupas(): Observable<Roupa[] | null> {
-    return this._http.get<Roupa[]>(this.NEW_URL, this.httpOptions).pipe(
-      map((resp: HttpResponse<Roupa[]>) => {
-        if (resp.status == 200) {
-          return resp.body;
-        } else {
-          return [];
-        }
-      }),
-      catchError((err, caught) => {
-        if (err.status == 404) {
-          return of([]);
-        } else {
-          return throwError(() => err);
-        }
-      })
-    );
+    return this._http
+      .get<Roupa[]>(`${this.NEW_URL}/listar`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<Roupa[]>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
   getRoupaById(id: number): Observable<Roupa | null> {
@@ -64,7 +67,11 @@ export class RoupaService {
 
   postRoupa(roupa: Roupa): Observable<Roupa | null> {
     return this._http
-      .post<Roupa>(this.NEW_URL, JSON.stringify(roupa), this.httpOptions)
+      .post<Roupa>(
+        `${this.NEW_URL}/cadastrar`,
+        JSON.stringify(roupa),
+        this.httpOptions
+      )
       .pipe(
         map((resp: HttpResponse<Roupa>) => {
           if (resp.status == 201) {
@@ -79,15 +86,15 @@ export class RoupaService {
       );
   }
 
-  putRoupa(roupa: Roupa): Observable<Roupa | null> {
+  putRoupa(roupa: RoupaDto): Observable<RoupaDto | null> {
     return this._http
-      .put<Roupa>(
-        `${this.NEW_URL}/???/${roupa.id}`,
+      .put<RoupaDto>(
+        `${this.NEW_URL}/atualizar/${roupa.idRoupa}`,
         JSON.stringify(roupa),
         this.httpOptions
       )
       .pipe(
-        map((resp: HttpResponse<Roupa>) => {
+        map((resp: HttpResponse<RoupaDto>) => {
           if (resp.status == 200) {
             return resp.body;
           } else {
@@ -100,21 +107,21 @@ export class RoupaService {
       );
   }
 
-  deleteRoupa(id: number): Observable<Roupa | null> {
+  deleteRoupa(id: number): Observable<RoupaDto | null> {
     return this._http
-    .delete<Roupa>(`${this.NEW_URL}/???/${id}`, this.httpOptions)
-    .pipe(
-      map((resp: HttpResponse<Roupa>) => {
-        if (resp.status == 200) {
-          return resp.body;
-        } else {
-          return null;
-        }
-      }),
-      catchError((err, caught) => {
-        return throwError(() => err);
-      })
-    );
+      .delete<RoupaDto>(`${this.NEW_URL}/inativar/${id}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<RoupaDto>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
   }
 
   // ===============================[NEW]===============================

@@ -10,6 +10,9 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Roupa } from '../../../../shared/models/roupa.model';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { CommonModule } from '@angular/common';
+import { RoupaDto } from '../../../../shared/models/dto/roupa-dto.model';
+import { RoupaService } from '../../../../services/roupa.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editar-roupas-modal',
@@ -26,16 +29,56 @@ import { CommonModule } from '@angular/common';
 export class EditarRoupasModalComponent implements OnInit {
   @Output() voltarClicked = new EventEmitter<void>();
   @Output() edicaoConcluida = new EventEmitter<void>();
-  @Input() roupaParaEditar: Roupa | undefined;
+  @Input() roupaParaEditar!: RoupaDto;
   @ViewChild('formEditarRoupa') formEditarRoupa!: NgForm;
+
+  //  ======================[NEW]======================
+  constructor(private roupaService: RoupaService, private router: Router) {}
+
+  roupas: Roupa[] = [];
+  mensagem: string = '';
+  mensagem_detalhes: string = '';
+
+  salvar(): void {
+    if (this.formEditarRoupa.form.valid) {
+      this.roupaService.putRoupa(this.roupaParaEditar).subscribe({
+        next: (roupa: RoupaDto | null) => {
+          this.router.navigate(['manutencao-roupa']);
+          this.edicaoConcluida.emit();
+          this.listarRoupas();
+        },
+        error: (err) => {
+          this.mensagem = `Erro atualizando roupa ${this.roupaParaEditar.descricao}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        },
+      });
+    }
+  }
+
+  listarRoupas(): Roupa[] {
+    this.roupaService.getAllRoupas().subscribe({
+      next: (data: Roupa[] | null) => {
+        if (data == null) {
+          this.roupas = [];
+        } else {
+          this.roupas = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = 'Erro buscando lista de usuários';
+        this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+      },
+    });
+    return this.roupas;
+  }
+
+  //  ======================[NEW]======================
 
   descricaoRoupa?: string;
   prazoRoupa?: number;
   precoRoupa: number = 0;
 
   valueInvalid: boolean = false;
-
-  constructor() {}
 
   ngOnInit(): void {
     if (this.roupaParaEditar) {
@@ -49,27 +92,6 @@ export class EditarRoupasModalComponent implements OnInit {
 
   cancelar(): void {
     this.voltarClicked.emit();
-  }
-
-  salvar(): void {
-    if (
-      this.formEditarRoupa.form.valid &&
-      this.descricaoRoupa &&
-      this.prazoRoupa &&
-      this.precoRoupa > 0
-    ) {
-      const editRoupa: Roupa = new Roupa();
-      editRoupa.id = this.roupaParaEditar?.id || 0;
-      editRoupa.descricao = this.descricaoRoupa;
-      editRoupa.prazoDias = this.formatarDiasUteisParaMinutos(this.prazoRoupa);
-      editRoupa.preco = this.precoRoupa;
-      console.log('Roupa editada com sucesso: ', editRoupa);
-
-      this.edicaoConcluida.emit();
-    } else {
-      console.log('Erro ao editar roupa!');
-      this.valueInvalid = true;
-    }
   }
 
   clearValueInvalid(): void {
