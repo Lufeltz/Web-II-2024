@@ -66,7 +66,7 @@
     </p>
   </div>
   <div class="d-flex align-items-center">
-    <button
+    <button [disabled]="!botoesAtivados"
       class="btn btn-success mt-2 mr-md-2"
       id="aprovar"
       (click)="aprovarPedido()"
@@ -74,7 +74,7 @@
       Aprovar
     </button>
     <div class="cancelar">
-      <button class="btn btn-danger btn mt-2" (click)="rejeitarPedido()">
+      <button [disabled]="!botoesAtivados" class="btn btn-danger btn mt-2" (click)="rejeitarPedido()">
         Cancelar
       </button>
     </div>

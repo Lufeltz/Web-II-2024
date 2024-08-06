@@ -7,7 +7,7 @@ import { Pedido } from '../../shared/models/pedido.model';
 import { Status } from '../../shared/models/status.enum';
 import { PedidoRoupa } from '../../shared/models/pedido-roupa.model';
 import { PedidosService } from '../../services/pedidos.service';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, Validators } from '@angular/forms'; 
 
 @Component({
   selector: 'app-pedido',
@@ -22,6 +22,7 @@ export class PedidoComponent {
     private listaRoupas : PedidoRoupa[] = [];
     private orcamentoAtual: Orcamento = new Orcamento;
     private mostrarValores: boolean = false;
+    private botoesHabilitados: boolean = false;
 
     constructor(private roupaService: RoupaService, private pedidoService: PedidosService){
 
@@ -51,10 +52,15 @@ export class PedidoComponent {
     inserirRoupa(roupa: Roupa | undefined, qntd: string): void{
       if(roupa) {
         let nQntd = parseInt(qntd);
+        let verificaItem = this.listaRoupas.find(pedidoRoupa => pedidoRoupa.roupa.descricao == roupa.descricao);
+        if(verificaItem != undefined){
+          verificaItem.quantidade += nQntd;
+        } else {
         let novoItem: PedidoRoupa = new PedidoRoupa();
         novoItem.roupa = roupa;
         novoItem.quantidade = nQntd;
         this.listaRoupas.push(novoItem);
+        }
       }            
     }
 
@@ -67,7 +73,7 @@ export class PedidoComponent {
       this.orcamentoAtual = new Orcamento();
       let i, diasMax: number = 0;
       for(i=0; i<this.listaRoupas.length; i++){
-        this.orcamentoAtual.valor += this.listaRoupas[i].roupa.preco;
+        this.orcamentoAtual.valor += this.listaRoupas[i].roupa.preco * this.listaRoupas[i].quantidade;
         if(this.listaRoupas[i].roupa.prazoDias > diasMax){
           diasMax = this.listaRoupas[i].roupa.prazoDias;
         }
@@ -75,46 +81,43 @@ export class PedidoComponent {
       this.orcamentoAtual.dataPrazo.setDate(this.orcamentoAtual.dataPrazo.getDate() + diasMax);
       this.orcamentoAtual.aprovado = false;
       this.mostrarValores = true;
+      this.botoesAtivados = true;
     }
 
     aprovarPedido() {
       let novoPedido: Pedido = new Pedido();
       novoPedido.orcamento = this.orcamentoAtual;
-      //novoPedido.cliente = null; obter o login do cliente
+      //novoPedido.cliente = null; obter o cliente através do usuario logado
       novoPedido.dataPedido = new Date();
       
       const prazoSimulado: Date = novoPedido.orcamento.dataPrazo;
       // Verifique se dataPrazo é um objeto Date
       if (!(novoPedido.orcamento.dataPrazo instanceof Date)) {
         novoPedido.orcamento.dataPrazo = new Date(); //reseta para data atual
-      }
-    
+      }   
       // Calcule a diferença em milissegundos
-      const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
-    
+      const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();    
       // Converter para dias
-      const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
-    
-      // Aqui você pode decidir como quer usar a diferença:
-      // 1. Armazenar a diferença em dias em uma variável separada.
-      // 2. Manipular diretamente a data.
-    
+      const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24)
       console.log(`Diferença em dias: ${diferencaDias}`);
-    
       // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
       novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
       novoPedido.orcamento.aprovado = true;
-      novoPedido.listaPedidoRoupa = this.listaRoupas; // Corrigido para `this.listaRoupas`
-      novoPedido.situacao.tipoSituacao = Status.EM_ABERTO;
+      novoPedido.listaPedidoRoupas = this.listaRoupas; // Corrigido para `this.listaRoupas`
+      novoPedido.situacao = Status.EM_ABERTO;
       
       this.pedidoService.postPedido(novoPedido).subscribe({
         next: (pedido) => {
-          alert("Seu pedido de número #" + pedido?.id + "foi enviado com sucesso!");
+          alert("Seu pedido de número #" + pedido?.numeroPedido + " foi enviado com sucesso!");
         },
         error: (err) => {
           console.log("Erro ao enviar pedido!");
         }
       });
+      // Limpar a lista de roupas e ocultar valores
+      this.listaRoupas.splice(0, this.listaRoupas.length);
+      this.mostrarValores = false;
+      this.botoesAtivados = false;
     }
 
     rejeitarPedido() {
@@ -140,8 +143,8 @@ export class PedidoComponent {
       // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
       novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
       novoPedido.orcamento.aprovado = true;
-      novoPedido.listaPedidoRoupa = this.listaRoupas; // Corrigido para `this.listaRoupas`
-      novoPedido.situacao.tipoSituacao = Status.REJEITADO;
+      novoPedido.listaPedidoRoupas = this.listaRoupas; // Corrigido para `this.listaRoupas`
+      novoPedido.situacao = Status.REJEITADO;
       
       this.pedidoService.postPedido(novoPedido).subscribe({
         next: (pedido) => {
@@ -155,6 +158,7 @@ export class PedidoComponent {
       // Limpar a lista de roupas e ocultar valores
       this.listaRoupas.splice(0, this.listaRoupas.length);
       this.mostrarValores = false;
+      this.botoesAtivados = false;
     }
     
 
@@ -184,5 +188,13 @@ export class PedidoComponent {
 
     set selectedRoupa(value: Roupa | undefined) {
       this.roupaSelecionada = value;
+    }
+
+    get botoesAtivados(): boolean {
+      return this.botoesHabilitados;
+    }
+
+    set botoesAtivados(value: boolean){
+      this.botoesHabilitados = value;
     }
 }
