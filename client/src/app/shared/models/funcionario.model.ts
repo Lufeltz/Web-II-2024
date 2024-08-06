@@ -1,6 +1,8 @@
-import { Usuario } from "./usuario.model";
+import { Usuario } from './usuario.model';
 
-export class Funcionario extends Usuario{
-    dataNascimento: Date = new Date();
-    usuario: Usuario = new Usuario();
+export class Funcionario {
+  idFuncionario: number = 0;
+  //   dataNascimento: string = '';
+  dataNascimento: Date = new Date();
+  usuario: Usuario = new Usuario();
 }

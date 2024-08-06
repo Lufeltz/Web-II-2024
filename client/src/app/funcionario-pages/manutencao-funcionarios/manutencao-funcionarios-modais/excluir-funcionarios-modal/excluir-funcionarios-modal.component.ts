@@ -31,16 +31,15 @@ export class ExcluirFuncionariosModalComponent {
     this.mensagem = '';
     this.mensagem_detalhes = '';
 
-    // console.log(this.roupaParaExcluir.idRoupa);
     this.funcionarioService
-      .deleteFuncionario(this.funcionarioParaExcluir.idUsuario)
+      .deleteFuncionario(this.funcionarioParaExcluir.idFuncionario)
       .subscribe({
         complete: () => {
           this.exclusaoConcluida.emit();
           this.listarFuncionarios();
         },
         error: (err) => {
-          this.mensagem = `Erro removendo funcionario ${this.funcionarioParaExcluir.idUsuario} - ${this.funcionarioParaExcluir.usuario.nome}`;
+          this.mensagem = `Erro removendo funcionario ${this.funcionarioParaExcluir.idFuncionario} - ${this.funcionarioParaExcluir.usuario.nome}`;
           this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         },
       });

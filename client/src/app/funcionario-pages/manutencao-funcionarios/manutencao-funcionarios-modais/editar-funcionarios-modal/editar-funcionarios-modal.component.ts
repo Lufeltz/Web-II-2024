@@ -7,14 +7,11 @@ import {
   Input,
 } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { Roupa } from '../../../../shared/models/roupa.model';
-import { NgxCurrencyDirective } from 'ngx-currency';
 import { CommonModule } from '@angular/common';
 import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FuncionarioService } from '../../../../services/funcionario.service';
-import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -43,12 +40,13 @@ export class EditarFuncionariosModalComponent implements OnInit {
   ) {}
 
   funcionarios: Funcionario[] = [];
-  funcionarios2: Funcionario[] = [];
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
   salvar(): void {
     if (this.formEditarFuncionario.form.valid) {
+      // this.funcionarioParaEditar.usuario.permissao.tipoPermissao = 'FUNCIONARIO';
+      console.log(this.funcionarioParaEditar);
       this.funcionarioService
         .putFuncionario(this.funcionarioParaEditar)
         .subscribe({

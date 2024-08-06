@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
-import { FuncionarioDto } from '../shared/models/dto/funcionario-dto.model';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -71,7 +70,7 @@ export class FuncionarioService {
   ): Observable<Funcionario | null> {
     return this._http
       .post<Funcionario>(
-        this.NEW_URL,
+        `${this.NEW_URL}/cadastrar`,
         JSON.stringify(funcionario),
         this.httpOptions
       )
@@ -94,7 +93,7 @@ export class FuncionarioService {
   ): Observable<Funcionario | null> {
     return this._http
       .put<Funcionario>(
-        `${this.NEW_URL}/atualizar/${funcionario.idUsuario}`,
+        `${this.NEW_URL}/atualizar/${funcionario.idFuncionario}`,
         JSON.stringify(funcionario),
         this.httpOptions
       )
