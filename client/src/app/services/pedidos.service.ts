@@ -28,7 +28,7 @@ export class PedidosService {
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllPedidos(): Observable<Pedido[] | null> {
-    return this._http.get<Pedido[]>(this.NEW_URL + "/cadastrar", this.httpOptions).pipe(
+    return this._http.get<Pedido[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
       map((resp: HttpResponse<Pedido[]>) => {
         if (resp.status == 200) {
           return resp.body;
@@ -69,7 +69,7 @@ export class PedidosService {
 
   postPedido(pedido: Pedido): Observable<Pedido | null> {
     return this._http
-      .post<Pedido>(this.NEW_URL, JSON.stringify(pedido), this.httpOptions)
+      .post<Pedido>(this.NEW_URL + "/cadastrar", JSON.stringify(pedido), this.httpOptions)
       .pipe(
         map((resp: HttpResponse<Pedido>) => {
           if (resp.status == 201) {
@@ -87,7 +87,7 @@ export class PedidosService {
   putPedido(pedido: Pedido): Observable<Pedido | null> {
     return this._http
       .put<Pedido>(
-        `${this.NEW_URL}/???/${pedido.id}`,
+        `${this.NEW_URL}/???/${pedido.numeroPedido}`,
         JSON.stringify(pedido),
         this.httpOptions
       )
