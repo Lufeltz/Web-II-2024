@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, catchError, forkJoin, map, of, throwError } from 'rxjs';
 import { Pedido } from '../shared/models/pedido.model';
+import { PedidoDto } from '../shared/models/dto/pedido-dto.model';
 
 const BASE_URL = 'http://localhost:3000/';
 @Injectable({
@@ -27,9 +28,9 @@ export class PedidosService {
   };
 
   // arrumar a URL em NEW_URL e nos métodos
-  getAllPedidos(): Observable<Pedido[] | null> {
-    return this._http.get<Pedido[]>(this.NEW_URL + "/cadastrar", this.httpOptions).pipe(
-      map((resp: HttpResponse<Pedido[]>) => {
+  getAllPedidos(): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto[]>) => {
         if (resp.status == 200) {
           return resp.body;
         } else {
