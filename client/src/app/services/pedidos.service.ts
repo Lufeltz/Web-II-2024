@@ -28,7 +28,26 @@ export class PedidosService {
   };
 
   // arrumar a URL em NEW_URL e nos métodos
-  getAllPedidos(): Observable<PedidoDto[] | null> {
+  getAllPedidos(): Observable<Pedido[] | null> {
+    return this._http.get<Pedido[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
+      map((resp: HttpResponse<Pedido[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  getAllPedidosDto(): Observable<PedidoDto[] | null> {
     return this._http.get<PedidoDto[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
       map((resp: HttpResponse<PedidoDto[]>) => {
         if (resp.status == 200) {
@@ -46,6 +65,7 @@ export class PedidosService {
       })
     );
   }
+
 
   getPedidoById(id: number): Observable<Pedido | null> {
     return this._http
