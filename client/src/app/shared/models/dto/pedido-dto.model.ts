@@ -9,5 +9,5 @@ export class PedidoDto {
     dataPagamento: Date = new Date();
     situacao!: Status;
     orcamento: Orcamento = new Orcamento();
-    listaPedidoRoupa: PedidoRoupaDto[] = [];
+    listaPedidoRoupas: PedidoRoupaDto[] = [];
 }

@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
   // listaPedidosEmAberto(): void {
   //   this.pedidosService.getPedidos().subscribe((pedidos : Pedido[]) => {
   //     for(let i=0; i<pedidos.length; i++){
-  //       if(pedidos[i].situacao.tipoSituacao == Status.EM_ABERTO){
+  //       if(pedidos[i].situacao == Status.EM_ABERTO){
   //         this.pedidosEmAberto.push(pedidos[i]);
   //       }
   //     }

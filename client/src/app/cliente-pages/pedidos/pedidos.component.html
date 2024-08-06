@@ -32,45 +32,45 @@
       <tr
         class="
             {{
-          pedido.situacao.tipoSituacao === statusEnum.EM_ABERTO
+          pedido.situacao === statusEnum.EM_ABERTO
             ? 'table-warning'
             : ''
         }}
             {{
-          pedido.situacao.tipoSituacao === statusEnum.REJEITADO ||
-          pedido.situacao.tipoSituacao === statusEnum.CANCELADO
+          pedido.situacao === statusEnum.REJEITADO ||
+          pedido.situacao === statusEnum.CANCELADO
             ? 'table-danger'
             : ''
         }}
             {{
-          pedido.situacao.tipoSituacao === statusEnum.RECOLHIDO
+          pedido.situacao === statusEnum.RECOLHIDO
             ? 'table-secondary'
             : ''
         }}
             {{
-          pedido.situacao.tipoSituacao === statusEnum.AGUARDANDO_PAGAMENTO
+          pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO
             ? 'table-info'
             : ''
         }}
             {{
-          pedido.situacao.tipoSituacao === statusEnum.PAGO
+          pedido.situacao === statusEnum.PAGO
             ? 'table-success'
             : ''
         }}
             {{
-          pedido.situacao.tipoSituacao === statusEnum.FINALIZADO
+          pedido.situacao === statusEnum.FINALIZADO
             ? 'table-primary'
             : ''
         }}
         "
       >
         <td>{{ pedido.id }}</td>
-        <td>{{ pedido.situacao.tipoSituacao }}</td>
+        <td>{{ pedido.situacao }}</td>
         <td>{{ pedido.dataPedido }}</td>
 
         <td>
           <ul class="list-group">
-            @for(roupa of pedido.listaPedidoRoupa; track roupa.id){
+            @for(roupa of pedido.listaPedidoRoupas; track roupa.id){
             <li>
               {{ roupa.roupa.descricao }}, R${{ roupa.roupa.preco }},
               {{ roupa.roupa.prazoDias }} Dias
@@ -83,9 +83,9 @@
         <td>R$ {{ pedido.orcamento.valor }}</td>
 
         <td>
-          @if(pedido.situacao.tipoSituacao == statusEnum.AGUARDANDO_PAGAMENTO){
+          @if(pedido.situacao == statusEnum.AGUARDANDO_PAGAMENTO){
           <button type="button" class="btn btn-success" (click)="abrirModal(pedido)">Pagar</button>
-          } @if(pedido.situacao.tipoSituacao == statusEnum.EM_ABERTO){
+          } @if(pedido.situacao == statusEnum.EM_ABERTO){
           <button type="button" class="btn btn-danger">Cancelar</button>
           }
         </td>

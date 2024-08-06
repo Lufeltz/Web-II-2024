@@ -18,8 +18,8 @@ export class PagarPedidoComponent {
 
   pagarPedido() {
     if (this.pedido) {
-      if (this.pedido.situacao.tipoSituacao === Status.AGUARDANDO_PAGAMENTO) {
-        this.pedido.situacao.tipoSituacao = Status.PAGO;
+      if (this.pedido.situacao === Status.AGUARDANDO_PAGAMENTO) {
+        this.pedido.situacao = Status.PAGO;
         console.log('Pedido pago com sucesso!');
       } else {
         console.warn('Este pedido não está aguardando pagamento.');

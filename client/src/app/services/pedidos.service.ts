@@ -90,7 +90,7 @@ export class PedidosService {
 
   postPedido(pedido: Pedido): Observable<Pedido | null> {
     return this._http
-      .post<Pedido>(this.NEW_URL, JSON.stringify(pedido), this.httpOptions)
+      .post<Pedido>(this.NEW_URL + "/cadastrar", JSON.stringify(pedido), this.httpOptions)
       .pipe(
         map((resp: HttpResponse<Pedido>) => {
           if (resp.status == 201) {

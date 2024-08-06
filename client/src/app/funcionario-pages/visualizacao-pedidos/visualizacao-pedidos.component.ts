@@ -36,7 +36,7 @@ export class VisualizacaoPedidosComponent implements OnInit {
       next: (pedidos: Pedido[]) => {
         this.pedidos = pedidos;
         this.orderedPedidos = pedidos
-          .filter((p) => p.situacao.tipoSituacao === this.statusEnum.EM_ABERTO)
+          .filter((p) => p.situacao === this.statusEnum.EM_ABERTO)
           .sort((a, b) => a.dataPedido.getTime() - b.dataPedido.getTime());
         this.pedidosArePresent = true;
         console.log('Pedidos obtidos com sucesso!');
@@ -107,13 +107,13 @@ export class VisualizacaoPedidosComponent implements OnInit {
   }
 
   recolherPedido(pedido: Pedido) {
-    pedido.situacao.tipoSituacao = Status.RECOLHIDO;
+    pedido.situacao = Status.RECOLHIDO;
     this.router.navigate(['/visualizacao-pedidos']);
   }
 
   confirmarLavagem(pedido: Pedido) {
-    if (pedido.situacao.tipoSituacao === Status.RECOLHIDO) {
-      pedido.situacao.tipoSituacao = Status.AGUARDANDO_PAGAMENTO;
+    if (pedido.situacao === Status.RECOLHIDO) {
+      pedido.situacao = Status.AGUARDANDO_PAGAMENTO;
       console.log('Lavagem confirmada com sucesso!');
     } else {
       console.warn('Este pedido não foi recolhido.');
@@ -121,8 +121,8 @@ export class VisualizacaoPedidosComponent implements OnInit {
   }
 
   finalizarPedido(pedido: Pedido) {
-    if (pedido.situacao.tipoSituacao === Status.PAGO) {
-      pedido.situacao.tipoSituacao = Status.FINALIZADO;
+    if (pedido.situacao === Status.PAGO) {
+      pedido.situacao = Status.FINALIZADO;
       console.log('Pedido finalizado com sucesso!');
     } else {
       console.warn('Este pedido não está pago.');

@@ -9,8 +9,9 @@ export class Pedido {
     dataPedido: Date = new Date();
     dataPagamento: Date = new Date();
     cliente: Cliente = new Cliente();
-    situacao: Situacao = new Situacao();
+    // situacao: Situacao = new Situacao();
+    situacao:string = '';
     orcamento: Orcamento = new Orcamento();
-    listaPedidoRoupa: PedidoRoupa[] = [];
+    listaPedidoRoupas: PedidoRoupa[] = [];
 }
 

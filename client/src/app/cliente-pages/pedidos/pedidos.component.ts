@@ -28,7 +28,7 @@ export class PedidosComponent implements OnInit {
       next: (pedidos: Pedido[]) => {
         this.pedidos = pedidos;
         this.filteredPedidos = pedidos
-          .filter((p) => p.situacao.tipoSituacao === this.statusEnum.EM_ABERTO)
+          .filter((p) => p.situacao === this.statusEnum.EM_ABERTO)
           .sort((a, b) => {
             const dateA = new Date(a.dataPedido).getTime();
             const dateB = new Date(b.dataPedido).getTime();
@@ -41,7 +41,7 @@ export class PedidosComponent implements OnInit {
 
   filtroPedidos(e: any) {
     this.filteredPedidos = this.pedidos.filter(
-      (pedido) => e.target.value === pedido.situacao.tipoSituacao
+      (pedido) => e.target.value === pedido.situacao
     );
   }
 

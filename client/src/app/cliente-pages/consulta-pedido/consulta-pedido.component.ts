@@ -42,7 +42,7 @@ export class ConsultaPedidoComponent implements OnInit {
             if (pedidoEncontrado) {
               this.pedido = pedidoEncontrado;
   
-              if (this.pedido.listaPedidoRoupa.length === 0) {
+              if (this.pedido.listaPedidoRoupas.length === 0) {
                 this.pedidoEncontrado = false;
                 console.log('Nenhum item de roupa encontrado no pedido.');
                 return;
@@ -92,12 +92,12 @@ export class ConsultaPedidoComponent implements OnInit {
   }
 
   calcularQuantidadeTotal() {
-    this.totalItens = this.pedido.listaPedidoRoupa.length;
+    this.totalItens = this.pedido.listaPedidoRoupas.length;
   }
 
   calcularPrecoTotal() {
     this.precoTotal = 0;
-    for (const item of this.pedido.listaPedidoRoupa) {
+    for (const item of this.pedido.listaPedidoRoupas) {
       const preco =
         typeof item.roupa.preco === 'string'
           ? parseFloat(item.roupa.preco)

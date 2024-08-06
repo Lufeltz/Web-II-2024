@@ -83,19 +83,19 @@
                   <span
                     [ngClass]="{
                       'text-yellow':
-                        pedido.situacao.tipoSituacao === 'EM ABERTO',
+                        pedido.situacao === 'EM ABERTO',
                       'text-red':
-                        pedido.situacao.tipoSituacao === 'REJEITADO' ||
-                        pedido.situacao.tipoSituacao === 'CANCELADO',
-                      'text-gray': pedido.situacao.tipoSituacao === 'RECOLHIDO',
+                        pedido.situacao === 'REJEITADO' ||
+                        pedido.situacao === 'CANCELADO',
+                      'text-gray': pedido.situacao === 'RECOLHIDO',
                       'text-blue':
-                        pedido.situacao.tipoSituacao === 'AGUARDANDO PAGAMENTO',
-                      'text-orange': pedido.situacao.tipoSituacao === 'PAGO',
+                        pedido.situacao === 'AGUARDANDO PAGAMENTO',
+                      'text-orange': pedido.situacao === 'PAGO',
                       'text-green':
-                        pedido.situacao.tipoSituacao === 'FINALIZADO'
+                        pedido.situacao === 'FINALIZADO'
                     }"
                   >
-                    {{ pedido.situacao.tipoSituacao }}
+                    {{ pedido.situacao }}
                   </span>
                 </div>
                 <div class="container-prazo-pedido-text">
@@ -114,7 +114,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-items-body custom-tr-items">
-                  <tr *ngFor="let item of pedido.listaPedidoRoupa">
+                  <tr *ngFor="let item of pedido.listaPedidoRoupas">
                     <td>{{ item.roupa }}</td>
                     <td>R${{ formatarValor(item.roupa.preco) }}</td>
                   </tr>
