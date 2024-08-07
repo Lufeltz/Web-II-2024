@@ -82,9 +82,7 @@ export class PedidoComponent {
         diasMax = this.listaRoupas[i].roupa.prazoDias;
       }
     }
-    this.orcamentoAtual.dataPrazo.setDate(
-      this.orcamentoAtual.dataPrazo.getDate() + diasMax
-    );
+    this.orcamentoAtual.dataPrazo.setDate(this.orcamentoAtual.dataPrazo.getDate() + diasMax);
     this.orcamentoAtual.aprovado = false;
     this.mostrarValores = true;
     this.botoesAtivados = true;
@@ -93,41 +91,33 @@ export class PedidoComponent {
   aprovarPedido() {
     let novoPedido: PedidoDto = new PedidoDto();
     novoPedido.orcamento = this.orcamentoAtual;
-    //novoPedido.cliente = null; obter o cliente através do usuario logado
     novoPedido.dataPedido = new Date();
 
     const prazoSimulado: Date = novoPedido.orcamento.dataPrazo;
-    // Verifique se dataPrazo é um objeto Date
     if (!(novoPedido.orcamento.dataPrazo instanceof Date)) {
-      novoPedido.orcamento.dataPrazo = new Date(); //reseta para data atual
+      novoPedido.orcamento.dataPrazo = new Date();
     }
-    // Calcule a diferença em milissegundos
-    const diferencaMillis =
-      novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
-    // Converter para dias
+    const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
     console.log(`Diferença em dias: ${diferencaDias}`);
-    // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
     novoPedido.orcamento.dataPrazo = new Date(
       prazoSimulado.getTime() + diferencaMillis
     );
+    novoPedido.idCliente = 1;
     novoPedido.orcamento.aprovado = true;
-    novoPedido.listaPedidoRoupas = this.listaRoupas; // Corrigido para `this.listaRoupas`
+    novoPedido.listaPedidoRoupas = this.listaRoupas;
     novoPedido.situacao = Status.EM_ABERTO;
 
-    this.pedidoService.postPedido(novoPedido).subscribe({
+    this.pedidoService.cadastrar(novoPedido).subscribe({
       next: (pedido) => {
         alert(
-          'Seu pedido de número #' +
-            pedido?.numeroPedido +
-            ' foi enviado com sucesso!'
+          'Seu pedido de número #' + pedido?.numeroPedido + ' foi enviado com sucesso!'
         );
       },
       error: (err) => {
         console.log('Erro ao enviar pedido!');
       },
     });
-    // Limpar a lista de roupas e ocultar valores
     this.listaRoupas.splice(0, this.listaRoupas.length);
     this.mostrarValores = false;
     this.botoesAtivados = false;
