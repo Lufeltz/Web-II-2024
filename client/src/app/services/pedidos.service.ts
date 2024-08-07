@@ -65,18 +65,18 @@ export class PedidosService {
     );
   }
 
-  consultar(numeroPedio: number): Observable<PedidoDto[] | null> {
-    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/consultar/${numeroPedio}`, this.httpOptions).pipe(
-      map((resp: HttpResponse<PedidoDto[]>) => {
-        if (resp.status == 200) {
+  consultar(numeroPedido: number): Observable<PedidoDto | null> {
+    return this._http.get<PedidoDto>(`${this.NEW_URL}/consultar/${numeroPedido}`, this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto>) => {
+        if (resp.status === 200) {
           return resp.body;
         } else {
-          return [];
+          return null;
         }
       }),
-      catchError((err, caught) => {
-        if (err.status == 404) {
-          return of([]);
+      catchError((err) => {
+        if (err.status === 404) {
+          return of(null);
         } else {
           return throwError(() => err);
         }
