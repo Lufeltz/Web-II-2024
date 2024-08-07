@@ -13,6 +13,7 @@ import { LetrasSomenteDirective } from '../../../../shared/directives/letras-som
 import { NgxMaskDirective } from 'ngx-mask';
 import { FuncionarioService } from '../../../../services/funcionario.service';
 import { Router } from '@angular/router';
+import { Permissao } from '../../../../shared/models/permissao.model';
 
 @Component({
   selector: 'app-editar-funcionarios-modal',
@@ -45,7 +46,9 @@ export class EditarFuncionariosModalComponent implements OnInit {
 
   salvar(): void {
     if (this.formEditarFuncionario.form.valid) {
-      // this.funcionarioParaEditar.usuario.permissao.tipoPermissao = 'FUNCIONARIO';
+      this.funcionarioParaEditar.usuario.permissao = new Permissao();
+      this.funcionarioParaEditar.usuario.permissao.tipoPermissao =
+        'FUNCIONARIO';
       console.log(this.funcionarioParaEditar);
       this.funcionarioService
         .putFuncionario(this.funcionarioParaEditar)

@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (usuarioLogado) {
     if (
       route.data?.['role'] &&
-      route.data?.['role'].indexOf(usuarioLogado.perfil) === -1
+      route.data?.['role'].indexOf(usuarioLogado.tipoPermissao) === -1
     ) {
       // Se o perfil do usuário não está no perfil da rota
       // vai para login

@@ -40,13 +40,12 @@
                     name="email"
                     id="email"
                     placeholder=" "
-                    [(ngModel)]="login.login"
+                    [(ngModel)]="login.email"
                     #usuario="ngModel"
                     required
                     [class.invalid-border]="
                       usuario.invalid && (usuario.dirty || usuario.touched)
                     "
-                    
                     (focus)="clearLoginError()"
                   />
                   <label for="usuario">E-mail</label>
@@ -83,7 +82,6 @@
                     (focus)="clearLoginError()"
                   />
                   <label for="senha">Senha</label>
-                  <p>login e senha iguais: cliente/cliente funcionario/funcionario</p>
                 </div>
               </div>
               <div

@@ -104,17 +104,20 @@
                 <thead>
                   <tr class="custom-headers-tfoot">
                     <th scope="col">Itens:</th>
+                    <th scope="col">Quantidade:</th>
                     <th scope="col">Valor:</th>
                   </tr>
                 </thead>
                 <tbody class="table-items-body custom-tr-items">
                   <tr *ngFor="let item of pedido.listaPedidoRoupas">
                     <td>{{ item.roupa.descricao }} ({{ item.quantidade }}.qtd)</td>
+                    <td>{{ item.quantidade }}.qtd</td>
                     <td>R${{ formatarValor(item.roupa.preco * item.quantidade) }}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr class="custom-headers-tfoot">
+                    <th></th>
                     <th>Itens totais: {{ totalItens }}</th>
                     <th>Valor total: R${{ formatarValor(precoTotal) }}</th>
                   </tr>

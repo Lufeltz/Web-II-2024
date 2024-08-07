@@ -19,6 +19,7 @@ export class HomepageComponent implements OnInit {
   status = Status;
 
   pedidos: PedidoDto[] = [];
+  pedido!: PedidoDto;
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
@@ -28,17 +29,32 @@ export class HomepageComponent implements OnInit {
     this.listaPedidos();
   }
 
+  recolherPedido(pedido: PedidoDto): void {
+    pedido.situacao = this.status.RECOLHIDO;
+    this.pedidosService
+      .atualizarPorFuncionario(pedido.numeroPedido, pedido)
+      .subscribe({
+        next: (pedido: PedidoDto | null) => {
+          this.router.navigate(['/homepage']);
+          this.listaPedidos();
+        },
+        error: (err) => {
+          this.mensagem = `Erro atualizando pedido ${this.pedido.numeroPedido}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        },
+      });
+  }
+
   listaPedidos(): PedidoDto[] {
     this.pedidosService.getAllPedidosDto().subscribe({
       next: (data: PedidoDto[] | null) => {
         if (data == null) {
           this.pedidos = [];
-          // this.funcionariosIsPresent = false;
         } else {
-          this.pedidos = data;
-          console.log(this.pedidos)
-          // console.log(this.roupas);
-          // this.funcionariosIsPresent = true;
+          this.pedidos = data.filter(
+            (pedido) => pedido.situacao == Status.EM_ABERTO
+          );
+          // console.log(this.pedidos);
         }
       },
       error: (err) => {
@@ -64,10 +80,10 @@ export class HomepageComponent implements OnInit {
   //   });
   // }
 
-  recolherPedido(pedido: PedidoDto) {
-    pedido.situacao = Status.RECOLHIDO;
-    this.router.navigate(['/visualizacao-pedidos']);
-  }
+  // recolherPedido(pedido: PedidoDto) {
+  //   pedido.situacao = Status.RECOLHIDO;
+  //   this.router.navigate(['/visualizacao-pedidos']);
+  // }
 
   // get listaPedidos() : Pedido[] {
   //   return this.pedidosEmAberto;

@@ -1,18 +1,13 @@
 import {
   HttpClient,
   HttpHeaders,
-  HttpParams,
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Login } from '../shared/models/login.model';
-import { Usuario } from '../shared/models/usuario.model';
-import { Usuario2 } from '../shared/models/usuario2.model';
 import { UsuarioResponseDto } from '../shared/models/dto/usuario-response-dto.model';
 import { UsuarioRequestDto } from '../shared/models/dto/usuario-request-dto.model';
 
-const BASE_URL = 'http://localhost:3000/';
 const LS_CHAVE: string = 'usuarioLogado';
 
 @Injectable({
@@ -21,12 +16,12 @@ const LS_CHAVE: string = 'usuarioLogado';
 export class LoginService {
   constructor(private _http: HttpClient) {}
 
-  public get usuarioLogado(): Usuario2 {
+  public get usuarioLogado(): UsuarioResponseDto {
     let usu = localStorage[LS_CHAVE];
     return usu ? JSON.parse(localStorage[LS_CHAVE]) : null;
   }
 
-  public set usuarioLogado(usuario: Usuario2) {
+  public set usuarioLogado(usuario: UsuarioResponseDto) {
     localStorage[LS_CHAVE] = JSON.stringify(usuario);
   }
 
@@ -34,19 +29,19 @@ export class LoginService {
     delete localStorage[LS_CHAVE];
   }
 
-  login(login: Login): Observable<Usuario2 | null> {
-    let usu = new Usuario2(1, login.login, login.login, login.senha, 'FUNC');
-    if (login.login == login.senha) {
-      if (login.login == 'cliente') {
-        usu.perfil = 'CLIENTE';
-      } else if (login.login == 'funcionario') {
-        usu.perfil = 'FUNCIONARIO';
-      }
-      return of(usu);
-    } else {
-      return of(null);
-    }
-  }
+  // login(login: Login): Observable<Usuario2 | null> {
+  //   let usu = new Usuario2(1, login.login, login.login, login.senha, 'FUNC');
+  //   if (login.login == login.senha) {
+  //     if (login.login == 'cliente') {
+  //       usu.perfil = 'CLIENTE';
+  //     } else if (login.login == 'funcionario') {
+  //       usu.perfil = 'FUNCIONARIO';
+  //     }
+  //     return of(usu);
+  //   } else {
+  //     return of(null);
+  //   }
+  // }
 
   // ===============================[NEW]===============================
 
@@ -61,7 +56,7 @@ export class LoginService {
 
   //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
-  loginCorreto(usuarioRequestDto: UsuarioRequestDto): Observable<UsuarioResponseDto | null> {
+  login(usuarioRequestDto: UsuarioRequestDto): Observable<UsuarioResponseDto | null> {
     return this._http
       .post<UsuarioResponseDto>(
         `${this.NEW_URL}/login`,
@@ -70,7 +65,8 @@ export class LoginService {
       )
       .pipe(
         map((resp: HttpResponse<UsuarioResponseDto>) => {
-          if (resp.status == 201) {
+          if (resp.status == 200) {
+            console.log(resp.body);
             return resp.body;
           } else {
             return null;

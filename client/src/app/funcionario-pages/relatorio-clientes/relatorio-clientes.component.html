@@ -1,4 +1,4 @@
-<div class="background">
+<!-- <div class="background">
   <div
     class="d-flex justify-content-center align-items-center"
     style="min-height: calc(100vh - 80px)"
@@ -50,7 +50,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Listagem ocorre aqui -->
+              
             </tbody>
           </table> 
         </div>
@@ -58,4 +58,80 @@
     </div>
   </div>
 </div>
+ -->
 
+<!-- RODRIGO -->
+
+<div class="background">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
+    <div class="container">
+      <div class="card shadow-lg custom-card border-0">
+        <div class="card-body">
+          <div class="container-relatorio-clientes-texto">
+            <h5 class="relatorio-clientes-text card-title">
+              Relatório de Clientes
+            </h5>
+            <h6 class="relatorio-clientes-phrase card-subtitle">
+              Visualize e gere um PDF contendo dados de todos os clientes.
+            </h6>
+          </div>
+          <div class="container-buttons d-flex justify-content-end">
+            <button
+              class="btn-relatorio"
+              type="button"
+              class="btn btn-primary custom-btn btn-relatorio"
+              (click)="gerarRelatorio()"
+            >
+              Gerar Relatório
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-voltar"
+              (click)="voltar()"
+            >
+              Voltar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary custom-btn btn-pdf"
+              (click)="gerarPDF()"
+              [disabled]="!relatorioClientesGerado"
+            >
+              Gerar PDF
+            </button>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+              </tr>
+              <tr *ngFor="let cliente of listaClientes">
+                <td>{{ cliente.usuario.nome }}</td>
+                <td>{{ cliente.cpf }}</td>
+                <td>{{ cliente.usuario.email }}</td>
+                <td>{{ cliente.telefone }}</td>
+                <td>
+                  {{ cliente.endereco.rua }}, {{ cliente.endereco.numero }} -
+                  {{ cliente.endereco.cidade }}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Listagem ocorre aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RODRIGO -->

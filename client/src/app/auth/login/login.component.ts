@@ -5,6 +5,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Login } from '../../shared/models/login.model';
 import { NumericoDirective } from '../../shared/directives/numerico.directive';
+import { UsuarioRequestDto } from '../../shared/models/dto/usuario-request-dto.model';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +17,22 @@ import { NumericoDirective } from '../../shared/directives/numerico.directive';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('formLogin') formLogin!: NgForm;
-  login: Login = new Login();
+  // login: Login = new Login();
+  login: UsuarioRequestDto = new UsuarioRequestDto();
   loading: boolean = false;
   message!: string;
+
+  emailUser?: string;
+  passwordUser?: string;
+  loginUser: Login = new Login();
+  loginError: boolean = false;
+
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private clienteService: ClienteService
+  ) {}
 
   ngOnInit(): void {
     if (this.loginService.usuarioLogado) {
@@ -29,70 +44,63 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  logar(): void {
-    this.loading = true;
-    if (this.formLogin.form.valid) {
-      this.loginService.login(this.login).subscribe((usu) => {
-        if (usu != null) {
-          this.loginService.usuarioLogado = usu;
-          this.loading = false;
-          if(usu.perfil == "FUNCIONARIO"){
-            this.router.navigate(['/homepage']);
-          }
-          else if (usu.perfil == "CLIENTE"){
-            this.router.navigate(['/pedidos']);
-          }else {
-            this.router.navigate(['/login'])
-          }
-        } else {
-          this.message = 'Usuário/Senha inválidos.';
-        }
-      });
-    }
-    this.loading = false;
-  }
-
-  emailUser?: string;
-  passwordUser?: string;
-  loginUser: Login = new Login();
-  loginError: boolean = false;
-
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  // logar(): void {
+  //   this.loading = true;
+  //   if (this.formLogin.form.valid) {
+  //     this.loginService.login(this.login).subscribe((usu) => {
+  //       if (usu != null) {
+  //         this.loginService.usuarioLogado = usu;
+  //         this.loading = false;
+  //         if (usu.perfil == 'FUNCIONARIO') {
+  //           this.router.navigate(['/homepage']);
+  //         } else if (usu.perfil == 'CLIENTE') {
+  //           this.router.navigate(['/pedidos']);
+  //         } else {
+  //           this.router.navigate(['/login']);
+  //         }
+  //       } else {
+  //         this.message = 'Usuário/Senha inválidos.';
+  //       }
+  //     });
+  //   }
+  //   this.loading = false;
+  // }
 
   // ===============================[NEW]===============================
   // login: Login = new Login();
   // loading: boolean = false;
   // message!: string;
 
-  // logar(): void {
-  //   this.loading = true;
-
-  //   if (this.formLogin.form.valid) {
-  //     this.loginService.login(this.login).subscribe({
-  //       next: (usu) => {
-  //         if (usu != null) {
-  //           // this.loginService.usuarioLogado = usu;
-  //           this.loading = false;
-  //           this.router.navigate(['/home']);
-  //         } else {
-  //           this.loading = false;
-  //           this.message = 'Usuário/Senha inválidos.';
-  //         }
-  //       },
-  //       error: (err) => {
-  //         this.loading = false;
-  //         this.message = `Erro efetuando login: ${err.message}`;
-  //       },
-  //     });
-  //   }
-  //   else {
-  //     this.loading = false;
-  //   }
-  // }
+  logar(): void {
+    this.loading = true;
+    if (this.formLogin.form.valid) {
+      this.loginService.login(this.login).subscribe({
+        next: (usu) => {
+          if (usu != null) {
+            console.log(usu);
+            this.loginService.usuarioLogado = usu;
+            this.loading = false;
+            if (usu.tipoPermissao == 'FUNCIONARIO') {
+              this.router.navigate(['/homepage']);
+            } else if (usu.tipoPermissao == 'CLIENTE') {
+              this.clienteService.consultarPorIdUsuario(usu.idUsuario)
+              this.router.navigate(['/pedidos']);
+            } else {
+              this.router.navigate(['/login']);
+            }
+          } else {
+            this.message = 'Usuário/Senha invállidos.';
+          }
+        },
+        error: (err) => {
+          this.loading = false;
+          this.message = `Erro efetuando login: ${err.message}`;
+        },
+      });
+    } else {
+      this.loading = false;
+    }
+  }
 
   // ngOnInit(): void {
   //   if (this.loginService.usuarioLogado) {
