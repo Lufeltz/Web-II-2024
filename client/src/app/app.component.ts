@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './components/page-not-found';
 import { ManutencaoRoupasComponent } from './funcionario-pages/manutencao-roupas';
 import { NavbarComponent } from './components/navbar';
 import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receitas';
+import { HomepageClienteComponent } from './cliente-pages/homepage-cliente';
 
 @Component({
     selector: 'app-root',
@@ -26,6 +27,7 @@ import { RelatorioReceitasComponent } from './funcionario-pages/relatorio-receit
       CadastroComponent,
 
       //cliente-pages
+      HomepageClienteComponent,
       PedidosComponent,
       PedidoComponent,
       ConsultaPedidoComponent,

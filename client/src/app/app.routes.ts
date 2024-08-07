@@ -14,6 +14,7 @@ import { ManutencaoFuncionariosComponent } from './funcionario-pages/manutencao-
 import { RelatorioClientesComponent } from './funcionario-pages/relatorio-clientes/relatorio-clientes.component';
 import { RelatorioClientesFieisComponent } from './funcionario-pages/relatorio-clientes-fieis/relatorio-clientes-fieis.component';
 import { authGuard } from './auth/auth.guard';
+import { HomepageClienteComponent } from './cliente-pages/homepage-cliente';
 
 export const routes: Routes = [
   //default
@@ -24,6 +25,15 @@ export const routes: Routes = [
   { path: 'cadastro', title: 'Cadastro', component: CadastroComponent },
 
   //cliente-pages
+  {
+    path: 'homepage-cliente',
+    title: 'homepage-cliente',
+    component: HomepageClienteComponent,
+    canActivate: [authGuard],
+    data: {
+      role: 'CLIENTE',
+    },
+  },
   {
     path: 'pedidos',
     title: 'Pedidos',

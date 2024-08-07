@@ -46,8 +46,27 @@ export class PedidosService {
     );
   }
 
-  listarPorCliente(idCliente: number): Observable<PedidoDto[] | null> {
-    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/listarPorCliente/${idCliente}`, this.httpOptions).pipe(
+  listarPorIdUsuario(isUsuario: number): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/listarPorIdUsuario/${isUsuario}`, this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  listarPorIdCliente(idCliente: number): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/listarPorIdCliente/${idCliente}`, this.httpOptions).pipe(
       map((resp: HttpResponse<PedidoDto[]>) => {
         if (resp.status == 200) {
           return resp.body;
