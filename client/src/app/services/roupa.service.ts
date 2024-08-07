@@ -22,6 +22,33 @@ export class RoupaService {
     }),
   };
 
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+  listar(): Observable<RoupaDto[] | null> {
+    return this._http
+      .get<RoupaDto[]>(`${this.NEW_URL}/listar`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<RoupaDto[]>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+
+
   // arrumar a URL em NEW_URL e nos métodos
   getAllRoupas(): Observable<Roupa[] | null> {
     return this._http

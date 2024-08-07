@@ -5,6 +5,7 @@ import { Usuario } from '../shared/models/usuario.model';
 import { RelatorioCliente } from '../shared/models/relatorio-cliente.model';
 import { ClienteFiel } from '../shared/models/cliente-fiel.model';
 import { Cliente } from '../shared/models/cliente.model';
+import { ClienteDto } from '../shared/models/dto/cliente-dto.model';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -24,6 +25,48 @@ export class ClienteService {
       'Content-Type': 'application/json',
     }),
   };
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+  cadastrar(cliente: Cliente): Observable<ClienteDto | null> {
+    return this._http
+      .post<ClienteDto>(this.NEW_URL, JSON.stringify(cliente), this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<ClienteDto>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  consultarPorIdUsuario(idUsuario: number): Observable<ClienteDto | null> {
+    return this._http
+      .get<ClienteDto>(`${this.NEW_URL}/consultar/${idUsuario}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<ClienteDto>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of(null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllClientes(): Observable<Cliente[] | null> {

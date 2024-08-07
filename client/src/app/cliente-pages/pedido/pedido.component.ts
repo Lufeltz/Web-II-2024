@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { RoupaService } from '../../services/roupa.service';
-import { Roupa } from '../../shared/models/roupa.model';
 import { Orcamento } from '../../shared/models/orcamento.model';
-import { Pedido } from '../../shared/models/pedido.model';
 import { Status } from '../../shared/models/status.enum';
-import { PedidoRoupa } from '../../shared/models/pedido-roupa.model';
 import { PedidosService } from '../../services/pedidos.service';
-import { FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { PedidoDto } from '../../shared/models/dto/pedido-dto.model';
+import { PedidoRoupaDto } from '../../shared/models/dto/pedido-roupa-dto.model';
+import { RoupaDto } from '../../shared/models/dto/roupa-dto.model';
 
 @Component({
   selector: 'app-pedido',
@@ -17,9 +17,9 @@ import { FormsModule, Validators } from '@angular/forms';
   styleUrl: './pedido.component.css',
 })
 export class PedidoComponent {
-  private roupas: Roupa[] = [];
-  private roupaSelecionada: Roupa | undefined;
-  private listaRoupas: PedidoRoupa[] = [];
+  private roupas: RoupaDto[] = [];
+  private roupaSelecionada: RoupaDto | undefined;
+  private listaRoupas: PedidoRoupaDto[] = [];
   private orcamentoAtual: Orcamento = new Orcamento();
   private mostrarValores: boolean = false;
   private botoesHabilitados: boolean = false;
@@ -30,12 +30,12 @@ export class PedidoComponent {
   ) {}
 
   ngOnInit(): void {
-    this.loadRoupas();
+    this.listarRoupas();
   }
 
-  loadRoupas(): Roupa[] {
-    this.roupaService.getAllRoupas().subscribe({
-      next: (data: Roupa[] | null) => {
+  listarRoupas(): RoupaDto[] {
+    this.roupaService.listar().subscribe({
+      next: (data: RoupaDto[] | null) => {
         if (data == null) {
           this.roupas = [];
         } else {
@@ -49,7 +49,7 @@ export class PedidoComponent {
     return this.roupas;
   }
 
-  inserirRoupa(roupa: Roupa | undefined, qntd: string): void {
+  inserirRoupa(roupa: RoupaDto | undefined, qntd: string): void {
     if (roupa) {
       let nQntd = parseInt(qntd);
       let verificaItem = this.listaRoupas.find(
@@ -58,7 +58,7 @@ export class PedidoComponent {
       if (verificaItem != undefined) {
         verificaItem.quantidade += nQntd;
       } else {
-        let novoItem: PedidoRoupa = new PedidoRoupa();
+        let novoItem: PedidoRoupaDto = new PedidoRoupaDto();
         novoItem.roupa = roupa;
         novoItem.quantidade = nQntd;
         this.listaRoupas.push(novoItem);
@@ -66,7 +66,7 @@ export class PedidoComponent {
     }
   }
 
-  removerRoupa(item: PedidoRoupa): void {
+  removerRoupa(item: PedidoRoupaDto): void {
     let i = this.listaRoupas.indexOf(item);
     this.listaRoupas.splice(i, 1);
   }
@@ -91,7 +91,7 @@ export class PedidoComponent {
   }
 
   aprovarPedido() {
-    let novoPedido: Pedido = new Pedido();
+    let novoPedido: PedidoDto = new PedidoDto();
     novoPedido.orcamento = this.orcamentoAtual;
     //novoPedido.cliente = null; obter o cliente através do usuario logado
     novoPedido.dataPedido = new Date();
@@ -134,7 +134,7 @@ export class PedidoComponent {
   }
 
   rejeitarPedido() {
-    let novoPedido: Pedido = new Pedido();
+    let novoPedido: PedidoDto = new PedidoDto();
     novoPedido.orcamento = this.orcamentoAtual;
     //novoPedido.cliente = null; obter o login do cliente
     novoPedido.dataPedido = new Date();
@@ -185,7 +185,7 @@ export class PedidoComponent {
     return this.orcamentoAtual.dataPrazo;
   }
 
-  get tabela(): PedidoRoupa[] {
+  get tabela(): PedidoRoupaDto[] {
     return this.listaRoupas;
   }
 
@@ -193,15 +193,15 @@ export class PedidoComponent {
     return this.mostrarValores;
   }
 
-  get getRoupas(): Roupa[] {
+  get getRoupas(): RoupaDto[] {
     return this.roupas;
   }
 
-  get selectedRoupa(): Roupa | undefined {
+  get selectedRoupa(): RoupaDto | undefined {
     return this.roupaSelecionada;
   }
 
-  set selectedRoupa(value: Roupa | undefined) {
+  set selectedRoupa(value: RoupaDto | undefined) {
     this.roupaSelecionada = value;
   }
 

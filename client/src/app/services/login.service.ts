@@ -9,6 +9,8 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Login } from '../shared/models/login.model';
 import { Usuario } from '../shared/models/usuario.model';
 import { Usuario2 } from '../shared/models/usuario2.model';
+import { UsuarioResponseDto } from '../shared/models/dto/usuario-response-dto.model';
+import { UsuarioRequestDto } from '../shared/models/dto/usuario-request-dto.model';
 
 const BASE_URL = 'http://localhost:3000/';
 const LS_CHAVE: string = 'usuarioLogado';
@@ -48,7 +50,7 @@ export class LoginService {
 
   // ===============================[NEW]===============================
 
-  NEW_URL = 'http://localhost:8080/??????';
+  NEW_URL = 'http://localhost:8080/usuario';
 
   httpOptions = {
     observe: 'response' as 'response',
@@ -56,6 +58,31 @@ export class LoginService {
       'Content-Type': 'application/json',
     }),
   };
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+  loginCorreto(usuarioRequestDto: UsuarioRequestDto): Observable<UsuarioResponseDto | null> {
+    return this._http
+      .post<UsuarioResponseDto>(
+        `${this.NEW_URL}/login`,
+        JSON.stringify(usuarioRequestDto),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<UsuarioResponseDto>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   // arrumar a URL em NEW_URL e nos métodos
 

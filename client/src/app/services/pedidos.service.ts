@@ -16,8 +16,6 @@ const BASE_URL = 'http://localhost:3000/';
 export class PedidosService {
   constructor(private _http: HttpClient) {}
 
-  // ===============================[NEW]===============================
-
   NEW_URL = 'http://localhost:8080/pedido';
 
   httpOptions = {
@@ -26,6 +24,130 @@ export class PedidosService {
       'Content-Type': 'application/json',
     }),
   };
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+  listar(): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(this.NEW_URL + "/listar", this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  listarPorCliente(idCliente: number): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/listarPorCliente/${idCliente}`, this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  consultar(numeroPedio: number): Observable<PedidoDto[] | null> {
+    return this._http.get<PedidoDto[]>(`${this.NEW_URL}/consultar/${numeroPedio}`, this.httpOptions).pipe(
+      map((resp: HttpResponse<PedidoDto[]>) => {
+        if (resp.status == 200) {
+          return resp.body;
+        } else {
+          return [];
+        }
+      }),
+      catchError((err, caught) => {
+        if (err.status == 404) {
+          return of([]);
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
+
+  atualizarPorCliente(numeroPedido: number, pedidoDto: PedidoDto): Observable<PedidoDto | null> {
+    return this._http
+      .put<PedidoDto>(
+        `${this.NEW_URL}/atualizarPorCliente/${numeroPedido}`,
+        JSON.stringify(pedidoDto),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<PedidoDto>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  atualizarPorFuncionario(numeroPedido: number, pedidoDto: PedidoDto): Observable<PedidoDto | null> {
+    return this._http
+      .put<PedidoDto>(
+        `${this.NEW_URL}/atualizarPorFuncionario/${numeroPedido}`,
+        JSON.stringify(pedidoDto),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<PedidoDto>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  cadastrar(pedidoDto: PedidoDto): Observable<PedidoDto | null> {
+    return this._http
+      .post<PedidoDto>(
+        `${this.NEW_URL}/cadastrar`,
+        JSON.stringify(pedidoDto),
+        this.httpOptions
+      )
+      .pipe(
+        map((resp: HttpResponse<PedidoDto>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllPedidos(): Observable<Pedido[] | null> {
@@ -88,11 +210,11 @@ export class PedidosService {
       );
   }
 
-  postPedido(pedido: Pedido): Observable<Pedido | null> {
+  postPedido(pedido: PedidoDto): Observable<PedidoDto | null> {
     return this._http
-      .post<Pedido>(this.NEW_URL + "/cadastrar", JSON.stringify(pedido), this.httpOptions)
+      .post<PedidoDto>(this.NEW_URL + "/cadastrar", JSON.stringify(pedido), this.httpOptions)
       .pipe(
-        map((resp: HttpResponse<Pedido>) => {
+        map((resp: HttpResponse<PedidoDto>) => {
           if (resp.status == 201) {
             return resp.body;
           } else {

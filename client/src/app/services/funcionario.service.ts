@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
+import { FuncionarioDto } from '../shared/models/dto/funcionario-dto.model';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -21,6 +22,31 @@ export class FuncionarioService {
       'Content-Type': 'application/json',
     }),
   };
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
+
+  consultarPorIdUsuario(idUsuario: number): Observable<FuncionarioDto | null> {
+    return this._http
+      .get<FuncionarioDto>(`${this.NEW_URL}/consultar/${idUsuario}`, this.httpOptions)
+      .pipe(
+        map((resp: HttpResponse<FuncionarioDto>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of(null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   // arrumar a URL em NEW_URL e nos métodos
   getAllFuncionarios(): Observable<Funcionario[] | null> {
