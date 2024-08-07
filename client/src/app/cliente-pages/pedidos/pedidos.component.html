@@ -1,96 +1,87 @@
-<h1 class="text-center">Pedidos em aberto</h1>
+<br />
+<h1 class="text-center">Visualização de Pedidos</h1>
+<div class="filter">
+  <select
+    #selectElement
+    (change)="filtroPedidos(selectElement.value)"
+    class="form-select"
+  >
+    <option value="TODOS">TODOS</option>
+    <option value="PEDIDOS DE HOJE">PEDIDOS DE HOJE</option>
+    <option value="PEDIDOS POR DATA">PEDIDOS POR DATA</option>
+  </select>
+</div>
 
-<div class="m-5">
-  <div>
-    <select (change)="filtroPedidos($event)" class="form-select">
-      <option [value]="statusEnum.EM_ABERTO">EM ABERTO</option>
-      <option [value]="statusEnum.REJEITADO">REJEITADO</option>
-      <option [value]="statusEnum.CANCELADO">CANCELADO</option>
-      <option [value]="statusEnum.AGUARDANDO_PAGAMENTO">
-        AGUARDANDO PAGAMENTO
-      </option>
-      <option [value]="statusEnum.RECOLHIDO">RECOLHIDO</option>
-      <option [value]="statusEnum.PAGO">PAGO</option>
-      <option [value]="statusEnum.FINALIZADO">FINALIZADO</option>
-    </select>
+<div>
+  <div *ngIf="opcaoSelecionada === 'PEDIDOS POR DATA'" class="date-filter">
+    <label for="startDate" class="dtLabel">Data inicial:</label>
+    <input
+      type="date"
+      id="startDate"
+      name="startDate"
+      [(ngModel)]="startDate"
+      class="dtInput"
+    />
+    <label for="endDate" class="dtLabel">Data final:</label>
+    <input
+      type="date"
+      id="endDate"
+      name="endDate"
+      [(ngModel)]="endDate"
+      class="dtInput"
+    />
+    <button
+      type="button"
+      class="btn-filter"
+      (click)="filtroPedidos(opcaoSelecionada)"
+    >
+      Filtrar
+    </button>
   </div>
+  <br />
+  <div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div id="listaPedidos">
+      <table class="table">
+        <tr>
+          <th scope="col">Pedido</th>
+          <th scope="col">Data Criação</th>
+          <th scope="col">Roupas</th>
+          <th scope="col">Prazo do serviço</th>
+          <th scope="col">Situação</th>
+          <th scope="col">Ação</th>
+        </tr>
+        <tr *ngFor="let pedido of orderedPedidos">
+          <td>{{ pedido.numeroPedido }}</td>
+          <td>{{ formatDate(pedido.dataPedido) }}</td>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Situação</th>
-        <th scope="col">Data Criação</th>
-        <th scope="col">Roupas</th>
-        <th scope="col">Prazo do serviço</th>
-        <th scope="col">Preço total</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for(pedido of filteredPedidos; track pedido.id){
-      <tr
-        class="
-            {{
-          pedido.situacao === statusEnum.EM_ABERTO
-            ? 'table-warning'
-            : ''
-        }}
-            {{
-          pedido.situacao === statusEnum.REJEITADO ||
-          pedido.situacao === statusEnum.CANCELADO
-            ? 'table-danger'
-            : ''
-        }}
-            {{
-          pedido.situacao === statusEnum.RECOLHIDO
-            ? 'table-secondary'
-            : ''
-        }}
-            {{
-          pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO
-            ? 'table-info'
-            : ''
-        }}
-            {{
-          pedido.situacao === statusEnum.PAGO
-            ? 'table-success'
-            : ''
-        }}
-            {{
-          pedido.situacao === statusEnum.FINALIZADO
-            ? 'table-primary'
-            : ''
-        }}
-        "
-      >
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.situacao }}</td>
-        <td>{{ pedido.dataPedido }}</td>
+          <ul *ngFor="let roupa of pedido.listaPedidoRoupas">
+              <li>Peça: {{ roupa.roupa.descricao }}, Prazo: {{ roupa.roupa.prazoDias }} dia(s), Preço: {{ roupa.roupa.preco }}</li>
 
-        <td>
-          <ul class="list-group">
-            @for(roupa of pedido.listaPedidoRoupas; track roupa.id){
-            <li>
-              {{ roupa.roupa.descricao }}, R${{ roupa.roupa.preco }},
-              {{ roupa.roupa.prazoDias }} Dias
-            </li>
-            }
           </ul>
-        </td>
-
-        <td>{{ pedido.orcamento.dataPrazo }} Min</td>
-        <td>R$ {{ pedido.orcamento.valor }}</td>
-
-        <td>
-          @if(pedido.situacao == statusEnum.AGUARDANDO_PAGAMENTO){
-          <button type="button" class="btn btn-success" (click)="abrirModal(pedido)">Pagar</button>
-          } @if(pedido.situacao == statusEnum.EM_ABERTO){
-          <button type="button" class="btn btn-danger">Cancelar</button>
-          }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+          <td>{{ formatDatePlus(pedido.orcamento.dataPrazo) }}</td>
+          <td [ngClass]="getStatusColor(pedido.situacao)">
+            {{ pedido.situacao }}
+          </td>
+          <td>
+            <button
+              *ngIf="pedido.situacao === statusEnum.EM_ABERTO"
+              class="btn btn-success"
+              (click)="cancelarPedido(pedido)"
+            >
+              Cancelar
+            </button>
+          </td>
+          <td>
+            <button
+              *ngIf="pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO"
+              class="btn btn-success"
+              (click)="pagarPedido(pedido)"
+            >
+              Pagar
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>

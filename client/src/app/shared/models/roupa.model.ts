@@ -1,5 +1,5 @@
 export class Roupa {
-  id: number = 0;
+  idRoupa: number = 0;
   descricao: string = '';
   preco: number = 0;
   prazoDias: number = 0;

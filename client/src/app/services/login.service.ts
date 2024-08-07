@@ -29,6 +29,10 @@ export class LoginService {
     delete localStorage[LS_CHAVE];
   }
 
+  getUsuarioLogado(): UsuarioResponseDto {
+    return this.usuarioLogado;
+  }
+
   // login(login: Login): Observable<Usuario2 | null> {
   //   let usu = new Usuario2(1, login.login, login.login, login.senha, 'FUNC');
   //   if (login.login == login.senha) {

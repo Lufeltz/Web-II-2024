@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RoupaService } from '../../services/roupa.service';
 import { Orcamento } from '../../shared/models/orcamento.model';
 import { Status } from '../../shared/models/status.enum';
@@ -8,6 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { PedidoDto } from '../../shared/models/dto/pedido-dto.model';
 import { PedidoRoupaDto } from '../../shared/models/dto/pedido-roupa-dto.model';
 import { RoupaDto } from '../../shared/models/dto/roupa-dto.model';
+import { UsuarioResponseDto } from '../../shared/models/dto/usuario-response-dto.model';
+import { LoginService } from '../../services/login.service';
+import { ClienteDto } from '../../shared/models/dto/cliente-dto.model';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-pedido',
@@ -17,20 +21,36 @@ import { RoupaDto } from '../../shared/models/dto/roupa-dto.model';
   styleUrl: './pedido.component.css',
 })
 export class PedidoComponent {
+  usuario: UsuarioResponseDto = new UsuarioResponseDto();
+  cliente: ClienteDto | null = null;
   private roupas: RoupaDto[] = [];
   private roupaSelecionada: RoupaDto | undefined;
   private listaRoupas: PedidoRoupaDto[] = [];
   private orcamentoAtual: Orcamento = new Orcamento();
   private mostrarValores: boolean = false;
   private botoesHabilitados: boolean = false;
+  mensagem: string = '';
+  mensagem_detalhes: string = '';
 
-  constructor(
-    private roupaService: RoupaService,
-    private pedidoService: PedidosService
-  ) {}
+  constructor(private roupaService: RoupaService,private pedidoService: PedidosService, private loginService: LoginService, private clienteService: ClienteService) {}
 
   ngOnInit(): void {
+    this.usuario = this.loginService.getUsuarioLogado();
+    this.obterClienteLogado();
     this.listarRoupas();
+  }
+
+  obterClienteLogado(): void {
+    this.clienteService.consultarPorIdUsuario(this.usuario.idUsuario)
+    .subscribe({
+      next: (cliente) => {
+        this.cliente = cliente;
+      },
+      error: (err) => {
+        this.mensagem = 'Erro ao buscar dados do cliente';
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+      }
+    });
   }
 
   listarRoupas(): RoupaDto[] {
@@ -90,6 +110,12 @@ export class PedidoComponent {
 
   aprovarPedido() {
     let novoPedido: PedidoDto = new PedidoDto();
+    if (this.cliente?.idCliente !== undefined) {
+      novoPedido.idCliente = this.cliente.idCliente;
+    } else {
+      this.mensagem = 'ID do cliente não disponível.';
+      return;
+    }
     novoPedido.orcamento = this.orcamentoAtual;
     novoPedido.dataPedido = new Date();
 
@@ -100,10 +126,7 @@ export class PedidoComponent {
     const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
     console.log(`Diferença em dias: ${diferencaDias}`);
-    novoPedido.orcamento.dataPrazo = new Date(
-      prazoSimulado.getTime() + diferencaMillis
-    );
-    novoPedido.idCliente = 1;
+    novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
     novoPedido.orcamento.aprovado = true;
     novoPedido.listaPedidoRoupas = this.listaRoupas;
     novoPedido.situacao = Status.EM_ABERTO;
@@ -125,32 +148,31 @@ export class PedidoComponent {
 
   rejeitarPedido() {
     let novoPedido: PedidoDto = new PedidoDto();
+    if (this.cliente?.idCliente !== undefined) {
+      novoPedido.idCliente = this.cliente.idCliente;
+    } else {
+      this.mensagem = 'ID do cliente não disponível.';
+      return;
+    }
     novoPedido.orcamento = this.orcamentoAtual;
-    //novoPedido.cliente = null; obter o login do cliente
     novoPedido.dataPedido = new Date();
 
     const prazoSimulado: Date = novoPedido.orcamento.dataPrazo;
-    // Verifique se dataPrazo é um objeto Date
     if (!(novoPedido.orcamento.dataPrazo instanceof Date)) {
-      novoPedido.orcamento.dataPrazo = new Date(); //reseta para data atual
+      novoPedido.orcamento.dataPrazo = new Date();
     }
 
-    // Calcule a diferença em milissegundos
-    const diferencaMillis =
-      novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
-
-    // Converter para dias
+    const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
 
     console.log(`Diferença em dias: ${diferencaDias}`);
 
-    // Atualizar o valor de `dataPrazo` com a nova data ou diferença, se necessário
     novoPedido.orcamento.dataPrazo = new Date(
       prazoSimulado.getTime() + diferencaMillis
     );
-    novoPedido.orcamento.aprovado = true;
-    novoPedido.listaPedidoRoupas = this.listaRoupas; // Corrigido para `this.listaRoupas`
+    novoPedido.listaPedidoRoupas = this.listaRoupas;
     novoPedido.situacao = Status.REJEITADO;
+    novoPedido.orcamento.aprovado = false;
 
     this.pedidoService.postPedido(novoPedido).subscribe({
       next: (pedido) => {
@@ -161,7 +183,6 @@ export class PedidoComponent {
       },
     });
 
-    // Limpar a lista de roupas e ocultar valores
     this.listaRoupas.splice(0, this.listaRoupas.length);
     this.mostrarValores = false;
     this.botoesAtivados = false;

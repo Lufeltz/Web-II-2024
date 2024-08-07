@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/homepage']);
             } else if (usu.tipoPermissao == 'CLIENTE') {
               this.clienteService.consultarPorIdUsuario(usu.idUsuario)
-              this.router.navigate(['/pedidos']);
+              this.router.navigate(['/homepage-cliente']);
             } else {
               this.router.navigate(['/login']);
             }
