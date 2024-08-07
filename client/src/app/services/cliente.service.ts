@@ -30,7 +30,7 @@ export class ClienteService {
 
   cadastrar(cliente: Cliente): Observable<ClienteDto | null> {
     return this._http
-      .post<ClienteDto>(this.NEW_URL, JSON.stringify(cliente), this.httpOptions)
+      .post<ClienteDto>(`${this.NEW_URL}/cadastrar`, JSON.stringify(cliente), this.httpOptions)
       .pipe(
         map((resp: HttpResponse<ClienteDto>) => {
           if (resp.status == 201) {

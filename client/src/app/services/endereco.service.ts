@@ -7,7 +7,7 @@ import { EnderecoDto } from '../shared/models/dto/endereco-dto.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ClienteService {
+export class EnderecoService {
   constructor(private _http: HttpClient) {}
 
   // ===============================[NEW]===============================
@@ -23,7 +23,7 @@ export class ClienteService {
 
   //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
-  consultar(cep: number): Observable<EnderecoDto | null> {
+  consultar(cep: String): Observable<EnderecoDto | null> {
     return this._http
       .get<EnderecoDto>(`${this.NEW_URL}/consultar/${cep}`, this.httpOptions)
       .pipe(
