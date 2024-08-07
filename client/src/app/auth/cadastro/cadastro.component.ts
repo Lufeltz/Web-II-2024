@@ -47,6 +47,7 @@ export class CadastroComponent {
       this.usuario.email = this.cadastroEmail;
       this.usuario.nome = this.cadastroNome;
       this.usuario.permissao.tipoPermissao = 'CLIENTE';
+      this.usuario.permissao.idPermissao = 1;
       this.endereco.cep = this.cadastroCep;
       this.endereco.uf = this.cadastroUf;
       this.endereco.cidade = this.cadastroCidade;
