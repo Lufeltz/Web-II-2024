@@ -84,8 +84,9 @@ export class PedidosService {
     );
   }
 
-  consultar(numeroPedido: number): Observable<PedidoDto | null> {
-    return this._http.get<PedidoDto>(`${this.NEW_URL}/consultar/${numeroPedido}`, this.httpOptions).pipe(
+  consultar(numeroPedido: number, idCliente: number): Observable<PedidoDto | null> {
+    const params = new HttpParams().set('numeroPedido', numeroPedido).set('idCliente', idCliente);
+    return this._http.get<PedidoDto>(`${this.NEW_URL}/consultar`, {params, observe: 'response',}).pipe(
       map((resp: HttpResponse<PedidoDto>) => {
         if (resp.status === 200) {
           return resp.body;
