@@ -68,7 +68,11 @@
                 *ngIf="getButtonLabel(pedido.situacao) !== null"
                 class="btn"
                 [ngClass]="getButtonClass(pedido.situacao)"
-                (click)="handleAction(pedido)"
+                (click)="
+                  pedido.situacao === 'AGUARDANDO_PAGAMENTO'
+                    ? pagar(pedido)
+                    : handleAction(pedido)
+                "
               >
                 {{ getButtonLabel(pedido.situacao) }}
               </button>

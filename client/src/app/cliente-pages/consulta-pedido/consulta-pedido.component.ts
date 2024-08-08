@@ -16,7 +16,7 @@ import { ClienteService } from '../../services/cliente.service';
   imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './consulta-pedido.component.html',
   styleUrls: ['./consulta-pedido.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class ConsultaPedidoComponent implements OnInit {
   @ViewChild('formConsultaPedido') formConsultaPedido!: NgForm;
@@ -33,7 +33,13 @@ export class ConsultaPedidoComponent implements OnInit {
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
-  constructor(private router: Router, private pedidosService: PedidosService, private datePipe: DatePipe, private loginService: LoginService, private clienteService: ClienteService) {}
+  constructor(
+    private router: Router,
+    private pedidosService: PedidosService,
+    private datePipe: DatePipe,
+    private loginService: LoginService,
+    private clienteService: ClienteService
+  ) {}
 
   ngOnInit(): void {
     this.usuario = this.loginService.getUsuarioLogado();
@@ -45,16 +51,17 @@ export class ConsultaPedidoComponent implements OnInit {
   }
 
   obterClienteLogado(): void {
-    this.clienteService.consultarPorIdUsuario(this.usuario.idUsuario)
-    .subscribe({
-      next: (cliente) => {
-        this.cliente = cliente;
-      },
-      error: (err) => {
-        this.mensagem = 'Erro ao buscar dados do cliente';
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-      }
-    });
+    this.clienteService
+      .consultarPorIdUsuario(this.usuario.idUsuario)
+      .subscribe({
+        next: (cliente) => {
+          this.cliente = cliente;
+        },
+        error: (err) => {
+          this.mensagem = 'Erro ao buscar dados do cliente';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        },
+      });
   }
 
   consultar() {
@@ -62,35 +69,43 @@ export class ConsultaPedidoComponent implements OnInit {
       this.consultaPedidoSubmetido = this.numeroPedido;
 
       if (this.cliente?.idCliente !== undefined) {
-        this.pedidosService.consultar(this.numeroPedido, this.cliente.idCliente).subscribe({
-          next: (pedido: PedidoDto | null) => {
-            if (pedido) {
-              this.pedido = pedido;
-              this.prazoServico = this.datePipe.transform(new Date(this.pedido.orcamento.dataPrazo), 'dd/MM/yyyy') || '';
-              this.totalItens = this.pedido.listaPedidoRoupas.reduce((total, item) => total + item.quantidade, 0);
-              this.precoTotal = this.pedido.orcamento.valor;
-              this.pedidoEncontrado = true;
-            } else {
+        this.pedidosService
+          .consultar(this.numeroPedido, this.cliente.idCliente)
+          .subscribe({
+            next: (pedido: PedidoDto | null) => {
+              if (pedido) {
+                this.pedido = pedido;
+                this.prazoServico =
+                  this.datePipe.transform(
+                    new Date(this.pedido.orcamento.dataPrazo),
+                    'dd/MM/yyyy'
+                  ) || '';
+                this.totalItens = this.pedido.listaPedidoRoupas.reduce(
+                  (total, item) => total + item.quantidade,
+                  0
+                );
+                this.precoTotal = this.pedido.orcamento.valor;
+                this.pedidoEncontrado = true;
+              } else {
+                this.pedidoEncontrado = false;
+                console.log('Pedido não encontrado.');
+              }
+            },
+            error: (error) => {
               this.pedidoEncontrado = false;
-              console.log('Pedido não encontrado.');
-            }
-          },
-          error: (error) => {
-            this.pedidoEncontrado = false;
-            console.log('Erro ao requisitar o pedido: ', error);
-          }
-        });
+              console.log('Erro ao requisitar o pedido: ', error);
+            },
+          });
       } else {
         this.mensagem = 'ID do cliente não disponível.';
         return;
       }
-  
     } else {
       this.pedidoEncontrado = false;
       console.log('Formulário inválido ou código de pedido não fornecido.');
     }
   }
-  
+
   formatarValor(valor: number): string {
     return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   }

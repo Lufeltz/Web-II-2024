@@ -11,7 +11,7 @@ import { PedidoRoupaDto } from '../../../shared/models/dto/pedido-roupa-dto.mode
   standalone: true,
   imports: [CommonModule],
   templateUrl: './modal-pagamento.component.html',
-  styleUrl: './modal-pagamento.component.css'
+  styleUrl: './modal-pagamento.component.css',
 })
 export class ModalPagamentoComponent {
   @Output() voltarClicked = new EventEmitter<void>();
@@ -22,7 +22,7 @@ export class ModalPagamentoComponent {
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
-  constructor(private pedidosService: PedidosService, private router: Router){}
+  constructor(private pedidosService: PedidosService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -30,17 +30,18 @@ export class ModalPagamentoComponent {
     this.mensagem = '';
     this.mensagem_detalhes = '';
     pedido.situacao = this.status.PAGO;
-    this.pedidosService.atualizarPorCliente(pedido.numeroPedido, pedido).subscribe({
-      complete: () => {
-        this.pagamentoConcluido.emit();
-        this.router.navigate(['/pedidos']);
-        //this.listaPedidos(this.usuario.idUsuario);
-      },
-      error: (err) => {
-        this.mensagem = `Erro pagar pedido ${this.pedidoParaPagar.numeroPedido} - ${this.pedidoParaPagar.numeroPedido}`;
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-      },
-    });
+    this.pedidosService
+      .atualizarPorCliente(pedido.numeroPedido, pedido)
+      .subscribe({
+        complete: () => {
+          this.pagamentoConcluido.emit();
+          this.router.navigate(['/pedidos']);
+        },
+        error: (err) => {
+          this.mensagem = `Erro pagar pedido ${this.pedidoParaPagar.numeroPedido} - ${this.pedidoParaPagar.numeroPedido}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        },
+      });
   }
 
   cancelar(): void {
@@ -77,12 +78,11 @@ export class ModalPagamentoComponent {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-  
+
     const formattedDate = `${day < 10 ? '0' + day : day}/${
       month < 10 ? '0' + month : month
     }/${year}`;
-  
+
     return formattedDate;
   }
-
 }

@@ -33,61 +33,59 @@ export class VisualizacaoPedidosComponent implements OnInit {
     this.listaPedidos();
   }
 
-// BUTTONS
+  // BUTTONS
 
-formatSituacao(situacao: string): string {
-  return situacao.replace(/_/g, ' ');
-}
-
-// Função para determinar a classe do botão
-getButtonClass(situacao: Status): string {
-  switch (situacao) {
-    case this.statusEnum.EM_ABERTO:
-      return 'btn btn-dark'; // Cor para "Recolher"
-    case this.statusEnum.RECOLHIDO:
-      return 'btn btn-dark'; // Cor para "Confirmar Lavagem"
-    case this.statusEnum.PAGO:
-      return 'btn btn-dark'; // Cor para "Finalizar Pedido"
-    default:
-      return 'btn btn-dark'; // Cor padrão
+  formatSituacao(situacao: string): string {
+    return situacao.replace(/_/g, ' ');
   }
-}
 
-// Função para determinar o rótulo do botão
-getButtonLabel(situacao: Status): string | null {
-  switch (situacao) {
-    case this.statusEnum.EM_ABERTO:
-      return 'Recolher';
-    case this.statusEnum.RECOLHIDO:
-      return 'Confirmar Lavagem';
-    case this.statusEnum.PAGO:
-      return 'Finalizar Pedido';
-    default:
-      return null; // Rótulo padrão
+  // Função para determinar a classe do botão
+  getButtonClass(situacao: Status): string {
+    switch (situacao) {
+      case this.statusEnum.EM_ABERTO:
+        return 'btn btn-dark'; // Cor para "Recolher"
+      case this.statusEnum.RECOLHIDO:
+        return 'btn btn-dark'; // Cor para "Confirmar Lavagem"
+      case this.statusEnum.PAGO:
+        return 'btn btn-dark'; // Cor para "Finalizar Pedido"
+      default:
+        return 'btn btn-dark'; // Cor padrão
+    }
   }
-}
 
-// Função para executar a ação correta
-handleAction(pedido: PedidoDto): void {
-  switch (pedido.situacao) {
-    case this.statusEnum.EM_ABERTO:
-      this.recolherPedido(pedido);
-      break;
-    case this.statusEnum.RECOLHIDO:
-      this.confirmarLavagem(pedido);
-      break;
-    case this.statusEnum.PAGO:
-      this.finalizarPedido(pedido);
-      break;
-    default:
-      console.log('Nenhuma ação disponível');
-      break;
+  // Função para determinar o rótulo do botão
+  getButtonLabel(situacao: Status): string | null {
+    switch (situacao) {
+      case this.statusEnum.EM_ABERTO:
+        return 'Recolher';
+      case this.statusEnum.RECOLHIDO:
+        return 'Confirmar Lavagem';
+      case this.statusEnum.PAGO:
+        return 'Finalizar Pedido';
+      default:
+        return null; // Rótulo padrão
+    }
   }
-}
 
-// BUTTONS
+  // Função para executar a ação correta
+  handleAction(pedido: PedidoDto): void {
+    switch (pedido.situacao) {
+      case this.statusEnum.EM_ABERTO:
+        this.recolherPedido(pedido);
+        break;
+      case this.statusEnum.RECOLHIDO:
+        this.confirmarLavagem(pedido);
+        break;
+      case this.statusEnum.PAGO:
+        this.finalizarPedido(pedido);
+        break;
+      default:
+        console.log('Nenhuma ação disponível');
+        break;
+    }
+  }
 
-
+  // BUTTONS
 
   listaPedidos(): void {
     this.pedidosService.getAllPedidosDto().subscribe({
@@ -129,8 +127,7 @@ handleAction(pedido: PedidoDto): void {
     this.opcaoSelecionada = opcaoSelecionada;
     switch (opcaoSelecionada) {
       case 'PEDIDOS DE HOJE':
-        const hoje = new Date(2024, 5, 10); // teste
-        // const hoje = new Date();
+        const hoje = new Date();
         const inicioHoje = new Date(
           hoje.getFullYear(),
           hoje.getMonth(),

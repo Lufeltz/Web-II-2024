@@ -7,6 +7,8 @@ import { PedidoDto } from '../../shared/models/dto/pedido-dto.model';
 import { Router } from '@angular/router';
 import { UsuarioResponseDto } from '../../shared/models/dto/usuario-response-dto.model';
 import { LoginService } from '../../services/login.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalPagamentoComponent } from './modal-pagamento/modal-pagamento.component';
 
 @Component({
   selector: 'app-pedidos',
@@ -27,6 +29,7 @@ export class PedidosComponent implements OnInit {
   status = Status;
   pedido!: PedidoDto;
   usuarioLogado!: UsuarioResponseDto;
+  pedidoParaPagar!: PedidoDto;
 
   mensagem: string = '';
   mensagem_detalhes: string = '';
@@ -34,7 +37,8 @@ export class PedidosComponent implements OnInit {
   constructor(
     private pedidosService: PedidosService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -124,23 +128,45 @@ export class PedidosComponent implements OnInit {
   filtroPedidos(opcaoSelecionada: string) {
     this.usuarioLogado = this.loginService.getUsuarioLogado();
     this.opcaoSelecionada = opcaoSelecionada;
+
     this.pedidosService
       .listarPorIdUsuario(this.usuarioLogado.idUsuario)
       .subscribe({
         next: (data: PedidoDto[] | null) => {
           if (data == null) {
             this.pedidos = [];
+            this.orderedPedidos = [];
+            this.pedidosArePresent = false;
           } else {
+            // Filtra os pedidos pela situação selecionada
             this.pedidos = data.filter(
               (pedido) => pedido.situacao === this.opcaoSelecionada
             );
+
+            // Converte os campos de data para objetos Date
+            this.pedidos = this.pedidos.map((pedido) => ({
+              ...pedido,
+              dataPedido: new Date(pedido.dataPedido),
+              orcamento: {
+                ...pedido.orcamento,
+                dataPrazo: new Date(pedido.orcamento.dataPrazo),
+              },
+            }));
+
+            // Ordena os pedidos pela data do pedido de forma decrescente
+            this.pedidos.sort(
+              (a, b) => b.dataPedido.getTime() - a.dataPedido.getTime()
+            );
+
+            // Define os pedidos ordenados
+            this.orderedPedidos = [...this.pedidos];
+            this.pedidosArePresent = true;
           }
-          // Atualiza os pedidos ordenados para refletir os novos filtros
-          this.orderedPedidos = [...this.pedidos];
         },
         error: (err) => {
           this.mensagem = 'Erro buscando lista de pedidos';
           this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+          this.pedidosArePresent = false;
         },
       });
   }
@@ -195,12 +221,12 @@ export class PedidosComponent implements OnInit {
     this.pedidosService
       .atualizarPorCliente(pedido.numeroPedido, pedido)
       .subscribe({
-        next: (pedido: PedidoDto | null) => {
-          this.router.navigate(['/pedidos']);
-          this.listaPedidos(this.usuario.idUsuario);
+        next: () => {
+          // Atualiza a lista com base na opção selecionada
+          this.filtroPedidos(this.opcaoSelecionada);
         },
         error: (err) => {
-          this.mensagem = `Erro atualizando pedido ${this.pedido.numeroPedido}`;
+          this.mensagem = `Erro atualizando pedido ${pedido.numeroPedido}`;
           this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         },
       });
@@ -211,14 +237,32 @@ export class PedidosComponent implements OnInit {
     this.pedidosService
       .atualizarPorCliente(pedido.numeroPedido, pedido)
       .subscribe({
-        next: (pedido: PedidoDto | null) => {
-          this.router.navigate(['/pedidos']);
-          this.listaPedidos(this.usuario.idUsuario);
+        next: () => {
+          // Atualiza a lista com base na opção selecionada
+          this.filtroPedidos(this.opcaoSelecionada);
         },
         error: (err) => {
-          this.mensagem = `Erro atualizando pedido ${this.pedido.numeroPedido}`;
+          this.mensagem = `Erro atualizando pedido ${pedido.numeroPedido}`;
           this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         },
       });
+  }
+
+  // MODAL
+
+  pagar(pedidoParaPagar: PedidoDto) {
+    this.pedidoParaPagar = pedidoParaPagar;
+    const modalRef = this.modalService.open(ModalPagamentoComponent, {
+      backdrop: 'static',
+      centered: true,
+    });
+    modalRef.componentInstance.pedidoParaPagar = this.pedidoParaPagar; // Corrigido
+    modalRef.componentInstance.voltarClicked.subscribe(() => {
+      modalRef.close();
+    });
+    modalRef.componentInstance.pagamentoConcluido.subscribe(() => {
+      this.filtroPedidos(this.opcaoSelecionada);
+      modalRef.close();
+    });
   }
 }

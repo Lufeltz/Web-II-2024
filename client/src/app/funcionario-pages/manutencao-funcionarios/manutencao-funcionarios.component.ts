@@ -9,7 +9,6 @@ import { ExcluirFuncionariosModalComponent } from './manutencao-funcionarios-mod
 import { FuncionarioService } from '../../services/funcionario.service';
 import { Funcionario } from '../../shared/models/funcionario.model';
 import { NgxMaskPipe } from 'ngx-mask';
-import { FuncionarioDto } from '../../shared/models/dto/funcionario-dto.model';
 
 @Component({
   selector: 'app-manutencao-funcionarios',
@@ -29,7 +28,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
   funcionariosIsPresent: boolean | any = null;
   funcionarioParaEditar!: Funcionario;
   funcionarioParaExcluir!: Funcionario;
-  //  ======================[NEW]======================
+
   funcionarios: Funcionario[] = [];
   mensagem: string = '';
   mensagem_detalhes = '';
@@ -52,7 +51,6 @@ export class ManutencaoFuncionariosComponent implements OnInit {
           this.funcionariosIsPresent = false;
         } else {
           this.funcionarios = data;
-          // console.log(this.roupas);
           this.funcionariosIsPresent = true;
         }
       },
@@ -63,28 +61,6 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
     return this.funcionarios;
   }
-
-  //  ======================[NEW]======================
-
-  // loadFuncionarios() {
-  //   this.funcionarioService.getFuncionarios().subscribe({
-  //     next: (funcionario: Funcionario[]) => {
-  //       this.funcionario = funcionario;
-  //       // this.orderFuncionario = funcionario
-  //       //   .sort((a, b) => {
-  //       //     const descricaoA = a..toLowerCase();
-  //       //     const descricaoB = b.funcionario.toLowerCase();
-  //       //     return descricaoA.localeCompare(descricaoB);
-  //       //   });
-  //       if (this.funcionario.length === 0) {
-  //         this.funcionariosIsPresent = false;
-  //       } else {
-  //         this.funcionariosIsPresent = true;
-  //       }
-  //     },
-  //     error: (error) => console.log('Erro ao requisitar as roupas: ', error),
-  //   });
-  // }
 
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
     return Math.ceil(tempoDeServicoMinutos / 1440);
