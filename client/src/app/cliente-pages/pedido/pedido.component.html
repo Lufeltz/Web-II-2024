@@ -1,9 +1,14 @@
+<div class="background">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: calc(100vh - 80px)"
+  >
 <div class="container">
-  <h1>Pedido On-line</h1>
-  <div class="row">
+  <h1 class="info-text">Pedido On-line</h1>
+  <div class="info-text row">
     <div class="col-md-4">
       <label for="roupa">Roupa:</label>
-      <select id="roupa" [(ngModel)]="selectedRoupa" class="form-control">
+      <select id="roupa" [(ngModel)]="selectedRoupa" class="info-text form-control">
         <option *ngFor="let roupa of getRoupas" [ngValue]="roupa">{{ roupa.descricao }}</option>
       </select>
     </div>
@@ -22,28 +27,30 @@
     <div class="col-md-4">
       <button
         id="addRoupa"
-        class="btn btn-primary mt-4"
+        class="custom-btn btn btn-primary mt-4"
         (click)="inserirRoupa(selectedRoupa, quantidade.value)"
       >
         Inserir
       </button>
     </div>
   </div>
+  <div class="scroll-view">
   <table class="table max-width">
     <thead>
       <tr>
-        <th class="col-8">Peça</th>
-        <th class="col-2">Quantidade</th>
-        <th class="col-2">Ações</th>
+        <th class="info-text col-8">Peça</th>
+        <th class="info-text col-2">Quantidade</th>
+        <th class="info-text col-2">Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let roupa of tabela">
-        <td>{{ roupa.roupa.descricao }}</td>
-        <td>{{ roupa.quantidade }}</td>
+        <td class="info-text">{{ roupa.roupa.descricao }}</td>
+        <td class="info-text">{{ roupa.quantidade }}</td>
         <td>
           <button
             class="btn btn-danger btn-circle"
+            id="remove-btn"
             (click)="removerRoupa(roupa)"
           >
             X
@@ -52,15 +59,16 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-primary" (click)="cadastrarPedido()">
+  </div>
+  <button class="custom-btn btn btn-primary" (click)="cadastrarPedido()">
     Cadastrar pedido
   </button>
   <div class="result" *ngIf="exibir">
-    <p class="d-flex align-items-center">
+    <p class="info-text d-flex align-items-center">
       <label for="total">Valor total:&nbsp;</label>
       <span id="total">{{ total | currency:'BRL':'symbol':'1.2-2'}}</span>
     </p>
-    <p class="d-flex align-items-center">
+    <p class="info-text d-flex align-items-center">
       <label for="dias">Prazo estimado:&nbsp;</label>
       <span id="dias"> {{ tempo | date : "dd/MM/yyyy HH:mm" }}</span>
     </p>
@@ -75,8 +83,10 @@
     </button>
     <div class="cancelar">
       <button [disabled]="!botoesAtivados" class="btn btn-danger btn mt-2" (click)="rejeitarPedido()">
-        Cancelar
+        Rejeitar
       </button>
     </div>
   </div>
+</div>
+</div>
 </div>
