@@ -14,22 +14,26 @@
 
 <div>
   <div *ngIf="opcaoSelecionada === 'PEDIDOS POR DATA'" class="date-filter">
-    <label for="startDate" class="dtLabel">Data inicial:</label>
-    <input
-      type="date"
-      id="startDate"
-      name="startDate"
-      [(ngModel)]="startDate"
-      class="dtInput"
-    />
-    <label for="endDate" class="dtLabel">Data final:</label>
-    <input
-      type="date"
-      id="endDate"
-      name="endDate"
-      [(ngModel)]="endDate"
-      class="dtInput"
-    />
+    <div class="date-group">
+      <label for="startDate" class="dtLabel">Data inicial:</label>
+      <input
+        type="date"
+        id="startDate"
+        name="startDate"
+        [(ngModel)]="startDate"
+        class="dtInput"
+      />
+    </div>
+    <div class="date-group">
+      <label for="endDate" class="dtLabel">Data final:</label>
+      <input
+        type="date"
+        id="endDate"
+        name="endDate"
+        [(ngModel)]="endDate"
+        class="dtInput"
+      />
+    </div>
     <button
       type="button"
       class="btn-filter"
@@ -39,57 +43,68 @@
     </button>
   </div>
   <br />
-  <div class="shadow-lg p-3 mb-5 bg-white rounded">
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
     <div id="listaPedidos">
       <table class="table">
-        <tr>
-          <th scope="col">Pedido</th>
-          <th scope="col">Data Criação</th>
-          <th scope="col">Roupas</th>
-          <th scope="col">Prazo do serviço</th>
-          <th scope="col">Situação</th>
-          <th scope="col">Ação</th>
-        </tr>
-        <tr *ngFor="let pedido of orderedPedidos">
-          <td>{{ pedido.numeroPedido }}</td>
-          <td>{{ formatDate(pedido.dataPedido) }}</td>
+        <thead class="table-header-bg">
+          <tr>
+            <th scope="col">Pedido</th>
+            <th scope="col">Data Criação</th>
+            <th scope="col">Roupas</th>
+            <th scope="col">Prazo do serviço</th>
+            <th scope="col">Situação</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let pedido of orderedPedidos"
+            [ngClass]="{
+              'table-warning': pedido.situacao === statusEnum.EM_ABERTO,
+              'table-danger':
+                pedido.situacao === statusEnum.REJEITADO ||
+                pedido.situacao === statusEnum.CANCELADO,
+              'table-secondary': pedido.situacao === statusEnum.RECOLHIDO,
+              'table-info': pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO,
+              'table-success': pedido.situacao === statusEnum.PAGO,
+              'table-primary': pedido.situacao === statusEnum.FINALIZADO
+            }"
+          >
+            <td>{{ pedido.numeroPedido }}</td>
+            <td>{{ formatDate(pedido.dataPedido) }}</td>
 
-          <ul *ngFor="let roupa of pedido.listaPedidoRoupas">
-              <li>Peça: {{ roupa.roupa.descricao }}, Prazo: {{ roupa.roupa.prazoDias }} dia(s), Preço: {{ roupa.roupa.preco }}</li>
+            <td>
+              <ul
+                *ngFor="let roupa of pedido.listaPedidoRoupas"
+                class="roupa-list"
+              >
+                <li>
+                  Peça: {{ roupa.roupa.descricao }}, Prazo:
+                  {{ roupa.roupa.prazoDias }} dia(s), Preço: R$
+                  {{ roupa.roupa.preco }}, Quantidade: {{ roupa.quantidade }}
+                </li>
+              </ul>
+            </td>
 
-          </ul>
-          <td>{{ formatDatePlus(pedido.orcamento.dataPrazo) }}</td>
-          <td [ngClass]="getStatusColor(pedido.situacao)">
-            {{ pedido.situacao }}
-          </td>
-          <td>
-            <button
-              *ngIf="pedido.situacao === statusEnum.EM_ABERTO"
-              class="btn btn-success"
-              (click)="recolherPedido(pedido)"
-            >
-              Recolher
-            </button>
-          </td>
-          <td>
-            <button
-              *ngIf="pedido.situacao === statusEnum.RECOLHIDO"
-              class="btn btn-success"
-              (click)="confirmarLavagem(pedido)"
-            >
-              Confirmar Lavagem
-            </button>
-          </td>
-          <td>
-            <button
-              *ngIf="pedido.situacao === statusEnum.PAGO"
-              class="btn btn-success"
-              (click)="finalizarPedido(pedido)"
-            >
-              Finalizar Pedido
-            </button>
-          </td>
-        </tr>
+            <td>{{ formatDatePlus(pedido.orcamento.dataPrazo) }}</td>
+
+            <td [ngClass]="pedido.situacao">
+              {{ formatSituacao(pedido.situacao) }}
+            </td>
+
+            <!-- Coluna única para o botão -->
+            <td>
+              <button
+                *ngIf="getButtonLabel(pedido.situacao) !== null"
+                class="btn"
+                [ngClass]="getButtonClass(pedido.situacao)"
+                (click)="handleAction(pedido)"
+              >
+                {{ getButtonLabel(pedido.situacao) }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

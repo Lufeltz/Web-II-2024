@@ -242,19 +242,17 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
-import { PedidosService } from '../../services/pedidos.service';
 import { Pedido } from '../../shared/models/pedido.model';
 import autoTable from 'jspdf-autotable';
-import { ClienteService } from '../../services/cliente.service';
-import { Cliente } from '../../shared/models/cliente.model';
 import { RelatorioCliente } from '../../shared/models/relatorio-cliente.model';
 import { RelatorioTodosClientes } from '../../shared/models/dto/relatorio-todos-clientes';
 import { RelatorioService } from '../../services/relatorio.service';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-relatorio-clientes',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, NgxMaskPipe],
   templateUrl: './relatorio-clientes.component.html',
   styleUrl: './relatorio-clientes.component.css',
 })
@@ -273,6 +271,22 @@ export class RelatorioClientesComponent implements OnInit {
   ngOnInit(): void {
     //this.listarClientes();
   }
+
+  formatarCpf(cpf: string): string {
+    return cpf
+      .replace(/\D/g, '') // Remove tudo que não é dígito
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  }
+
+  formatarTelefone(telefone: string): string {
+    return telefone
+      .replace(/\D/g, '') // Remove tudo que não é dígito
+      .replace(/^(\d{2})(\d)(\d{4})(\d{4})$/, '($1) $2 $3-$4'); // Formata como (41) 9 7652-0932
+  }
+  
+  
 
   gerarRelatorio(): RelatorioTodosClientes[] {
     this.relatorioService.getAllClientes().subscribe({
@@ -313,23 +327,20 @@ export class RelatorioClientesComponent implements OnInit {
       { align: 'center' }
     );
 
+    // Preparar os dados com formatação
     const dadosTabela = this.clientes.map((cliente) => {
       return [
         cliente.usuario.nome,
-        cliente.cpf,
+        this.formatarCpf(cliente.cpf),
         cliente.usuario.email,
-        cliente.telefone,
-        cliente.endereco.rua +
-          ', ' +
-          cliente.endereco.numero +
-          ' - ' +
-          cliente.endereco.cidade,
+        this.formatarTelefone(cliente.telefone),
+        `${cliente.endereco.rua}, ${cliente.endereco.numero} - ${cliente.endereco.cidade}`,
       ];
     });
 
     autoTable(doc, {
       startY: 39,
-      head: [['Nome:', 'CPF:', 'Email:', 'Telefone:', 'Endereço:']],
+      head: [['Nome', 'CPF', 'Email', 'Telefone', 'Endereço']],
       headStyles: {
         fillColor: [204, 204, 204],
         textColor: 0,
@@ -349,9 +360,9 @@ export class RelatorioClientesComponent implements OnInit {
     doc.save('relatorio-clientes.pdf');
   }
 
-  voltar() {
-    this.router.navigate(['/']);
-  }
+  // voltar() {
+  //   this.router.navigate(['/']);
+  // }
 
   get listaClientes(): RelatorioTodosClientes[] {
     return this.clientes;

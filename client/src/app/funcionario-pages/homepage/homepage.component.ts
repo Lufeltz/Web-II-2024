@@ -29,6 +29,10 @@ export class HomepageComponent implements OnInit {
     this.listaPedidos();
   }
 
+  formatSituacao(situacao: string): string {
+    return situacao.replace(/_/g, ' ');
+  }
+
   recolherPedido(pedido: PedidoDto): void {
     pedido.situacao = this.status.RECOLHIDO;
     this.pedidosService

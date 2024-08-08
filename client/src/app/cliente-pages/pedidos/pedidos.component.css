@@ -1,0 +1,170 @@
+/* Restante do estilo */
+
+.amarelo {
+    background-color: yellow;
+  }
+  
+  .vermelho {
+    background-color: red;
+  }
+  
+  .cinza {
+    background-color: gray;
+  }
+  
+  .azul {
+    background-color: blue;
+  }
+  
+  .laranja {
+    background-color: orange;
+  }
+  
+  .verde {
+    background-color: green;
+  }
+  
+  .roxo {
+    background-color: purple;
+  }
+  
+  /* Centralização de Texto */
+  .text-center {
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  /* Inputs e Labels */
+  .dtInput {
+    margin: 5px;
+    border-radius: 4px;
+  }
+  
+  .dtLabel {
+    margin-left: 30px;
+  }
+  
+  /* Filtro */
+  .filter {
+    width: 40%;
+    margin: 0 auto; /* Centraliza o elemento na página */
+  }
+  
+  /* Botão de Filtro */
+  .btn-filter {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center; /* Centraliza o texto dentro do botão */
+  }
+  
+  /* Estilo para o cartão */
+  .card {
+      background-color: #fff; /* Cor de fundo do card */
+      border-radius: 10px; /* Bordas arredondadas */
+      padding: 20px; /* Espaçamento interno */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
+      margin: 20px auto; /* Centralizar o card */
+      max-width: 80%; /* Largura máxima do card */
+      border: none; /* Remove qualquer borda */
+    }
+    /* Estilos da Tabela */
+  table {
+      width: 100%; /* Ajusta a largura da tabela conforme necessário */
+      margin: 0 auto; /* Centraliza a tabela na página */
+      border-collapse: collapse; /* Garante que as bordas da tabela sejam colapsadas */
+    }
+    ul {
+      list-style-type: none; /* Remove os marcadores padrão */
+      margin: 0; /* Remove a margem padrão */
+      padding: 0; /* Remove o padding padrão */
+    }
+    
+    /* Ajusta a aparência dos itens da lista */
+    li {
+      margin: 0; /* Remove margem extra dos itens */
+      padding: 4px 0; /* Padding entre itens */
+    }
+    /* Estilo das Células */
+    td,
+    th {
+      border: 3px solid white; /* Define a borda das células da tabela */
+      padding: 12px; /* Padding interno das células */
+      text-align: center; /* Centraliza texto horizontalmente */
+      vertical-align: middle; /* Alinha conteúdo verticalmente ao centro */
+      background-color: inherit; /* Herda a cor de fundo da linha */
+    }
+    
+    thead th {
+      font-weight: bold;
+      text-align: center; /* Centraliza texto do cabeçalho */
+    }
+    
+    /* Estilos de Linhas da Tabela */
+    tbody tr {
+      transition: background-color 0.3s; /* Transição suave para mudanças de cor */
+    }
+    
+    tbody tr:hover {
+      background-color: #f1f1f1; /* Cor de fundo para hover */
+    }
+    
+    /* Cores de Fundo Baseadas em Status */
+    .table-warning td {
+      background-color: #fff3cd; /* Cor de fundo para status de aviso */
+    }
+    
+    .table-danger td {
+      background-color: #f8d7da; /* Cor de fundo para status de perigo */
+    }
+    
+    .table-secondary td {
+      background-color: #e2e3e5; /* Cor de fundo para status secundário */
+    }
+    
+    .table-info td {
+      background-color: #d1ecf1; /* Cor de fundo para status de informação */
+    }
+    
+    .table-success td {
+      background-color: #d4edda; /* Cor de fundo para status de sucesso */
+    }
+    
+    .table-primary td {
+      background-color: #cce5ff; /* Cor de fundo para status primário */
+    }
+    
+  .date-filter {
+    display: flex;
+    flex-direction: column; /* Alinha os rótulos e botões verticalmente */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    margin: 0 auto; /* Centraliza o container na página */
+  }
+  
+  .date-filter > * {
+    margin: 5px; /* Adiciona um pequeno espaçamento entre os itens */
+  }
+  
+  .date-filter .date-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens no centro horizontalmente */
+  }
+  
+  .date-filter .date-group label,
+  .date-filter .date-group input {
+    margin: 0 10px; /* Espaçamento entre rótulo e campo de entrada */
+  }
+  
+  .btn-filter {
+    margin-top: 10px; /* Espaçamento entre o botão e os campos de data */
+  }
+  
+  .table-header-bg {
+      background-color: #f8f9fa; /* Cor cinza claro do Bootstrap */
+    }
+    

@@ -43,7 +43,7 @@
                   <tr *ngFor="let item of funcionarios">
                     <td style="width: 30%">{{ item.usuario.nome }}</td>
                     <td style="width: 30%">{{ item.usuario.email }}</td>
-                    <td style="width: 24%">{{ item.dataNascimento }}</td>
+                    <td style="width: 24%">{{ item.dataNascimento  | date:'dd/MM/yyyy' }}</td>
                     <td
                       style="width: 8%; text-align: center; border-right: none"
                     >

@@ -30,7 +30,6 @@ export class AdicionarFuncionariosModalComponent {
   @Output() adicaoConcluida = new EventEmitter<void>();
   @ViewChild('formAdicionarFuncionario') formAdicionarFuncionario!: NgForm;
 
-  //  ======================[NEW]======================
   constructor(
     private funcionarioService: FuncionarioService,
     private router: Router
@@ -43,7 +42,7 @@ export class AdicionarFuncionariosModalComponent {
   loading!: boolean;
   mensagem: string = '';
   mensagem_detalhes: string = '';
-  botaoDesabilitado: boolean = false; // não está sendo utilizado
+  botaoDesabilitado: boolean = false;
 
   ngOnInit(): void {
     this.loading = false;
@@ -58,7 +57,6 @@ export class AdicionarFuncionariosModalComponent {
           next: (funcionario) => {
             this.loading = false;
             this.router.navigate(['/manutencao-funcionario']);
-            // console.log(roupa);
           },
           error: (err) => {
             this.loading = false;
@@ -79,11 +77,7 @@ export class AdicionarFuncionariosModalComponent {
   listarFuncionarios(): Funcionario[] {
     this.funcionarioService.getAllFuncionarios().subscribe({
       next: (data: Funcionario[] | null) => {
-        if (data == null) {
-          this.funcionarios = [];
-        } else {
-          this.funcionarios = data;
-        }
+        this.funcionarios = data ? data : [];
       },
       error: (err) => {
         this.mensagem = 'Erro buscando lista de usuários';
@@ -93,42 +87,18 @@ export class AdicionarFuncionariosModalComponent {
     return this.funcionarios;
   }
 
-  //  ======================[NEW]======================
-
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
-  dataNascimentoFuncionario: Date = new Date();
+  dataNascimentoFuncionario: Date | null = null;
   senhaFuncionario: string = '';
 
   valueInvalid: boolean = false;
 
+  formattedDataNascimento: string = '';
+
   cancelar(): void {
     this.voltarClicked.emit();
   }
-
-  // adicionar(): void {
-  //   if (
-  //     this.formAdicionarFuncionario.form.valid &&
-  //     this.nomeFuncionario &&
-  //     this.emailFuncionario &&
-  //     this.dataNascimentoFuncionario &&
-  //     this.senhaFuncionario
-  //   ) {
-  //     const newFuncionario: Funcionario = new Funcionario();
-  //     newFuncionario.id = 0;
-  //     newFuncionario.nome = this.nomeFuncionario;
-  //     newFuncionario.email = this.emailFuncionario;
-  //     newFuncionario.dataNascimento = this.dataNascimentoFuncionario;
-  //     newFuncionario.senha = this.senhaFuncionario;
-
-  //     console.log('Funcionário criado com sucesso: ', newFuncionario);
-
-  //     this.adicaoConcluida.emit();
-  //   } else {
-  //     console.log('Erro ao criar funcionário!');
-  //     this.valueInvalid = true;
-  //   }
-  // }
 
   diasParaMinutos(dias: number): number {
     const minutosPorDia = 24 * 60;
@@ -137,5 +107,12 @@ export class AdicionarFuncionariosModalComponent {
 
   clearValueInvalid(): void {
     this.valueInvalid = false;
+  }
+
+  updateDataNascimento(): void {
+    const [day, month, year] = this.formattedDataNascimento.split('/').map(Number);
+    if (day && month && year) {
+      this.funcionario.dataNascimento = new Date(year, month - 1, day)
+    }
   }
 }

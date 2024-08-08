@@ -23,18 +23,65 @@ export class PedidosComponent implements OnInit {
   statusEnum = Status;
   startDate: Date = new Date();
   endDate: Date = new Date();
-  opcaoSelecionada: string = '';
+  opcaoSelecionada: string = 'EM_ABERTO';
   status = Status;
   pedido!: PedidoDto;
+  usuarioLogado!: UsuarioResponseDto;
 
   mensagem: string = '';
   mensagem_detalhes: string = '';
 
-  constructor(private pedidosService: PedidosService, private router: Router, private loginService: LoginService) {}
+  constructor(
+    private pedidosService: PedidosService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.usuario = this.loginService.getUsuarioLogado();
-    this.listaPedidos(this.usuario.idUsuario);
+    this.filtroPedidos(this.opcaoSelecionada);
+  }
+
+  formatSituacao(situacao: string): string {
+    return situacao.replace(/_/g, ' ');
+  }
+
+  // Função para determinar a classe do botão
+  getButtonClass(situacao: Status): string {
+    switch (situacao) {
+      case this.statusEnum.EM_ABERTO:
+        return 'btn btn-dark'; // Cor para "Recolher"
+      case this.statusEnum.AGUARDANDO_PAGAMENTO:
+        return 'btn btn-dark'; // Cor para "Confirmar Lavagem"
+      default:
+        return 'btn btn-dark'; // Cor padrão
+    }
+  }
+
+  // Função para determinar o rótulo do botão
+  getButtonLabel(situacao: Status): string | null {
+    switch (situacao) {
+      case this.statusEnum.EM_ABERTO:
+        return 'Cancelar';
+      case this.statusEnum.AGUARDANDO_PAGAMENTO:
+        return 'Pagar';
+      default:
+        return null; // Rótulo padrão
+    }
+  }
+
+  // Função para executar a ação correta
+  handleAction(pedido: PedidoDto): void {
+    switch (pedido.situacao) {
+      case this.statusEnum.AGUARDANDO_PAGAMENTO:
+        this.pagarPedido(pedido);
+        break;
+      case this.statusEnum.EM_ABERTO:
+        this.cancelarPedido(pedido);
+        break;
+      default:
+        break;
+    }
   }
 
   listaPedidos(idUsuario: number): PedidoDto[] {
@@ -57,7 +104,7 @@ export class PedidosComponent implements OnInit {
 
           // Ordena os pedidos pela data do pedido
           this.pedidos.sort(
-            (a, b) => a.dataPedido.getTime() - b.dataPedido.getTime()
+            (b, a) => a.dataPedido.getTime() - b.dataPedido.getTime()
           );
 
           // Define os pedidos ordenados
@@ -75,91 +122,34 @@ export class PedidosComponent implements OnInit {
   }
 
   filtroPedidos(opcaoSelecionada: string) {
+    this.usuarioLogado = this.loginService.getUsuarioLogado();
     this.opcaoSelecionada = opcaoSelecionada;
-    switch (opcaoSelecionada) {
-      case 'PEDIDOS DE HOJE':
-        const hoje = new Date(2024, 5, 10); // teste
-        // const hoje = new Date();
-        const inicioHoje = new Date(
-          hoje.getFullYear(),
-          hoje.getMonth(),
-          hoje.getDate(),
-          0,
-          0,
-          0
-        );
-        const fimHoje = new Date(
-          hoje.getFullYear(),
-          hoje.getMonth(),
-          hoje.getDate(),
-          23,
-          59,
-          59
-        );
-
-        this.orderedPedidos = this.pedidos.filter((pedido) => {
-          const dataPedido = new Date(pedido.dataPedido);
-          return dataPedido >= inicioHoje && dataPedido <= fimHoje;
-        });
-
-        console.log('Pedidos filtrados:', this.orderedPedidos);
-        break;
-
-      case 'PEDIDOS POR DATA':
-        if (this.startDate && this.endDate) {
-          // Verifica se startDate e endDate são strings e converte para Date
-          const startDateObject =
-            typeof this.startDate === 'string'
-              ? new Date(this.startDate)
-              : this.startDate;
-          const endDateObject =
-            typeof this.endDate === 'string'
-              ? new Date(this.endDate)
-              : this.endDate;
-
-          if (
-            startDateObject instanceof Date &&
-            !isNaN(startDateObject.getTime()) &&
-            endDateObject instanceof Date &&
-            !isNaN(endDateObject.getTime())
-          ) {
-            const inicio = new Date(
-              startDateObject.getFullYear(),
-              startDateObject.getMonth(),
-              startDateObject.getDate(),
-              0,
-              0,
-              0
-            );
-            // Adiciona um dia à data final e define para o início do próximo dia
-            const fim = new Date(
-              endDateObject.getFullYear(),
-              endDateObject.getMonth(),
-              endDateObject.getDate() + 1,
-              0,
-              0,
-              0
-            );
-
-            this.orderedPedidos = this.pedidos.filter((pedido) => {
-              const dataPedido = new Date(pedido.dataPedido);
-              return dataPedido >= inicio && dataPedido < fim;
-            });
+    this.pedidosService
+      .listarPorIdUsuario(this.usuarioLogado.idUsuario)
+      .subscribe({
+        next: (data: PedidoDto[] | null) => {
+          if (data == null) {
+            this.pedidos = [];
           } else {
-            console.log('Datas inválidas.');
+            this.pedidos = data.filter(
+              (pedido) => pedido.situacao === this.opcaoSelecionada
+            );
           }
-        } else {
-          console.log('Por favor, selecione as datas de início e fim.');
-        }
-        break;
-
-      default:
-        this.orderedPedidos = this.pedidos.slice();
-        break;
-    }
+          // Atualiza os pedidos ordenados para refletir os novos filtros
+          this.orderedPedidos = [...this.pedidos];
+        },
+        error: (err) => {
+          this.mensagem = 'Erro buscando lista de pedidos';
+          this.mensagem_detalhes = `[${err.status} ${err.message}]`;
+        },
+      });
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: any): string {
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
     // Obtém os componentes da data
     const day = date.getDate();
     const month = date.getMonth() + 1;
@@ -177,7 +167,12 @@ export class PedidosComponent implements OnInit {
     return formattedDate;
   }
 
-  formatDatePlus(date: Date): string {
+  formatDatePlus(date: any): string {
+    // Verifica se o parâmetro 'date' é um objeto Date válido
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
     // Obtém os componentes da data
     const day = date.getDate() + 1;
     const month = date.getMonth() + 1;
@@ -195,29 +190,10 @@ export class PedidosComponent implements OnInit {
     return formattedDate;
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case Status.EM_ABERTO:
-        return 'amarelo';
-      case Status.REJEITADO:
-      case Status.CANCELADO:
-        return 'vermelho';
-      case Status.RECOLHIDO:
-        return 'cinza';
-      case Status.AGUARDANDO_PAGAMENTO:
-        return 'azul';
-      case Status.PAGO:
-        return 'laranja';
-      case Status.FINALIZADO:
-        return 'verde';
-      default:
-        return 'roxo';
-    }
-  }
-
   cancelarPedido(pedido: PedidoDto): void {
     pedido.situacao = this.status.CANCELADO;
-    this.pedidosService.atualizarPorCliente(pedido.numeroPedido, pedido)
+    this.pedidosService
+      .atualizarPorCliente(pedido.numeroPedido, pedido)
       .subscribe({
         next: (pedido: PedidoDto | null) => {
           this.router.navigate(['/pedidos']);
@@ -232,7 +208,8 @@ export class PedidosComponent implements OnInit {
 
   pagarPedido(pedido: PedidoDto): void {
     pedido.situacao = this.status.PAGO;
-    this.pedidosService.atualizarPorCliente(pedido.numeroPedido, pedido)
+    this.pedidosService
+      .atualizarPorCliente(pedido.numeroPedido, pedido)
       .subscribe({
         next: (pedido: PedidoDto | null) => {
           this.router.navigate(['/pedidos']);
@@ -244,5 +221,4 @@ export class PedidosComponent implements OnInit {
         },
       });
   }
-
 }

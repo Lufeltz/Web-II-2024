@@ -33,6 +33,62 @@ export class VisualizacaoPedidosComponent implements OnInit {
     this.listaPedidos();
   }
 
+// BUTTONS
+
+formatSituacao(situacao: string): string {
+  return situacao.replace(/_/g, ' ');
+}
+
+// Função para determinar a classe do botão
+getButtonClass(situacao: Status): string {
+  switch (situacao) {
+    case this.statusEnum.EM_ABERTO:
+      return 'btn btn-dark'; // Cor para "Recolher"
+    case this.statusEnum.RECOLHIDO:
+      return 'btn btn-dark'; // Cor para "Confirmar Lavagem"
+    case this.statusEnum.PAGO:
+      return 'btn btn-dark'; // Cor para "Finalizar Pedido"
+    default:
+      return 'btn btn-dark'; // Cor padrão
+  }
+}
+
+// Função para determinar o rótulo do botão
+getButtonLabel(situacao: Status): string | null {
+  switch (situacao) {
+    case this.statusEnum.EM_ABERTO:
+      return 'Recolher';
+    case this.statusEnum.RECOLHIDO:
+      return 'Confirmar Lavagem';
+    case this.statusEnum.PAGO:
+      return 'Finalizar Pedido';
+    default:
+      return null; // Rótulo padrão
+  }
+}
+
+// Função para executar a ação correta
+handleAction(pedido: PedidoDto): void {
+  switch (pedido.situacao) {
+    case this.statusEnum.EM_ABERTO:
+      this.recolherPedido(pedido);
+      break;
+    case this.statusEnum.RECOLHIDO:
+      this.confirmarLavagem(pedido);
+      break;
+    case this.statusEnum.PAGO:
+      this.finalizarPedido(pedido);
+      break;
+    default:
+      console.log('Nenhuma ação disponível');
+      break;
+  }
+}
+
+// BUTTONS
+
+
+
   listaPedidos(): void {
     this.pedidosService.getAllPedidosDto().subscribe({
       next: (data: PedidoDto[] | null) => {
@@ -188,26 +244,6 @@ export class VisualizacaoPedidosComponent implements OnInit {
     }`;
 
     return formattedDate;
-  }
-
-  getStatusColor(status: string): string {
-    switch (status) {
-      case Status.EM_ABERTO:
-        return 'amarelo';
-      case Status.REJEITADO:
-      case Status.CANCELADO:
-        return 'vermelho';
-      case Status.RECOLHIDO:
-        return 'cinza';
-      case Status.AGUARDANDO_PAGAMENTO:
-        return 'azul';
-      case Status.PAGO:
-        return 'laranja';
-      case Status.FINALIZADO:
-        return 'verde';
-      default:
-        return 'roxo';
-    }
   }
 
   recolherPedido(pedido: PedidoDto): void {

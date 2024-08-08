@@ -1,72 +1,3 @@
-<!-- <div class="background">
-    <div
-      class="d-flex justify-content-center align-items-center"
-      style="min-height: calc(100vh - 80px)"
-    >
-      <div class="container">
-        <div class="card shadow-lg custom-card border-0">
-          <div class="card-body">
-            <div class="container-relatorio-clientes-texto">
-              <h5 class="relatorio-clientes-text card-title">
-                Relatório de Clientes Fiéis
-              </h5>
-              <h6 class="relatorio-clientes-phrase card-subtitle">
-                Visualize e gere um PDF do relatório dos três clientes mais fiéis.
-              </h6>
-            </div>
-              <div class="container-buttons d-flex justify-content-end">
-                  <button class="btn-relatorio"
-                    type="button"
-                    class="btn btn-primary custom-btn btn-relatorio"
-                    (click)="gerarRelatorio()"
-                  >
-                    Gerar Relatório
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary custom-btn btn-voltar"
-                    (click)="voltar()"
-                  >
-                    Voltar
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary custom-btn btn-pdf"
-                    (click)="gerarPDF()"
-                    [disabled]="!relatorioClientesGerado"
-                  >
-                    Gerar PDF
-                  </button>
-              </div>
-  
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Endereço</th>
-                  <th>Qntd Pedidos</th>
-                  <th>Receita gerada</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let cliente of relatorioClientesFieis">
-                  <td>{{ cliente.quantidadePedidos }}</td>
-                  <td>{{ cliente.receita | currency }}</td>
-                </tr>
-              </tbody>
-            </table> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   -->
-
-<!-- RODRIGO -->
-
 <div class="background">
   <div
     class="d-flex justify-content-center align-items-center"
@@ -83,7 +14,7 @@
               Visualize e gere um PDF do relatório dos três clientes mais fiéis.
             </h6>
           </div>
-          <div class="container-buttons d-flex justify-content-end">
+          <div class="container-buttons d-flex justify-content-start">
             <button
               class="btn-relatorio"
               type="button"
@@ -91,13 +22,6 @@
               (click)="gerarRelatorio()"
             >
               Gerar Relatório
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary custom-btn btn-voltar"
-              (click)="voltar()"
-            >
-              Voltar
             </button>
             <button
               type="button"
@@ -124,9 +48,9 @@
             <tbody>
               <tr *ngFor="let cliente of listaCliente">
                 <td>{{ cliente.cliente.usuario.nome }}</td>
-                <td>{{ cliente.cliente.cpf }}</td>
+                <td>{{ cliente.cliente.cpf   | mask:'999.999.999-99' }}</td>
                 <td>{{ cliente.cliente.usuario.email }}</td>
-                <td>{{ cliente.cliente.telefone }}</td>
+                <td>{{ cliente.cliente.telefone | mask: "(99) 9 9999-9999" }}</td>
                 <td>
                   {{ cliente.cliente.endereco.rua }},
                   {{ cliente.cliente.endereco.numero }} -

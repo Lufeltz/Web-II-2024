@@ -1,4 +1,99 @@
+/* Centralização do Título */
+.text-center {
+    text-align: center; /* Centraliza o texto */
+}
 
+/* Estilo para o contêiner da tabela */
+.container {
+    max-width: 80%; /* Largura máxima do contêiner */
+    margin: 20px auto; /* Centraliza o contêiner */
+}
 
+/* Estilo para o cartão */
+.shadow-lg {
+    background-color: #fff; /* Cor de fundo do cartão */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
+    margin: 20px auto; /* Margem automática */
+}
 
+/* Estilo para a tabela */
+.table {
+    width: 100%; /* Ajusta a largura da tabela conforme necessário */
+    border-collapse: collapse; /* Garante que as bordas da tabela sejam colapsadas */
+}
 
+/* Estilo do Cabeçalho da Tabela */
+thead th {
+    font-weight: bold;
+    text-align: center; /* Centraliza o texto do cabeçalho */
+    background-color: #f8f9fa; /* Cor de fundo do cabeçalho */
+}
+
+/* Estilo das Células */
+td,
+th {
+    border: 3px solid white; /* Define a borda das células da tabela */
+    padding: 12px; /* Padding interno das células */
+    text-align: center; /* Centraliza o texto nas células */
+    vertical-align: middle; /* Alinha o conteúdo verticalmente ao centro */
+    background-color: inherit; /* Herda a cor de fundo da linha */
+}
+
+/* Cores de Fundo Baseadas em Status */
+.table-warning td {
+    background-color: #fff3cd; /* Cor de fundo para status de aviso */
+}
+
+.table-danger td {
+    background-color: #f8d7da; /* Cor de fundo para status de perigo */
+}
+
+.table-secondary td {
+    background-color: #e2e3e5; /* Cor de fundo para status secundário */
+}
+
+.table-info td {
+    background-color: #d1ecf1; /* Cor de fundo para status de informação */
+}
+
+.table-success td {
+    background-color: #d4edda; /* Cor de fundo para status de sucesso */
+}
+
+.table-primary td {
+    background-color: #cce5ff; /* Cor de fundo para status primário */
+}
+
+/* Estilo para a lista dentro da célula da tabela */
+ul.list-inline {
+    padding: 0; /* Remove padding da lista */
+    margin: 0; /* Remove margem da lista */
+    list-style: none; /* Remove marcadores da lista */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+ul.list-inline li {
+    margin-bottom: 4px; /* Espaçamento entre os itens */
+}
+
+/* Estilo do Botão */
+.btn-success {
+    background-color: #28a745; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove bordas padrão */
+    padding: 8px 16px; /* Padding interno do botão */
+    border-radius: 4px; /* Bordas arredondadas do botão */
+    cursor: pointer; /* Cursor pointer para interatividade */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo do texto de ausência de pedidos */
+.text-center p {
+    margin: 0; /* Remove a margem padrão do parágrafo */
+    font-size: 16px; /* Ajusta o tamanho da fonte */
+}

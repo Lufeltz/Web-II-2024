@@ -82,14 +82,16 @@
                 <div class="form-floating">
                   <input
                     type="text"
-                    class="form-control custom-input currency-input"
+                    class="form-control custom-input"
                     name="dataNascimento"
                     id="dataNascimento"
                     placeholder=" "
-                    [(ngModel)]="funcionario.dataNascimento"
+                    [(ngModel)]="formattedDataNascimento"
                     #dataNascimento="ngModel"
                     (focus)="clearValueInvalid()"
+                    (blur)="updateDataNascimento()"
                   />
+
                   <label for="dataNascimento">Data de Nascimento</label>
                 </div>
               </div>
@@ -118,7 +120,6 @@
                     [(ngModel)]="funcionario.usuario.senha"
                     #senha="ngModel"
                     required
-                    
                     [class.invalid-border]="
                       senha.invalid && (senha.dirty || senha.touched)
                     "

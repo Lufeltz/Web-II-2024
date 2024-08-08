@@ -11,11 +11,11 @@
             <th scope="col">Prazo</th>
             <th scope="col">Valor Total</th>
             <th scope="col">Situação</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Ação</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pedido of pedidos">
+          <tr *ngFor="let pedido of pedidos" class="table-warning">
             <td>{{ pedido.numeroPedido }}</td>
             <td>{{ pedido.dataPedido | date : "dd/MM/yyyy HH:mm" }}</td>
             <td>
@@ -23,22 +23,23 @@
                 class="list-inline"
                 *ngFor="let roupa of pedido.listaPedidoRoupas"
               >
-                <li>
-                  {{ roupa.quantidade }} {{ roupa.roupa.descricao }}
-                </li>
-                <li> R${{ roupa.roupa.preco }}{{ roupa.roupa.prazoDias }}</li>
+              <li>
+                Peça: {{ roupa.roupa.descricao }}, Prazo:
+                {{ roupa.roupa.prazoDias }} dia(s), Preço:
+                R$ {{ roupa.roupa.preco }}, Quantidade: {{roupa.quantidade}}
+              </li>
               </ul>
             </td>
             <td>{{ pedido.orcamento.dataPrazo }}</td>
             <td>R$ {{ pedido.orcamento.valor }}</td>
-            <td>{{ pedido.situacao }}</td>
+            <td>{{ formatSituacao(pedido.situacao) }}</td>
             <td>
               <button
                 *ngIf="pedido.situacao === status.EM_ABERTO"
-                class="btn btn-success"
+                class="btn btn-dark"
                 (click)="cancelarPedido(pedido)"
               >
-                Cancelar
+                Recolher
               </button>
             </td>
           </tr>

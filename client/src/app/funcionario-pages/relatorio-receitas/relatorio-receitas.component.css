@@ -1,242 +1,3 @@
-/* body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-position: center center;
-    background-size: cover;
-}
-
-.background {
-    background-color: #F2F8FF;;
-}
-
-.container {
-    max-width: 1300px;
-    margin: 0 auto;
-    text-align: left;
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.custom-card {
-    border-radius: 30px;
-    padding-left: 25px;
-    padding-top: 10px;
-    padding-right: 25px;
-    padding-bottom: 20px;
-}
-
-.container-relatorio-receitas {
-    margin-bottom: 20px;
-}
-
-.relatorio-receitas-text {
-    text-align: left;
-    font-size: 30px;
-    font-weight: 300;
-    color: #32445c;
-}
-
-.relatorio-receitas-phrase {
-    text-align: left;
-    font-size: 16px;
-    color: #32445c;
-}
-
-.container-input-data {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.data-label {
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 600;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-.btn-relatorio {
-    margin-bottom: 10px;
-}
-
-.input-data {
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.input-data:focus {
-    outline: none;
-    border-color: #6fb5df;
-    box-shadow: 0 0 0 0.2rem #a5d7f3;
-}
-
-.input-data:hover {
-    outline: none;
-    border-color: #6fb5df;
-    cursor: text;
-}
-
-.input-data-inicial {
-    margin-right: 10px;
-}
-
-.input-data-final {
-    margin-right: 20px;
-}
-
-.custom-btn {
-    color: #fff;
-    border: none;
-    border-radius: 30px; 
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer; 
-    letter-spacing: inherit;
-}
-
-.btn-relatorio {
-    width: 165px;
-    background-color: #3dabe1;
-}
-
-.btn-relatorio:hover {
-    background-color: #1c8bc1;
-}
-
-.btn-relatorio:active {
-    background-color: #66c0eb;
-}
-
-.container-buttons {
-    margin-top: 35px;
-}
-
-.btn-voltar {
-    width: 120px;
-    margin-right: 20px;
-    background-color: #3dabe1;
-}
-
-.btn-voltar:hover {
-    background-color: #1c8bc1;
-}
-
-.btn-voltar:active {
-    background-color: #66c0eb;
-}
-
-.btn-pdf {
-    width: 140px;
-    background-color: green;
-}
-
-.btn-pdf:hover {
-    background-color: rgb(0, 100, 0);
-}
-
-.btn-pdf:active {
-    background-color: rgb(0, 182, 0);
-}
-
-.btn-pdf:disabled {
-    background-color: rgba(0, 160, 0, 0.637);
-}
-
-.container-periodo-receitas {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    margin-top: 40px;
-}
-
-.container-card-periodo-receitas {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 900;
-    background-color: #dcf2ff;
-    border-color: #ccc;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-.container-text-danger {
-    margin-top: -15px;
-    margin-bottom: -15px;
-}
-
-.container-table .table thead tr{
-    position: sticky;
-    top: 0;
-}
-
-.container-table thead th {
-    background-color: #f2f2f2;
-    border-right: 1px solid #ccc;
-}
-
-.alarm-table {
-    max-height: 280px;
-    overflow: auto;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-top: none;
-}
-
-.table-items-body td{
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 500;
-    width: 50.5%;
-}
-
-.container-table tbody td, .container-table tfoot th {
-    border-right: 1px solid #ccc;
-}
-
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #e2f5fff1;
-}
-
-.custom-headers-tfoot th {
-    background-color: #f2f2f2;
-    color: #32445c;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.alert-container {
-    margin: 0 auto;
-    max-width: 890px;
-    width: fit-content;
-    margin-top: 30px;
-} */
-
-
-
-
-
-/* RODRIGO */
-
 body {
     margin: 0;
     padding: 0;
@@ -249,7 +10,7 @@ body {
 }
 
 .background {
-    background-color: #F2F8FF;;
+    background-color: #F2F8FF;
 }
 
 .container {
@@ -263,10 +24,7 @@ body {
 
 .custom-card {
     border-radius: 30px;
-    padding-left: 25px;
-    padding-top: 10px;
-    padding-right: 25px;
-    padding-bottom: 20px;
+    padding: 10px 25px;
 }
 
 .container-relatorio-receitas {
@@ -274,39 +32,37 @@ body {
 }
 
 .relatorio-receitas-text {
-    text-align: left;
     font-size: 30px;
     font-weight: 300;
     color: #32445c;
 }
 
 .relatorio-receitas-phrase {
-    text-align: left;
     font-size: 16px;
     color: #32445c;
 }
 
 .container-input-data {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column; /* Empilha os rótulos e campos verticalmente */
+    align-items: flex-start; /* Alinha os itens à esquerda */
 }
 
-.data-label {
+.form-label {
     color: #32445c;
     font-size: 18px;
     font-weight: 600;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-.btn-relatorio {
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* Espaço entre o rótulo e o campo de entrada */
 }
 
 .input-data {
     color: #32445c;
     font-size: 18px;
     font-weight: 500;
+    width: 100%; /* Ajusta a largura dos campos de data para preencher a coluna */
+    max-width: 180px; /* Define a largura máxima dos campos de data */
+    margin-bottom: 15px; /* Espaço entre campos de entrada */
 }
 
 .input-data:focus {
@@ -315,18 +71,10 @@ body {
     box-shadow: 0 0 0 0.2rem #a5d7f3;
 }
 
-.input-data:hover {
-    outline: none;
-    border-color: #6fb5df;
-    cursor: text;
-}
-
-.input-data-inicial {
-    margin-right: 10px;
-}
-
-.input-data-final {
-    margin-right: 20px;
+.container-buttons {
+    margin-top: 35px;
+    display: flex;
+    gap: 10px; /* Espaço entre os botões */
 }
 
 .custom-btn {
@@ -349,24 +97,6 @@ body {
 }
 
 .btn-relatorio:active {
-    background-color: #66c0eb;
-}
-
-.container-buttons {
-    margin-top: 35px;
-}
-
-.btn-voltar {
-    width: 120px;
-    margin-right: 20px;
-    background-color: #3dabe1;
-}
-
-.btn-voltar:hover {
-    background-color: #1c8bc1;
-}
-
-.btn-voltar:active {
     background-color: #66c0eb;
 }
 
@@ -393,8 +123,6 @@ body {
     border-bottom: none;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     margin-top: 40px;
 }
 
@@ -409,20 +137,14 @@ body {
     background-color: #dcf2ff;
     border-color: #ccc;
     border-top: none;
-    border-left: none;
-    border-right: none;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
 }
 
 .container-text-danger {
-    margin-top: -15px;
-    margin-bottom: -15px;
+    margin: 0;
+    color: #d9534f; /* Cor para mensagens de erro */
 }
 
-.container-table .table thead tr{
+.container-table .table thead tr {
     position: sticky;
     top: 0;
 }
@@ -440,11 +162,10 @@ body {
     border-top: none;
 }
 
-.table-items-body td{
+.table-items-body td {
     color: #32445c;
     font-size: 18px;
     font-weight: 500;
-    width: 50.5%;
 }
 
 .container-table tbody td, .container-table tfoot th {
@@ -460,14 +181,16 @@ body {
     color: #32445c;
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 5px;
 }
 
 .alert-container {
-    margin: 0 auto;
+    margin: 30px auto 0;
     max-width: 890px;
     width: fit-content;
-    margin-top: 30px;
 }
 
-/* RODRIGO */
+@media (max-width: 768px) {
+    .col-md-6 {
+        max-width: 100%; /* Ajusta para 100% em telas menores para uma boa responsividade */
+    }
+}

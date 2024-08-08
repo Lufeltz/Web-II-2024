@@ -45,6 +45,10 @@ export class HomepageClienteComponent {
       });
   }
 
+  formatSituacao(situacao: string): string {
+    return situacao.replace(/_/g, ' ');
+  }
+
   listaPedidos(idUsuario: number): PedidoDto[] {
     this.pedidosService.listarPorIdUsuario(idUsuario).subscribe({
       next: (data: PedidoDto[] | null) => {
