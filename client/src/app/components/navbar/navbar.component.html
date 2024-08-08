@@ -2,7 +2,9 @@
   <nav class="navbar navbar-expand-md n" style="background-color: #32445c">
     <a
       class="navbar-brand nav-link"
-      [routerLink]="['pedidos']"
+      [routerLink]="
+        usuarioLogado.tipoPermissao === 'CLIENTE' ? '/pedidos' : '/homepage'
+      "
       style="margin-left: 20px"
     >
       <img
