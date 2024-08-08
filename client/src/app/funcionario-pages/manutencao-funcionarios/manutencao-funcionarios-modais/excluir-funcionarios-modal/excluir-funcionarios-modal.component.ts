@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FuncionarioService } from '../../../../services/funcionario.service';
 import { Router } from '@angular/router';
-import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.model';
 import { Funcionario } from '../../../../shared/models/funcionario.model';
 
 @Component({
@@ -62,21 +61,12 @@ export class ExcluirFuncionariosModalComponent {
     return this.funcionarios;
   }
 
-  //  ======================[NEW]======================
-
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
   dataNascimentoFuncionario: Date = new Date();
   senhaFuncionario: string = '';
 
-  ngOnInit(): void {
-    // if (this.funcionarioParaExcluir) {
-    //   this.nomeFuncionario = this.funcionarioParaExcluir.nome;
-    //   this.emailFuncionario = this.funcionarioParaExcluir.email;
-    //   this.dataNascimentoFuncionario =
-    //     this.funcionarioParaExcluir.dataNascimento;
-    // }
-  }
+  ngOnInit(): void {}
 
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
     return Math.ceil(tempoDeServicoMinutos / 1440);
@@ -89,12 +79,4 @@ export class ExcluirFuncionariosModalComponent {
   cancelar(): void {
     this.voltarClicked.emit();
   }
-
-  // excluir(): void {
-  //   console.log(
-  //     'Funcionário excluido com sucesso: ',
-  //     this.funcionarioParaExcluir
-  //   );
-  //   this.exclusaoConcluida.emit();
-  // }
 }

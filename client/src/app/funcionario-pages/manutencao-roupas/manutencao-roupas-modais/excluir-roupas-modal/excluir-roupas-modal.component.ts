@@ -17,8 +17,6 @@ export class ExcluirRoupasModalComponent {
   @Output() exclusaoConcluida = new EventEmitter<void>();
   @Input() roupaParaExcluir!: RoupaDto;
 
-  //  ======================[NEW]======================
-
   constructor(private roupasService: RoupaService, private router: Router) {}
 
   roupas: Roupa[] = [];
@@ -28,8 +26,6 @@ export class ExcluirRoupasModalComponent {
   excluir(): void {
     this.mensagem = '';
     this.mensagem_detalhes = '';
-
-    // console.log(this.roupaParaExcluir.idRoupa);
     this.roupasService.deleteRoupa(this.roupaParaExcluir.idRoupa).subscribe({
       complete: () => {
         this.exclusaoConcluida.emit();
@@ -59,20 +55,7 @@ export class ExcluirRoupasModalComponent {
     return this.roupas;
   }
 
-  //  ======================[NEW]======================
-
-  // descricaoRoupa?: string;
-  // prazoRoupa?: number;
-  // precoRoupa: number = 0;
-
   ngOnInit(): void {
-    // if (this.roupaParaExcluir) {
-    //   this.descricaoRoupa = this.roupaParaExcluir.descricao;
-    //   this.prazoRoupa = this.formatarMinutosParaDiasUteis(
-    //     this.roupaParaExcluir.prazoDias
-    //   );
-    //   this.precoRoupa = this.roupaParaExcluir.preco;
-    // }
   }
 
   formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
@@ -86,9 +69,4 @@ export class ExcluirRoupasModalComponent {
   cancelar(): void {
     this.voltarClicked.emit();
   }
-
-  // excluir(): void {
-  //   console.log('Roupa excluida com sucesso: ', this.roupaParaExcluir);
-  //   this.exclusaoConcluida.emit();
-  // }
 }

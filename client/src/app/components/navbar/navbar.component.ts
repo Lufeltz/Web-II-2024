@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Usuario2 } from '../../shared/models/usuario2.model';
 import { LoginService } from '../../services/login.service';
 import { UsuarioResponseDto } from '../../shared/models/dto/usuario-response-dto.model';
 

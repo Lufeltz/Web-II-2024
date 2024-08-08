@@ -4,14 +4,11 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Roupa } from '../shared/models/roupa.model';
 import { RoupaDto } from '../shared/models/dto/roupa-dto.model';
 
-const BASE_URL = 'http://localhost:3000/';
 @Injectable({
   providedIn: 'root',
 })
 export class RoupaService {
   constructor(private _http: HttpClient) {}
-
-  // ===============================[NEW]===============================
 
   NEW_URL = 'http://localhost:8080/roupa';
 
@@ -21,8 +18,6 @@ export class RoupaService {
       'Content-Type': 'application/json',
     }),
   };
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   listar(): Observable<RoupaDto[] | null> {
     return this._http
@@ -45,11 +40,6 @@ export class RoupaService {
       );
   }
 
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
-
-
-
-  // arrumar a URL em NEW_URL e nos métodos
   getAllRoupas(): Observable<Roupa[] | null> {
     return this._http
       .get<Roupa[]>(`${this.NEW_URL}/listar`, this.httpOptions)
@@ -149,11 +139,5 @@ export class RoupaService {
           return throwError(() => err);
         })
       );
-  }
-
-  // ===============================[NEW]===============================
-
-  getRoupas(): Observable<Roupa[]> {
-    return this._http.get<Roupa[]>(BASE_URL + 'pedidosRoupas');
   }
 }

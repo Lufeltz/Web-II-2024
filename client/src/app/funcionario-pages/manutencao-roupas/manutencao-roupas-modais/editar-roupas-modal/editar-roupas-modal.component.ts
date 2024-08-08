@@ -32,7 +32,6 @@ export class EditarRoupasModalComponent implements OnInit {
   @Input() roupaParaEditar!: RoupaDto;
   @ViewChild('formEditarRoupa') formEditarRoupa!: NgForm;
 
-  //  ======================[NEW]======================
   constructor(private roupaService: RoupaService, private router: Router) {}
 
   roupas: Roupa[] = [];
@@ -72,8 +71,6 @@ export class EditarRoupasModalComponent implements OnInit {
     return this.roupas;
   }
 
-  //  ======================[NEW]======================
-
   descricaoRoupa?: string;
   prazoRoupa?: number;
   precoRoupa: number = 0;
@@ -81,13 +78,6 @@ export class EditarRoupasModalComponent implements OnInit {
   valueInvalid: boolean = false;
 
   ngOnInit(): void {
-    // if (this.roupaParaEditar) {
-    //   this.descricaoRoupa = this.roupaParaEditar.descricao;
-    //   this.prazoRoupa = this.formatarMinutosParaDiasUteis(
-    //     this.roupaParaEditar.prazoDias
-    //   );
-    //   this.precoRoupa = this.roupaParaEditar.preco;
-    // }
   }
 
   cancelar(): void {

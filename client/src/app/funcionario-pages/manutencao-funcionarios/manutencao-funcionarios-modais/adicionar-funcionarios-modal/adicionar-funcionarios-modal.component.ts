@@ -8,7 +8,6 @@ import { NumericoDirective } from '../../../../shared/directives/numerico.direct
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 import { FuncionarioService } from '../../../../services/funcionario.service';
 import { Router } from '@angular/router';
-import { FuncionarioDto } from '../../../../shared/models/dto/funcionario-dto.model';
 
 @Component({
   selector: 'app-adicionar-funcionarios-modal',

@@ -52,11 +52,9 @@
 }
 
 .container-card-pedido-codigo {
-    /* background-color: #dcf2ff; */
     color: #32445c;
     font-size: 16px;
     font-weight: 900;
-    /* border-color: #fbfbfb; */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 10px 0;

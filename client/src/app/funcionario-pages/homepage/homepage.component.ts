@@ -58,7 +58,6 @@ export class HomepageComponent implements OnInit {
           this.pedidos = data.filter(
             (pedido) => pedido.situacao == Status.EM_ABERTO
           );
-          // console.log(this.pedidos);
         }
       },
       error: (err) => {
@@ -68,30 +67,6 @@ export class HomepageComponent implements OnInit {
     });
     return this.pedidos;
   }
-
-  // listaPedidosEmAberto(): void {
-  //   this.pedidosService.getPedidos().subscribe((pedidos : Pedido[]) => {
-  //     for(let i=0; i<pedidos.length; i++){
-  //       if(pedidos[i].situacao == Status.EM_ABERTO){
-  //         this.pedidosEmAberto.push(pedidos[i]);
-  //       }
-  //     }
-  //     if(this.pedidosEmAberto.length > 0){
-  //         this.pedidosEmAberto.sort((a, b) => new Date(a.dataPedido).getTime() - new Date(b.dataPedido).getTime());
-  //     } else {
-  //       this.listaVazia = true;
-  //     }
-  //   });
-  // }
-
-  // recolherPedido(pedido: PedidoDto) {
-  //   pedido.situacao = Status.RECOLHIDO;
-  //   this.router.navigate(['/visualizacao-pedidos']);
-  // }
-
-  // get listaPedidos() : Pedido[] {
-  //   return this.pedidosEmAberto;
-  // }
 
   get exibeLista(): boolean {
     return this.listaVazia;

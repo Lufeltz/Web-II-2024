@@ -34,7 +34,6 @@ export class EditarFuncionariosModalComponent implements OnInit {
   @Input() funcionarioParaEditar!: Funcionario;
   @ViewChild('formEditarFuncionario') formEditarFuncionario!: NgForm;
 
-  //  ======================[NEW]======================
   constructor(
     private funcionarioService: FuncionarioService,
     private router: Router
@@ -49,7 +48,7 @@ export class EditarFuncionariosModalComponent implements OnInit {
       this.funcionarioParaEditar.usuario.permissao = new Permissao();
       this.funcionarioParaEditar.usuario.permissao.tipoPermissao =
         'FUNCIONARIO';
-      console.log(this.funcionarioParaEditar);
+      // console.log(this.funcionarioParaEditar);
       this.funcionarioService
         .putFuncionario(this.funcionarioParaEditar)
         .subscribe({
@@ -83,8 +82,6 @@ export class EditarFuncionariosModalComponent implements OnInit {
     return this.funcionarios;
   }
 
-  //  ======================[NEW]======================
-
   nomeFuncionario: string = '';
   emailFuncionario: string = '';
   dataNascimentoFuncionario: Date = new Date();
@@ -93,41 +90,11 @@ export class EditarFuncionariosModalComponent implements OnInit {
   valueInvalid: boolean = false;
 
   ngOnInit(): void {
-    // if (this.funcionarioParaEditar) {
-    //   this.nomeFuncionario = this.funcionarioParaEditar.nome;
-    //   this.emailFuncionario = this.funcionarioParaEditar.email;
-    //   this.dataNascimentoFuncionario =
-    //     this.funcionarioParaEditar.dataNascimento;
-    //   this.senhaFuncionario = this.funcionarioParaEditar.senha;
-    // }
   }
 
   cancelar(): void {
     this.voltarClicked.emit();
   }
-
-  // salvar(): void {
-  //   if (
-  //     this.formEditarFuncionario.form.valid &&
-  //     this.nomeFuncionario &&
-  //     this.emailFuncionario &&
-  //     this.dataNascimentoFuncionario &&
-  //     this.senhaFuncionario
-  //   ) {
-  //     const editFuncionario: Funcionario = new Funcionario();
-  //     editFuncionario.id = this.funcionarioParaEditar?.id || 0;
-  //     editFuncionario.nome = this.nomeFuncionario;
-  //     editFuncionario.email = this.emailFuncionario;
-  //     editFuncionario.senha = this.senhaFuncionario;
-
-  //     console.log('Roupa editada com sucesso: ', editFuncionario);
-
-  //     this.edicaoConcluida.emit();
-  //   } else {
-  //     console.log('Erro ao editar funcionário!');
-  //     this.valueInvalid = true;
-  //   }
-  // }
 
   clearValueInvalid(): void {
     this.valueInvalid = false;

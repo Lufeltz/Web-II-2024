@@ -33,27 +33,24 @@ export class VisualizacaoPedidosComponent implements OnInit {
     this.listaPedidos();
   }
 
-  // BUTTONS
-
   formatSituacao(situacao: string): string {
     return situacao.replace(/_/g, ' ');
   }
 
-  // Função para determinar a classe do botão
   getButtonClass(situacao: Status): string {
     switch (situacao) {
       case this.statusEnum.EM_ABERTO:
-        return 'btn btn-dark'; // Cor para "Recolher"
+        return 'btn btn-dark'; 
       case this.statusEnum.RECOLHIDO:
-        return 'btn btn-dark'; // Cor para "Confirmar Lavagem"
+        return 'btn btn-dark';
       case this.statusEnum.PAGO:
-        return 'btn btn-dark'; // Cor para "Finalizar Pedido"
+        return 'btn btn-dark';
       default:
-        return 'btn btn-dark'; // Cor padrão
+        return 'btn btn-dark'; 
     }
   }
 
-  // Função para determinar o rótulo do botão
+
   getButtonLabel(situacao: Status): string | null {
     switch (situacao) {
       case this.statusEnum.EM_ABERTO:
@@ -63,11 +60,10 @@ export class VisualizacaoPedidosComponent implements OnInit {
       case this.statusEnum.PAGO:
         return 'Finalizar Pedido';
       default:
-        return null; // Rótulo padrão
+        return null; 
     }
   }
 
-  // Função para executar a ação correta
   handleAction(pedido: PedidoDto): void {
     switch (pedido.situacao) {
       case this.statusEnum.EM_ABERTO:
@@ -84,8 +80,6 @@ export class VisualizacaoPedidosComponent implements OnInit {
         break;
     }
   }
-
-  // BUTTONS
 
   listaPedidos(): void {
     this.pedidosService.getAllPedidosDto().subscribe({
@@ -150,12 +144,11 @@ export class VisualizacaoPedidosComponent implements OnInit {
           return dataPedido >= inicioHoje && dataPedido <= fimHoje;
         });
 
-        console.log('Pedidos filtrados:', this.orderedPedidos);
+        // console.log('Pedidos filtrados:', this.orderedPedidos);
         break;
 
       case 'PEDIDOS POR DATA':
         if (this.startDate && this.endDate) {
-          // Verifica se startDate e endDate são strings e converte para Date
           const startDateObject =
             typeof this.startDate === 'string'
               ? new Date(this.startDate)
@@ -179,7 +172,6 @@ export class VisualizacaoPedidosComponent implements OnInit {
               0,
               0
             );
-            // Adiciona um dia à data final e define para o início do próximo dia
             const fim = new Date(
               endDateObject.getFullYear(),
               endDateObject.getMonth(),

@@ -125,7 +125,7 @@ export class PedidoComponent {
     }
     const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
-    console.log(`Diferença em dias: ${diferencaDias}`);
+    // console.log(`Diferença em dias: ${diferencaDias}`);
     novoPedido.orcamento.dataPrazo = new Date(prazoSimulado.getTime() + diferencaMillis);
     novoPedido.orcamento.aprovado = true;
     novoPedido.listaPedidoRoupas = this.listaRoupas;
@@ -165,7 +165,7 @@ export class PedidoComponent {
     const diferencaMillis = novoPedido.orcamento.dataPrazo.getTime() - prazoSimulado.getTime();
     const diferencaDias = diferencaMillis / (1000 * 60 * 60 * 24);
 
-    console.log(`Diferença em dias: ${diferencaDias}`);
+    // console.log(`Diferença em dias: ${diferencaDias}`);
 
     novoPedido.orcamento.dataPrazo = new Date(
       prazoSimulado.getTime() + diferencaMillis

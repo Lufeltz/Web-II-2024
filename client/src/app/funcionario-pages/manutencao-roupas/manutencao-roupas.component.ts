@@ -44,7 +44,6 @@ export class ManutencaoRoupasComponent implements OnInit {
           this.roupasIsPresent = false;
         } else {
           this.roupas = data;
-          // console.log(this.roupas);
           this.roupasIsPresent = true;
         }
       },
@@ -54,31 +53,6 @@ export class ManutencaoRoupasComponent implements OnInit {
       },
     });
     return this.roupas;
-  }
-
-  // loadRoupas() {
-  //   this.roupaService.getRoupas().subscribe({
-  //     next: (roupa: Roupa[]) => {
-  //       this.roupa = roupa;
-  //       this.orderRoupa = roupa
-  //         .sort((a, b) => {
-  //           const descricaoA = a.descricao.toLowerCase();
-  //           const descricaoB = b.descricao.toLowerCase();
-  //           return descricaoA.localeCompare(descricaoB);
-  //         });
-  //         if (this.roupa.length === 0) {
-  //           this.roupasIsPresent = false;
-  //         } else {
-  //           this.roupasIsPresent = true;
-  //         }
-  //     },
-  //     error: (error) => console.log('Erro ao requisitar as roupas: ', error),
-  //   });
-  // }
-
-  // apagar depois
-  formatarMinutosParaDiasUteis(tempoDeServicoMinutos: number): number {
-    return Math.ceil(tempoDeServicoMinutos / 1440);
   }
 
   formatarValor(valor: number): string {

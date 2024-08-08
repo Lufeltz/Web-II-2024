@@ -12,12 +12,7 @@ import { Roupa } from '../../../../shared/models/roupa.model';
 import { NumericoDirective } from '../../../../shared/directives/numerico.directive';
 import { LetrasSomenteDirective } from '../../../../shared/directives/letras-somente.directive';
 import { RoupaService } from '../../../../services/roupa.service';
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink,
-  RouterModule,
-} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adicionar-roupas-modal',
@@ -38,7 +33,6 @@ export class AdicionarRoupasModalComponent implements OnInit {
   @Output() adicaoConcluida = new EventEmitter<void>();
   @ViewChild('formAdicionarRoupa') formAdicionarRoupa!: NgForm;
 
-  //  ======================[NEW]======================
   constructor(private roupasService: RoupaService, private router: Router) {}
 
   roupas: Roupa[] = [];
@@ -63,7 +57,6 @@ export class AdicionarRoupasModalComponent implements OnInit {
           next: (roupa) => {
             this.loading = false;
             this.router.navigate(['/manutencao-roupa']);
-            // console.log(roupa);
           },
           error: (err) => {
             this.loading = false;
@@ -98,34 +91,11 @@ export class AdicionarRoupasModalComponent implements OnInit {
     return this.roupas;
   }
 
-  //  ======================[NEW]======================
-
   valueInvalid: boolean = false;
 
   cancelar(): void {
     this.voltarClicked.emit();
   }
-
-  // adicionar(): void {
-  //   if (
-  //     this.formAdicionarRoupa.form.valid &&
-  //     this.roupa.descricao &&
-  //     this.roupa.prazoDias &&
-  //     this.roupa.preco > 0
-  //   ) {
-  //     const newRoupa: Roupa = new Roupa();
-  //     newRoupa.id = 0;
-  //     newRoupa.descricao = this.roupa.descricao;
-  //     newRoupa.prazoDias = this.roupa.prazoDias;
-  //     newRoupa.preco = this.roupa.preco;
-  //     console.log('Roupa criada com sucesso: ', newRoupa);
-
-  //     this.adicaoConcluida.emit();
-  //   } else {
-  //     console.log('Erro ao criar roupa!');
-  //     this.valueInvalid = true;
-  //   }
-  // }
 
   diasParaMinutos(dias: number): number {
     const minutosPorDia = 24 * 60;

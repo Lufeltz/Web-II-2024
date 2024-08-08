@@ -61,8 +61,6 @@
             <td [ngClass]="pedido.situacao">
               {{ formatSituacao(pedido.situacao) }}
             </td>
-
-            <!-- Coluna única para o botão -->
             <td>
               <button
                 *ngIf="getButtonLabel(pedido.situacao) !== null"

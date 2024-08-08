@@ -50,7 +50,6 @@ export class PedidosComponent implements OnInit {
     return situacao.replace(/_/g, ' ');
   }
 
-  // Função para determinar a classe do botão
   getButtonClass(situacao: Status): string {
     switch (situacao) {
       case this.statusEnum.EM_ABERTO:
@@ -62,7 +61,6 @@ export class PedidosComponent implements OnInit {
     }
   }
 
-  // Função para determinar o rótulo do botão
   getButtonLabel(situacao: Status): string | null {
     switch (situacao) {
       case this.statusEnum.EM_ABERTO:
@@ -74,7 +72,6 @@ export class PedidosComponent implements OnInit {
     }
   }
 
-  // Função para executar a ação correta
   handleAction(pedido: PedidoDto): void {
     switch (pedido.situacao) {
       case this.statusEnum.AGUARDANDO_PAGAMENTO:
@@ -138,12 +135,9 @@ export class PedidosComponent implements OnInit {
             this.orderedPedidos = [];
             this.pedidosArePresent = false;
           } else {
-            // Filtra os pedidos pela situação selecionada
             this.pedidos = data.filter(
               (pedido) => pedido.situacao === this.opcaoSelecionada
             );
-
-            // Converte os campos de data para objetos Date
             this.pedidos = this.pedidos.map((pedido) => ({
               ...pedido,
               dataPedido: new Date(pedido.dataPedido),
@@ -153,12 +147,10 @@ export class PedidosComponent implements OnInit {
               },
             }));
 
-            // Ordena os pedidos pela data do pedido de forma decrescente
             this.pedidos.sort(
               (a, b) => b.dataPedido.getTime() - a.dataPedido.getTime()
             );
 
-            // Define os pedidos ordenados
             this.orderedPedidos = [...this.pedidos];
             this.pedidosArePresent = true;
           }

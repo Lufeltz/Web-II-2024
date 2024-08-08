@@ -7,15 +7,11 @@ import { ClienteFiel } from '../shared/models/cliente-fiel.model';
 import { Cliente } from '../shared/models/cliente.model';
 import { ClienteDto } from '../shared/models/dto/cliente-dto.model';
 
-const BASE_URL = 'http://localhost:3000';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ClienteService {
   constructor(private _http: HttpClient) {}
-
-  // ===============================[NEW]===============================
 
   NEW_URL = 'http://localhost:8080/cliente';
 
@@ -25,8 +21,6 @@ export class ClienteService {
       'Content-Type': 'application/json',
     }),
   };
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   cadastrar(cliente: Cliente): Observable<ClienteDto | null> {
     return this._http
@@ -66,9 +60,6 @@ export class ClienteService {
       );
   }
 
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
-
-  // arrumar a URL em NEW_URL e nos métodos
   getAllClientes(): Observable<Cliente[] | null> {
     return this._http.get<Cliente[]>(this.NEW_URL, this.httpOptions).pipe(
       map((resp: HttpResponse<Cliente[]>) => {
@@ -162,23 +153,5 @@ export class ClienteService {
           return throwError(() => err);
         })
       );
-  }
-
-  // ===============================[NEW]===============================
-
-  getClientesRelatorio(): Observable<RelatorioCliente[]> {
-    return this._http.get<RelatorioCliente[]>(BASE_URL + '/clientes');
-  }
-
-  getClientes(): Observable<Usuario[]> {
-    return this._http.get<Usuario[]>(BASE_URL + '/clientes');
-  }
-
-  // getClienteById(clienteId: number): Observable<Usuario> {
-  //   return this._http.get<Usuario>(`${BASE_URL}/clientes/${clienteId}`);
-  // }
-
-  getClienteFielById(clienteId: number): Observable<ClienteFiel> {
-    return this._http.get<ClienteFiel>(`${BASE_URL}/clientes/${clienteId}`);
   }
 }

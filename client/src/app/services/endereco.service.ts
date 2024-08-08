@@ -3,14 +3,11 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { EnderecoDto } from '../shared/models/dto/endereco-dto.model';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class EnderecoService {
   constructor(private _http: HttpClient) {}
-
-  // ===============================[NEW]===============================
 
   NEW_URL = 'http://localhost:8080/endereco';
 
@@ -20,8 +17,6 @@ export class EnderecoService {
       'Content-Type': 'application/json',
     }),
   };
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   consultar(cep: String): Observable<EnderecoDto | null> {
     return this._http
@@ -43,7 +38,4 @@ export class EnderecoService {
         })
       );
   }
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
-
 }

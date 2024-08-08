@@ -1,9 +1,7 @@
-// RODRIGO
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -46,7 +44,7 @@ export class RelatorioClientesFieisComponent implements OnInit {
 
   formatarCpf(cpf: string): string {
     return cpf
-      .replace(/\D/g, '') // Remove tudo que não é dígito
+      .replace(/\D/g, '')
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
@@ -54,8 +52,8 @@ export class RelatorioClientesFieisComponent implements OnInit {
 
   formatarTelefone(telefone: string): string {
     return telefone
-      .replace(/\D/g, '') // Remove tudo que não é dígito
-      .replace(/^(\d{2})(\d)(\d{4})(\d{4})$/, '($1) $2 $3-$4'); // Formata como (41) 9 7652-0932
+      .replace(/\D/g, '')
+      .replace(/^(\d{2})(\d)(\d{4})(\d{4})$/, '($1) $2 $3-$4');
   }
 
   ngOnInit(): void {}
@@ -152,5 +150,3 @@ export class RelatorioClientesFieisComponent implements OnInit {
     return this.clientesFieis;
   }
 }
-
-// RODRIGO

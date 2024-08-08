@@ -7,7 +7,6 @@ import {
 import { Injectable } from '@angular/core';
 import { RelatorioTodosClientes } from '../shared/models/dto/relatorio-todos-clientes';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Receita } from '../shared/models/receita.model';
 import { ReceitaDto } from '../shared/models/dto/receita-dto.model';
 import { ClienteDto } from '../shared/models/dto/cliente-dto.model';
 import { ClienteFielDto } from '../shared/models/dto/cliente-fiel-dto.model';
@@ -26,8 +25,6 @@ export class RelatorioService {
       'Content-Type': 'application/json',
     }),
   };
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   visualizarReceitas(
     dataDe: string,
@@ -101,35 +98,6 @@ export class RelatorioService {
       );
   }
 
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
-
-  // getAllClientes(): Observable<RelatorioTodosClientes[] | null> {
-  //   return this._http
-  //     .get<RelatorioTodosClientes[]>(
-  //       `${this.NEW_URL}/visualizarClientes`,
-  //       this.httpOptions
-  //     )
-  //     .pipe(
-  //       map((resp: HttpResponse<RelatorioTodosClientes[]>) => {
-  //         if (resp.status == 200) {
-  //           return resp.body;
-  //         } else {
-  //           return [];
-  //         }
-  //       }),
-  //       catchError((err, caught) => {
-  //         if (err.status == 404) {
-  //           return of([]);
-  //         } else {
-  //           return throwError(() => err);
-  //         }
-  //       })
-  //     );
-  // }
-
-
-
-  // RODRIGO
   getAllClientes(): Observable<RelatorioTodosClientes[] | null> {
     return this._http
       .get<RelatorioTodosClientes[]>(
@@ -205,6 +173,4 @@ export class RelatorioService {
         })
       );
   }
-
-  // RODRIGO
 }

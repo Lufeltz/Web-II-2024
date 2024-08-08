@@ -33,22 +33,6 @@ export class LoginService {
     return this.usuarioLogado;
   }
 
-  // login(login: Login): Observable<Usuario2 | null> {
-  //   let usu = new Usuario2(1, login.login, login.login, login.senha, 'FUNC');
-  //   if (login.login == login.senha) {
-  //     if (login.login == 'cliente') {
-  //       usu.perfil = 'CLIENTE';
-  //     } else if (login.login == 'funcionario') {
-  //       usu.perfil = 'FUNCIONARIO';
-  //     }
-  //     return of(usu);
-  //   } else {
-  //     return of(null);
-  //   }
-  // }
-
-  // ===============================[NEW]===============================
-
   NEW_URL = 'http://localhost:8080/usuario';
 
   httpOptions = {
@@ -57,8 +41,6 @@ export class LoginService {
       'Content-Type': 'application/json',
     }),
   };
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
 
   login(usuarioRequestDto: UsuarioRequestDto): Observable<UsuarioResponseDto | null> {
     return this._http
@@ -70,7 +52,7 @@ export class LoginService {
       .pipe(
         map((resp: HttpResponse<UsuarioResponseDto>) => {
           if (resp.status == 200) {
-            console.log(resp.body);
+            // console.log(resp.body);
             return resp.body;
           } else {
             return null;
@@ -81,40 +63,4 @@ export class LoginService {
         })
       );
   }
-
-  //MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS MATHEUS
-
-  // arrumar a URL em NEW_URL e nos métodos
-
-  // login(login: Login): Observable<Usuario | null> {
-  //   return this._http
-  //     .post<Usuario>(this.NEW_URL, JSON.stringify(login), this.httpOptions)
-  //     .pipe(
-  //       map((resp: HttpResponse<Usuario>) => {
-  //         if (resp.status == 200) {
-  //           return resp.body;
-  //         } else {
-  //           return null;
-  //         }
-  //       }),
-  //       catchError((err) => {
-  //         if (err.status == 401) {
-  //           // UNAUTHORIZERD
-  //           return of(null);
-  //         } else {
-  //           return throwError(() => err);
-  //         }
-  //       })
-  //     );
-  // }
-
-  // ===============================[NEW]===============================
-
-  // remover esse depois que arrumar o de cima
-  // login(email: string, password: string): Observable<Login[]> {
-  //   const params = new HttpParams()
-  //     .set('email', email)
-  //     .set('password', password);
-  //   return this._http.get<Login[]>(BASE_URL + 'users', { params });
-  // }
 }
