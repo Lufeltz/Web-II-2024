@@ -60,14 +60,12 @@
           <tr
             *ngFor="let pedido of orderedPedidos"
             [ngClass]="{
-              'table-warning': pedido.situacao === statusEnum.EM_ABERTO,
-              'table-danger':
-                pedido.situacao === statusEnum.REJEITADO ||
-                pedido.situacao === statusEnum.CANCELADO,
-              'table-secondary': pedido.situacao === statusEnum.RECOLHIDO,
-              'table-info': pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO,
-              'table-success': pedido.situacao === statusEnum.PAGO,
-              'table-primary': pedido.situacao === statusEnum.FINALIZADO
+              'table-em-aberto': pedido.situacao === statusEnum.EM_ABERTO,
+              'table-rejeitado-cancelado': pedido.situacao === statusEnum.REJEITADO || pedido.situacao === statusEnum.CANCELADO,
+              'table-recolhido': pedido.situacao === statusEnum.RECOLHIDO,
+              'table-aguardando-pagamento': pedido.situacao === statusEnum.AGUARDANDO_PAGAMENTO,
+              'table-pago': pedido.situacao === statusEnum.PAGO,
+              'table-finalizado': pedido.situacao === statusEnum.FINALIZADO
             }"
           >
             <td>{{ pedido.numeroPedido }}</td>

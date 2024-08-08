@@ -109,9 +109,22 @@ export class AdicionarFuncionariosModalComponent {
   }
 
   updateDataNascimento(): void {
-    const [day, month, year] = this.formattedDataNascimento.split('/').map(Number);
-    if (day && month && year) {
-      this.funcionario.dataNascimento = new Date(year, month - 1, day)
+    const cleanDate = this.formattedDataNascimento.replace(/\D/g, '');
+    
+    if (cleanDate.length === 8) {
+      const day = parseInt(cleanDate.slice(0, 2), 10);
+      const month = parseInt(cleanDate.slice(2, 4), 10);
+      const year = parseInt(cleanDate.slice(4), 10);
+      
+      const fullYear = year < 100 ? (year < 30 ? 2000 + year : 1900 + year) : year;
+      
+      if (day > 0 && month > 0 && year > 0) {
+        this.funcionario.dataNascimento = new Date(fullYear, month - 1, day);
+      } else {
+        this.funcionario.dataNascimento = null;
+      }
+    } else {
+      this.funcionario.dataNascimento = null;
     }
   }
 }

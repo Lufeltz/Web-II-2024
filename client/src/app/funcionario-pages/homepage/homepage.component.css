@@ -1,3 +1,27 @@
+.table-em-aberto {
+    background-color: rgba(255, 213, 0, 0.6);
+}
+
+.table-rejeitado-cancelado {
+    background-color: rgba(217, 4, 41, 0.6);
+}
+
+.table-recolhido {
+    background-color: rgba(108, 117, 125, 0.6);
+}
+
+.table-aguardando-pagamento {
+    background-color: rgba(0, 180, 216, 0.6);
+}
+
+.table-pago {
+    background-color: rgba(244, 140, 6, 0.6);
+}
+
+.table-finalizado {
+    background-color: rgba(82, 183, 136, 0.6);
+}
+
 .text-center {
     text-align: center; 
 }
@@ -37,31 +61,6 @@ th {
     vertical-align: middle; 
     background-color: inherit; 
 }
-
-.table-warning td {
-    background-color: #fff3cd;
-}
-
-.table-danger td {
-    background-color: #f8d7da;
-}
-
-.table-secondary td {
-    background-color: #e2e3e5; 
-}
-
-.table-info td {
-    background-color: #d1ecf1; 
-}
-
-.table-success td {
-    background-color: #d4edda; 
-}
-
-.table-primary td {
-    background-color: #cce5ff; 
-}
-
 
 ul.list-inline {
     padding: 0;

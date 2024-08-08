@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pedido of pedidos" class="table-warning">
+          <tr *ngFor="let pedido of pedidos" class="table-em-aberto">
             <td>{{ pedido.numeroPedido }}</td>
             <td>{{ pedido.dataPedido | date : "dd/MM/yyyy HH:mm" }}</td>
             <td>

@@ -147,19 +147,23 @@
           </div>
         </li>
       </ul>
+      <div *ngIf="usuarioLogado" class="d-flex justify-content-center flex-grow-1">
+        <p class="navbar-text mb-0 text-white" *ngIf="temPermissao('CLIENTE')">
+          <i class="fa fa-user"></i> Cliente: {{ usuarioLogado.nome }}
+        </p>
+        <p class="navbar-text mb-0 text-white" *ngIf="temPermissao('FUNCIONARIO')">
+          <i class="fa fa-user"></i> Funcionário: {{ usuarioLogado.nome }}
+        </p>
+      </div>
     </div>
 
     <div *ngIf="usuarioLogado" id="navbarContent2">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#" (click)="logout()">Logout</a>
-        </li>
-        <li class="nav-item">
-          <p class="navbar-text mb-0 text-white">
-            <i class="fa fa-user"></i> {{ usuarioLogado.nome }}
-          </p>
+          <a class="nav-link" href="#" (click)="logout()">Sair</a>
         </li>
       </ul>
     </div>
+
   </nav>
 </div>

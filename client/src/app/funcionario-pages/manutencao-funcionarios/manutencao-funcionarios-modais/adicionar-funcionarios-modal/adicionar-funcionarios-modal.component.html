@@ -90,6 +90,9 @@
                     #dataNascimento="ngModel"
                     (focus)="clearValueInvalid()"
                     (blur)="updateDataNascimento()"
+                    mask="00/00/0000"
+                    [ngModelOptions]="{ updateOn: 'blur' }"
+                    required
                   />
 
                   <label for="dataNascimento">Data de Nascimento</label>

@@ -200,8 +200,13 @@
                     placeholder=" "
                     [(ngModel)]="cadastroNumero"
                     #numero="ngModel"
+                    required
+                    [class.invalid-border]="numero.invalid && (numero.dirty || numero.touched)"
                   />
                   <label for="numero">Número:</label>
+                </div>
+                <div *ngIf="numero.errors && (numero.dirty || numero.touched)" class="left-align text-danger">
+                  <div [hidden]="!numero?.errors?.['required']">Insira o número</div>
                 </div>
               </div>
             </div>
