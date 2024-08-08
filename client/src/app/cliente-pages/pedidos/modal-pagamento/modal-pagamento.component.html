@@ -1,31 +1,67 @@
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Pessoa</h4>
-  <button
-    type="button"
-    class="btn-close"
-    aria-label="Close"
-    (click)="activeModal.close()"
-  ></button>
-</div>
-<div class="modal-body">
-  <p>Número do pedido: {{ pedido.numeroPedido }}</p>
-  <p>Data do pedido: {{ pedido.dataPedido }}</p>
-  <p>Data do pagamento: {{ pedido.dataPagamento }}</p>
-  <p>Situação: {{ pedido.situacao }}</p>
-  <p>Prazo: {{ pedido.orcamento.dataPrazo }}</p>
-  <p>Valor: {{ pedido.orcamento.valor }}</p>
-  <p *ngFor="let roupa of pedido.listaPedidoRoupas">
-    Perfil1: {{ roupa.pedido }} Perfil2: {{ roupa.quantidade }} Perfil3:
-    {{ roupa.roupa.descricao }} Perfil4: {{ roupa.roupa.prazoDias }} Perfil5:
-    {{ roupa.roupa.preco }}
-  </p>
-</div>
-<div class="modal-footer">
-  <button
-    type="button"
-    class="btn btn-outline-dark"
-    (click)="activeModal.close()"
-  >
-    Fechar
-  </button>
+<div class="background">
+  <div class="modal-container d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg custom-card border-0">
+      <div class="card-body">
+        <div class="container-pagar-pedido-texto">
+          <h5 class="pagar-pedido-text card-title">Pagar Pedido</h5>
+          <h6 class="pagar-pedido-phrase card-subtitle">
+            Efetuar pagamento do pedido selecionado?
+          </h6>
+        </div>
+
+        <div class="container-table" style="overflow-x: auto">
+          <table class="table table-hover">
+            <thead class="table-items-head">
+              <tr>
+                <td class="tbody-header">Nº Pedido:</td>
+                <td class="tbody-result" colspan="2">{{ pedidoParaPagar.numeroPedido }}</td>
+              </tr>
+              <tr>
+                <td class="tbody-header">Data:</td>
+                <td class="tbody-result" colspan="2">{{ formatarData(pedidoParaPagar.dataPedido) }}h</td>
+              </tr>
+              <tr>
+                <td class="tbody-header">Prazo:</td>
+                <td class="tbody-result" colspan="2">{{ formatarDataSemTime(pedidoParaPagar.orcamento.dataPrazo) }}</td>
+              </tr>
+              <tr>
+                <td class="tbody-header-center" colspan="3">Roupas</td>
+              </tr>
+              <tr>
+                <td class="tbody-header">Descrição</td>
+                <td class="tbody-header-center">Quantidade</td>
+                <td class="tbody-header-center">Preço Unitário</td>
+              </tr>
+            </thead>
+            <tbody class="table-items-body">
+              <tr *ngFor="let pedidoRoupa of pedidoParaPagar.listaPedidoRoupas">
+                <td class="tbody-result">{{ pedidoRoupa.roupa.descricao }}</td>
+                <td class="tbody-result-center">{{ pedidoRoupa.quantidade }}</td>
+                <td class="tbody-result-center">R${{ formatarValor(pedidoRoupa.roupa.preco) }}</td>
+              </tr>
+            </tbody>
+            <tfoot class="table-items-tfoot">
+              <tr>
+                <td class="tfoot-result">Total:</td>
+                <td class="tfoot-result-center">{{ totalItens(pedidoParaPagar.listaPedidoRoupas) }}</td>
+                <td class="tfoot-result-center">R${{ formatarValor(pedidoParaPagar.orcamento.valor) }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="container-button d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-primary custom-btn btn-cancelar mr-2"
+            (click)="cancelar()"
+          >Cancelar</button>
+          <button
+            type="button"
+            class="btn btn-primary custom-btn btn-pagar"
+            (click)="pagar(pedidoParaPagar)">Pagar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
