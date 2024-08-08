@@ -171,27 +171,27 @@ body {
 }
 
 .text-yellow {
-    color: #ffd700;
+    color: #ffd500;
 }
   
 .text-red {
-    color: red;
+    color: #d90429;
 }
   
 .text-gray {
-    color: gray;
+    color: #6c757d;
 }
   
 .text-blue {
-    color: blue;
+    color: #00b4d8;
 }
   
 .text-orange {
-    color: orange;
+    color: #f48c06;
 }
   
 .text-green {
-    color: green;
+    color: #52b788;
 }
 
 .container-table .table thead tr{
@@ -233,4 +233,14 @@ body {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 5px;
+}
+
+
+.valor-text {
+    color: #32445c;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-radius: 10px;
 }

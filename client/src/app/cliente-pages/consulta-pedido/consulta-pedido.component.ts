@@ -40,6 +40,10 @@ export class ConsultaPedidoComponent implements OnInit {
     this.obterClienteLogado();
   }
 
+  formatSituacao(situacao: string): string {
+    return situacao.replace(/_/g, ' ');
+  }
+
   obterClienteLogado(): void {
     this.clienteService.consultarPorIdUsuario(this.usuario.idUsuario)
     .subscribe({

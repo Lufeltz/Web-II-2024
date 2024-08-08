@@ -81,15 +81,19 @@
                 <div class="container-situacao-text">
                   Situação:
                   <span
-                  [ngClass]="{
-                    'text-yellow': pedido.situacao === Status.EM_ABERTO,
-                    'text-red': pedido.situacao === Status.REJEITADO || pedido.situacao === Status.CANCELADO,
-                    'text-gray': pedido.situacao === Status.RECOLHIDO,
-                    'text-blue': pedido.situacao === Status.AGUARDANDO_PAGAMENTO,
-                    'text-orange': pedido.situacao === Status.PAGO,
-                    'text-green': pedido.situacao === Status.FINALIZADO
-                    }">
-                    {{ pedido.situacao }}
+                    [ngClass]="{
+                      'text-yellow': pedido.situacao === Status.EM_ABERTO,
+                      'text-red':
+                        pedido.situacao === Status.REJEITADO ||
+                        pedido.situacao === Status.CANCELADO,
+                      'text-gray': pedido.situacao === Status.RECOLHIDO,
+                      'text-blue':
+                        pedido.situacao === Status.AGUARDANDO_PAGAMENTO,
+                      'text-orange': pedido.situacao === Status.PAGO,
+                      'text-green': pedido.situacao === Status.FINALIZADO
+                    }"
+                  >
+                    {{ formatSituacao(pedido.situacao) }}
                   </span>
                 </div>
                 <div class="container-prazo-pedido-text">
@@ -102,27 +106,28 @@
             <div class="container-table shadow-sm alarm-table table-responsive">
               <table class="table table-hover">
                 <thead>
-                  <tr class="custom-headers-tfoot">
-                    <th scope="col">Itens:</th>
-                    <th scope="col">Quantidade:</th>
-                    <th scope="col">Valor:</th>
+                  <tr class="custom-headers-tfoot text-center">
+                    <th scope="col">Itens</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Valor</th>
                   </tr>
                 </thead>
-                <tbody class="table-items-body custom-tr-items">
+                <tbody class="table-items-body custom-tr-items text-center">
                   <tr *ngFor="let item of pedido.listaPedidoRoupas">
-                    <td>{{ item.roupa.descricao }} ({{ item.quantidade }}.qtd)</td>
-                    <td>{{ item.quantidade }}.qtd</td>
-                    <td>R${{ formatarValor(item.roupa.preco * item.quantidade) }}</td>
+                    <td>
+                      {{ item.roupa.descricao }}
+                    </td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>
+                      R${{ formatarValor(item.roupa.preco * item.quantidade) }}
+                    </td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr class="custom-headers-tfoot">
-                    <th></th>
-                    <th>Itens totais: {{ totalItens }}</th>
-                    <th>Valor total: R${{ formatarValor(precoTotal) }}</th>
-                  </tr>
-                </tfoot>
+
               </table>
+              <div colspan="3" class="text-center valor-text">
+                Valor total: R$ <span>{{ formatarValor(precoTotal) }}</span>
+              </div>
             </div>
           </div>
 
@@ -140,13 +145,6 @@
           </div>
 
           <div class="container-button d-flex justify-content-end mt-auto">
-            <button
-              type="button"
-              class="btn btn-primary custom-btn custom-btn-voltar"
-              (click)="voltar()"
-            >
-              Voltar
-            </button>
           </div>
         </div>
       </div>

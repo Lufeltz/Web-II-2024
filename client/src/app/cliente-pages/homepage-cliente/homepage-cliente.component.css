@@ -97,3 +97,27 @@ ul.list-inline li {
     margin: 0; /* Remove a margem padrão do parágrafo */
     font-size: 16px; /* Ajusta o tamanho da fonte */
 }
+
+.text-yellow {
+    color: #ffd500;
+}
+  
+.text-red {
+    color: #d90429;
+}
+  
+.text-gray {
+    color: #6c757d;
+}
+  
+.text-blue {
+    color: #00b4d8;
+}
+  
+.text-orange {
+    color: #f48c06;
+}
+  
+.text-green {
+    color: #52b788;
+}
